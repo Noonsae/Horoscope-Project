@@ -1,0 +1,1 @@
+// import할 때 가독성을 높이는 index.ts
