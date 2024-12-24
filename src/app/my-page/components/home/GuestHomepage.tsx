@@ -112,7 +112,7 @@ const GuestHomePage = () => {
               별자리가 전해준 새해의 행운처럼, 서로에게 따뜻한 마음을 나눠보세요.
             </p>
             <Link
-              href="/guestbook"
+              href="/compati"
               className="inline-block text-black py-3 px-5 rounded-md hover:bg-gray-400"
               style={{
                 backgroundColor: '#D9D9D9',
