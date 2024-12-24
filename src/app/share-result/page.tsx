@@ -1,9 +1,9 @@
 import React from 'react'
 
-const ShareResultsPage = () => {
+const page = () => {
   return (
-    <div>ShareResultsPage</div>
+    <div>page</div>
   )
 }
 
-export default ShareResultsPage
+export default page
