@@ -1,15 +1,42 @@
-// ssg
-import { chemiData } from '../data/data';
+'use client';
+import supabase from '@/supabase/supabase';
+import { useEffect, useState } from 'react';
 
 const Chemi = () => {
-  const stella2 = Object.values(chemiData);
-  const stella = Object.keys(stella2[0]);
-  console.log(stella2);
+  const [stellas, setStellas] = useState([]);
+  const [chemi, setChemi] = useState([]);
+  // 배열에 비어 있으면 첫번째 텍스트
+  // 배열에 값이 있으면 두번째 텍스트
 
+  useEffect(() => {
+    const fetchStellas = async () => {
+      const { data, error } = await supabase.from('stellas').select('*');
+      if (error) {
+        console.error(error.message);
+        return;
+      }
+      console.log(data);
+      setStellas(data);
+    };
+    fetchStellas();
+  }, []);
+
+  //   const clickEvent = (selectedStella) => {
+  //     if (chemi.length < 2 && !chemi.includes(selectedStella)) {
+  //       setChemi([...chemi, selectedStella]);
+  //     }
+  //   };
   return (
     <div>
-      {stella.map((p, _) => {
-        return <div key={_}>{p}</div>;
+      {stellas?.map((p) => {
+        return (
+          //   <button onClick={() => clickEvent(p)}>
+          <div key={p.id}>
+            <h1>{p.stella_name}</h1>
+            <p>{p.new_year}</p>
+          </div>
+          //   </button>
+        );
       })}
     </div>
   );
