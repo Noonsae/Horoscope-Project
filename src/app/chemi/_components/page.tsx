@@ -1,2 +1,18 @@
-// 퍼널 형식으로 구현할 예정
-// 클릭 후 sweet Alert 띄우면서 확인하면 다음 화면 보여주기
+// ssg
+import { chemiData } from '../data/data';
+
+const Chemi = () => {
+  const stella2 = Object.values(chemiData);
+  const stella = Object.keys(stella2[0]);
+  console.log(stella2);
+
+  return (
+    <div>
+      {stella.map((p, _) => {
+        return <div key={_}>{p}</div>;
+      })}
+    </div>
+  );
+};
+
+export default Chemi;
