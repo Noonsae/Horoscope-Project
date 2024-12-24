@@ -1,9 +1,7 @@
-import React from 'react'
+import Chemi from './_components/page';
 
-const page = () => {
-  return (
-    <div>page</div>
-  )
-}
+const ChemiePage = async () => {
+  return <Chemi />;
+};
 
-export default page
+export default ChemiePage;

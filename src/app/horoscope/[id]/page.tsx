@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Details from '@/app/horoscope/[id]/details';
 
 const page = () => {
   return (
-    <div>page</div>
-  )
-}
+    <div>
+      <Details />
+    </div>
+  );
+};
 
-export default page
+export default page;
