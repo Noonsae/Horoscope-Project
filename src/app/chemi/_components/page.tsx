@@ -32,8 +32,8 @@ const Chemi = () => {
         return (
           //   <button onClick={() => clickEvent(p)}>
           <div key={p.id}>
-            <h1>{p.stella_name}</h1>
-            <p>{p.new_year}</p>
+            <h1>{p.name}</h1>
+            <p>{p.description}</p>
           </div>
           //   </button>
         );
