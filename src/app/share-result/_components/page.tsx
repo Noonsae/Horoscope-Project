@@ -1,9 +1,9 @@
 import React from 'react'
 
-const page = () => {
+const ShareList = () => {
   return (
-    <div>page</div>
+    <div>ShareList</div>
   )
 }
 
-export default page
+export default ShareList
