@@ -29,5 +29,3 @@ const HomePage = () => {
 
   return isLogin ? <UserHomePage /> : <GuestHomePage />;
 };
-
-export default HomePage;
