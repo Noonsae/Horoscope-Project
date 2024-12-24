@@ -17,13 +17,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning={true}>
       <link rel="icon" href="/icons/bee.png" sizes="any" />
       <MyProvider>
         <body className="dark:bg-[#0a1428]">
           <Header />
           <main>{children}</main>
-
           <Footer />
         </body>
       </MyProvider>
