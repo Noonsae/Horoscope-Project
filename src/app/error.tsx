@@ -1,2 +1,2 @@
-// error
-'use client';
+"use client"
+

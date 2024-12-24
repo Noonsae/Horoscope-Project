@@ -11,6 +11,9 @@ const config: Config = {
       colors: {
         background: 'var(--background)',
         foreground: 'var(--foreground)'
+      },
+      backgroundImage: {
+        gradient: 'linear-gradient(to right bottom, #03020C, #070425);'
       }
     }
   },

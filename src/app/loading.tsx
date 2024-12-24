@@ -1,2 +1,1 @@
-// loading
 'use client';
