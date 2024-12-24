@@ -82,7 +82,7 @@ const GuestHomePage = () => {
               이 사람, 나와 정말 잘 맞을까? 별자리 궁합이 그 답을 알려드립니다!
             </p>
             <Link
-              href="/chemi"
+              href="/guestbook"
               className="inline-block text-black py-3 px-5 rounded-md hover:bg-gray-400"
               style={{
                 backgroundColor: '#D9D9D9',
