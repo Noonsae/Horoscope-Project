@@ -19,14 +19,14 @@ interface SignUpPayload {
 }
 
 export const useSignUpMutation = () => {
-  const fetchStellas = useStellasMutation();
+  // const fetchStellas = useStellasMutation();
   return useMutation({
     mutationFn: async ({ email, password, nickname, birth_date }: SignUpPayload) => {
       //  Supabase Auth 사용자 등록
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         throw new Error('유효하지 않은 이메일 형식입니다.');
       }
-      if (password.length === 8) {
+      if (password.length < 8) {
         throw new Error('비밀번호는 최소 8자 이상으로 입력력해주세요.');
       }
       if (!nickname || nickname.trim().length === 0) {
