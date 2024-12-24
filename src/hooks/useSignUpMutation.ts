@@ -1,6 +1,15 @@
 'use client';
-import supabase from '@/supabase/supabase';
+
+import browserClient from '@/supabase/supabase';
 import { useMutation } from '@tanstack/react-query';
+import { useStellasMutation } from './useStellasMutations';
+import { getStellaId } from './useStellaHelpers';
+
+interface Stella {
+  id: string;
+  name: string;
+  birth_data: string;
+}
 
 interface SignUpPayload {
   email: string;
@@ -10,10 +19,24 @@ interface SignUpPayload {
 }
 
 export const useSignUpMutation = () => {
+  const fetchStellas = useStellasMutation();
   return useMutation({
     mutationFn: async ({ email, password, nickname, birth_date }: SignUpPayload) => {
-      // 1. Supabase Auth 사용자 등록
-      const { data: authData, error: authError } = await supabase.auth.signUp({
+      //  Supabase Auth 사용자 등록
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        throw new Error('유효하지 않은 이메일 형식입니다.');
+      }
+      if (password.length === 8) {
+        throw new Error('비밀번호는 최소 8자 이상으로 입력력해주세요.');
+      }
+      if (!nickname || nickname.trim().length === 0) {
+        throw new Error('닉네임을 입력해주세요.');
+      }
+      if (!birth_date || isNaN(new Date(birth_date).getTime())) {
+        throw new Error('유효한 생년월일을 입력해주세요.');
+      }
+
+      const { data: authData, error: authError } = await browserClient.auth.signUp({
         email,
         password,
         options: { data: { nickname } }
@@ -24,17 +47,20 @@ export const useSignUpMutation = () => {
       }
 
       const userId = authData.user?.id;
+
       if (!userId) {
         throw new Error('유저 ID를 생성하지 못했습니다.');
       }
 
-      // 2. `users` 테이블에 추가 정보 저장
-      const { error: dbError } = await supabase.from('users').insert([
+      const stellaId = getStellaId(birth_date);
+
+      // `users` 테이블에 추가 정보 저장
+      const { error: dbError } = await browserClient.from('users').insert([
         {
           id: userId, // Auth의 user.id
-          email, // 사용자 이메일
           nickname, // 닉네임
-          birth_date // 생년월일
+          birth_date, // 생년월일
+          stella_id: stellaId
         }
       ]);
 
