@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 const Details = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 py-2 px-4">
