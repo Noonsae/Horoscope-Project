@@ -35,7 +35,7 @@ const Page: React.FC = () => {
           />
           <button
             type="submit"
-            className="w-full mt-6 bg-red-600 text-white py-2 rounded-lg focus:ring-4 transition font-bold"
+            className="w-full mt-6 bg-[#A82626] text-[#F0F0F0] py-2 rounded-lg focus:ring-4 transition font-bold"
           >
             로그인
           </button>

@@ -78,70 +78,76 @@ const Page: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      {!isFormComplete ? (
-        <form className="flex flex-col gap-4 w-80 bg-white p-6 rounded shadow">
-          <label>이메일</label>
-          <input
-            type="email"
-            name="email"
-            placeholder="이메일을 입력해주세요."
-            value={formData.email}
-            onChange={handleInputChange}
-            required
-          />
-          <label>닉네임</label>
-          <input
-            type="text"
-            name="nickname"
-            placeholder="닉네임을 입력해주세요."
-            value={formData.nickname}
-            onChange={handleInputChange}
-            required
-          />
-          <label>패스워드</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="패스워드를 입력해주세요."
-            value={formData.password}
-            onChange={handleInputChange}
-            required
-          />
-          <label>패스워드 확인</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            placeholder="패스워드를 다시 입력해주세요."
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-            required
-          />
-        </form>
-      ) : (
-        <form className="flex flex-col gap-4 w-80 bg-white p-6 rounded shadow" onSubmit={handleSubmit}>
-          <ReactDayPicker onDateChange={handleDateChange} />
-          <button type="submit" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
-            회원가입 하기
-          </button>
-          <button
-            type="button"
-            className="mt-2 bg-gray-500 text-white py-2 px-4 rounded"
-            onClick={() =>
-              setFormData({
-                email: '',
-                nickname: '',
-                password: '',
-                confirmPassword: '',
-                birth_date: null
-              })
-            }
-          >
-            뒤로 가기
-          </button>
-        </form>
-      )}
-    </div>
+    <>
+      <div className="flex flex-col items-center justify-center min-h-screen w-full h-64 bg-gradient">
+        {!isFormComplete ? (
+          <form className="bg-[#262626] p-6 rounded-lg shadow-md w-80">
+            <label className="block text-white text-sm font-medium mb-2">이메일</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder="이메일을 입력해주세요."
+              className="block w-full px-4 py-2 border rounded-lg text-sm text-gray-900 border-gray-300 bg-[#555555]"
+              required
+            />
+            <label className="block text-white text-sm font-medium mt-4 mb-2">닉네임</label>
+            <input
+              type="text"
+              name="nickname"
+              value={formData.nickname}
+              onChange={handleInputChange}
+              placeholder="닉네임을 입력해주세요."
+              className="block w-full px-4 py-2 border rounded-lg text-sm text-gray-900 border-gray-300 bg-[#555555]"
+              required
+            />
+            <label className="block text-white text-sm font-medium mt-4 mb-2">비밀번호</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              placeholder="비밀번호를 입력해주세요."
+              className="block w-full px-4 py-2 border rounded-lg text-sm text-gray-900 border-gray-300 bg-[#555555]"
+              required
+            />
+            <label className="block text-white text-sm font-medium mt-4 mb-2">비밀번호 확인</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              placeholder="비밀번호를 다시 입력해주세요."
+              className="block w-full px-4 py-2 border rounded-lg text-sm text-gray-900 border-gray-300 bg-[#555555]"
+              required
+            />
+          </form>
+        ) : (
+          <form className="flex flex-col gap-4 w-1 bg-white p-6 rounded shadow" onSubmit={handleSubmit}>
+            <ReactDayPicker onDateChange={handleDateChange} />
+            <button type="submit" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
+              회원가입 하기
+            </button>
+            <button
+              type="button"
+              className="mt-2 bg-gray-500 text-white py-2 px-4 rounded"
+              onClick={() =>
+                setFormData({
+                  email: '',
+                  nickname: '',
+                  password: '',
+                  confirmPassword: '',
+                  birth_date: null
+                })
+              }
+            >
+              뒤로 가기
+            </button>
+          </form>
+        )}
+      </div>
+    </>
   );
 };
 
