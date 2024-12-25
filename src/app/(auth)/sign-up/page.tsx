@@ -14,7 +14,7 @@ interface FormData {
   birth_date: Date | null;
 }
 
-const Page: React.FC = () => {
+const SignUpPage: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     email: '',
     nickname: '',
@@ -124,7 +124,7 @@ const Page: React.FC = () => {
             />
           </form>
         ) : (
-          <form className="flex flex-col gap-4 w-1 bg-white p-6 rounded shadow" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-4 w-1 bg-white w-[400px] p-6 rounded shadow" onSubmit={handleSubmit}>
             <ReactDayPicker onDateChange={handleDateChange} />
             <button type="submit" className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
               회원가입 하기
@@ -151,4 +151,4 @@ const Page: React.FC = () => {
   );
 };
 
-export default Page;
+export default SignUpPage;
