@@ -1,6 +1,6 @@
 'use client';
 
-import { Comment } from '@/types/guestbook.type';
+import { Comment } from '@/types/guestbook-type';
 import { addComment } from '@/utils/guestbook';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
@@ -13,7 +13,7 @@ const GuestbookForm = () => {
   const addMutation = useMutation<unknown, Error, Comment['comment']>({
     mutationFn: (newComment) => addComment(newComment),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"]});
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
       inputRef.current!.value = '';
     }
   });
