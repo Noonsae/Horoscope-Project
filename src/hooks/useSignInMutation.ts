@@ -1,5 +1,6 @@
 import useAuthStore from '@/store/useAuth';
-import browserClient from '@/supabase/supabase';
+import browserClient from '@/supabase/clientSupabase';
+
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
@@ -30,10 +31,16 @@ export const useSignInMutation = () => {
       if (error) {
         throw new Error(error.message);
       }
-      return data.user;
+      return data;
     },
-    onSuccess: (user) => {
+    onSuccess: (data) => {
+      const { user, session } = data;
+      if (session) {
+        localStorage.setItem('access_token', session.access_token);
+        localStorage.setItem('refresh_token', session.refresh_token);
+      }
       setUser(user);
+      Swal.fire('로그인 성공', '로그인에 성공하였습니다.');
       router.push('/');
     },
     onError: (error) => {
