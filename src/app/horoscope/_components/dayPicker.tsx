@@ -2,17 +2,22 @@
 import React, { useState } from 'react';
 import { DayPicker } from 'react-day-picker';
 import { ko } from 'date-fns/locale';
-import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
+import 'react-day-picker/dist/style.css';
 
-const ReactDayPicker: React.FC = () => {
-  const [selectedDay, setSelectedDay] = useState<Date | undefined>(new Date());
-  const [inputValue, setInputValue] = useState<string>(selectedDay ? format(selectedDay, 'yyyy-MM-dd') : '');
+type ReactDayPickerProps = {
+  onDateSelect: (date: Date | undefined) => void;
+};
+
+const ReactDayPicker: React.FC<ReactDayPickerProps> = ({ onDateSelect }) => {
+  const [selectedDay, setSelectedDay] = useState<Date | undefined>(undefined);
+  const [inputValue, setInputValue] = useState<string>('');
 
   const handleDaySelect = (day: Date | undefined) => {
     setSelectedDay(day);
+    onDateSelect(day); // 부모 컴포넌트에 선택된 날짜 전달
     if (day) {
-      setInputValue(format(day, 'yyyy-MM-dd'));
+      setInputValue(format(day, 'yyyy-MM-dd')); // 입력값 업데이트
     }
   };
 
@@ -23,6 +28,7 @@ const ReactDayPicker: React.FC = () => {
     const parsedDate = new Date(inputDate);
     if (!isNaN(parsedDate.getTime())) {
       setSelectedDay(parsedDate);
+      onDateSelect(parsedDate); // 입력된 날짜도 부모 컴포넌트에 전달
     }
   };
 

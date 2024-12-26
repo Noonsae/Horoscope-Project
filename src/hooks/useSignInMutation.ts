@@ -1,5 +1,6 @@
+import clientSupabase from '@/lib/supabase-client';
 import useAuthStore from '@/store/useAuth';
-import browserClient from '@/supabase/supabase';
+
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
@@ -11,6 +12,7 @@ interface SignInPayload {
 
 export const useSignInMutation = () => {
   const setUser = useAuthStore((state) => state.setUser);
+  const setSession = useAuthStore((state) => state.setSession);
 
   const router = useRouter();
 
@@ -23,17 +25,27 @@ export const useSignInMutation = () => {
         throw new Error('비밀번호는 최소 8자 이상으로 입력력해주세요.');
       }
 
-      const { data, error } = await browserClient.auth.signInWithPassword({
+      const { data, error } = await clientSupabase.auth.signInWithPassword({
         email,
         password
       });
       if (error) {
         throw new Error(error.message);
       }
-      return data.user;
+      return data;
     },
-    onSuccess: (user) => {
+    onSuccess: (data) => {
+      const { user, session } = data;
+
+      if (user) setUser(user);
+      if (session) {
+        setSession({
+          accessToken: session.access_token,
+          refreshToken: session.refresh_token
+        });
+      }
       setUser(user);
+      Swal.fire('로그인 성공', '로그인에 성공하였습니다.');
       router.push('/');
     },
     onError: (error) => {

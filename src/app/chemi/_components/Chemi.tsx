@@ -63,18 +63,19 @@ const Chemi = () => {
         // 만약 Promise리턴을 받으면,
         if (result.isConfirmed) {
           // 만약 모달창에서 confirm 버튼을 눌렀다면
-          setChemi(newChemi);
           Swal.fire(`${stella.name}선택이 완료되었습니다.', 'success`);
+          setChemi(newChemi);
         }
       });
-      const params = new URLSearchParams({
-        first: JSON.stringify(newChemi[0].name),
-        second: JSON.stringify(newChemi[1].name)
-      });
-      router.push(`/chemi/result?${params.toString()}`);
     }
+    const params = new URLSearchParams({
+      first: JSON.stringify(newChemi[0].name),
+      second: JSON.stringify(newChemi[1].name)
+    });
+    router.push(`/chemi/result?${params.toString()}`);
   };
   // 서치파람스로 url 에 정보넣어서 보내거나
+  // 스윗알럿 2개떳을떄 ok를 눌렀을떄 이제 newChemi가 추가되야하는데데
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4 text-center">

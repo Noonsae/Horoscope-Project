@@ -1,6 +1,6 @@
-export  type Horoscope = string;
+export type Horoscope = string;
 
-export  const dailyhoroscope: Horoscope[] = [
+export const dailyhoroscope: Horoscope[] = [
   '오늘은 작은 기쁨이 곳곳에 숨겨져 있으니 놓치지 마세요.',
   '친구와의 오랜 갈등이 풀릴 수 있는 날입니다.',
   '예상치 못한 곳에서 좋은 소식을 들을 수 있습니다.',

@@ -9,7 +9,7 @@ const UserHomePage = () => {
         className="w-full text-center py-20 mb-10 max-w-none"
         style={{ backgroundColor: '#9E9E9E', height: '640px' }}
       >
-        <h1 className="text-4xl font-bold">Hero</h1>
+        <h1 className="text-4xl font-bold">오늘의 운세</h1>
       </div>
 
       {/* Cards Section */}

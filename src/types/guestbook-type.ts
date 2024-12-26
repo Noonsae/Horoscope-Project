@@ -1,4 +1,4 @@
-import { Tables } from './supabase';
+import { Tables } from './supabase-type';
 
 export type Comment = Tables<'guestbook'> & {
   users: {
@@ -6,3 +6,4 @@ export type Comment = Tables<'guestbook'> & {
     profile_img: string | null;
   };
 };
+

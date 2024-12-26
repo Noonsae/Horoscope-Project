@@ -1,6 +1,6 @@
 'use client';
 
-import { Comment } from '@/types/guestbook.type';
+import { Comment } from '@/types/guestbook-type';
 import { useState } from 'react';
 import { updateComment, deleteComment, fetchCommentData } from '@/utils/guestbook'; // Supabase 함수 가져오기
 import Image from 'next/image';
@@ -10,6 +10,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 type MutationVariable = { editingComment: Comment['comment']; editingId: Comment['id'] };
 type ContextVariable = { previousComments: Comment[] | undefined };
+
+// const isOwner = guestbook.user_id === currentUserId;
+// isOwner 일 때만, 수정 삭제 버튼 보이게 처리
 
 const GuestbookList = () => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);

@@ -1,29 +1,24 @@
 'use client';
-import { createClient } from "@supabase/supabase-js";
+
 import { useEffect, useState } from "react";
 import UserHomePage from "./UserHomePage";
 import GuestHomePage from "./GuestHomePage";
+import clientSupabase from "@/lib/supabase-client";
 
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!, 
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
-
+const supabase = browserClient;
 
 const ClientHomePage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const ckeckLoginStatus = async () => {
-      const { data } = await supabase.auth.getSession();
+      const { data } = await clientSupabase.auth.getSession();
       setIsLogin(!!data.session);
     };
 
     ckeckLoginStatus();
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_envent, session) => {
+    const { data: listener } = clientSupabase.auth.onAuthStateChange((_envent, session) => {
       setIsLogin(!!session);
     });
 
@@ -32,7 +27,7 @@ const ClientHomePage = () => {
     };
   }, []);
 
-  return isLogin ? <UserHomePage/> : <GuestHomePage />;
+  return isLogin ? <UserHomePage /> : <GuestHomePage />;
 };
 
 export default ClientHomePage;

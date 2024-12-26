@@ -4,7 +4,7 @@ import { useSignInMutation } from '@/hooks/useSignInMutation';
 import Link from 'next/link';
 import { useState } from 'react';
 
-const Page: React.FC = () => {
+const SignInPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { mutate } = useSignInMutation();
@@ -50,4 +50,4 @@ const Page: React.FC = () => {
   );
 };
 
-export default Page;
+export default SignInPage;

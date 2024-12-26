@@ -1,9 +1,12 @@
 'use client';
 
-import { Comment } from '@/types/guestbook.type';
+import { Comment } from '@/types/guestbook-type';
 import { addComment } from '@/utils/guestbook';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRef } from 'react';
+
+
+// 로그인 상태가 아닐 시, 저장 버튼 disabled 처리
 
 const GuestbookForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -13,7 +16,7 @@ const GuestbookForm = () => {
   const addMutation = useMutation<unknown, Error, Comment['comment']>({
     mutationFn: (newComment) => addComment(newComment),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"]});
+      queryClient.invalidateQueries({ queryKey: ['comments'] });
       inputRef.current!.value = '';
     }
   });
