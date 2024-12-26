@@ -1,7 +1,7 @@
-// import Chemi from './_components/page';
+import Chemi from './_components/Chemi';
 
-// const ChemiePage = async () => {
-//   return <Chemi />;
-// };
+const ChemiePage = async () => {
+  return <Chemi />;
+};
 
-// export default ChemiePage;
+export default ChemiePage;
