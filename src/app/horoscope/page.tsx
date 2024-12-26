@@ -1,10 +1,13 @@
 'use client';
 import React, { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import ReactDayPicker from '@/app/horoscope/_components/dayPicker';
-import { getStellaId } from '@/hooks/useStellaHelpers'; // getStellaId 함수 import
+import { getStellaId } from '@/hooks/useStellaHelpers';
 
-const Page: React.FC = () => {
+const queryClient = new QueryClient();
+
+const HoroscopePage: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
   const router = useRouter();
 
@@ -17,31 +20,33 @@ const Page: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen py-2 px-4">
-      <div className="flex flex-col text-center border border-gray-300 rounded-lg shadow-lg bg-white p-6 w-[700px] h-[600px]">
-        <h1 className="mb-4 text-2xl font-bold">당신의 운세를 확인해보세요</h1>
-        <form onSubmit={handleSubmit} className="flex flex-col items-center justify-between flex-grow">
-          <div className="bg-white-500 rounded-lg p-4 w-[600px] h-[500px] flex flex-col items-center justify-between">
-            <div className="flex items-center justify-center flex-grow">
-              <ReactDayPicker onDateSelect={setSelectedDate} />
+    <QueryClientProvider client={queryClient}>
+      <div className="flex items-center justify-center h-screen py-2 px-4">
+        <div className="flex flex-col text-center border border-gray-300 rounded-lg shadow-lg bg-white p-6 w-[700px] h-[600px]">
+          <h1 className="mb-4 text-2xl font-bold">당신의 운세를 확인해보세요</h1>
+          <form onSubmit={handleSubmit} className="flex flex-col items-center justify-between flex-grow">
+            <div className="bg-white-500 rounded-lg p-4 w-[600px] h-[500px] flex flex-col items-center justify-between">
+              <div className="flex items-center justify-center flex-grow">
+                <ReactDayPicker onDateSelect={setSelectedDate} />
+              </div>
+              <div className="w-full flex justify-center mt-4">
+                <button
+                  type="submit"
+                  className="bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-600 transition"
+                  disabled={!selectedDate}
+                >
+                  운세확인하기
+                </button>
+              </div>
             </div>
-            <div className="w-full flex justify-center mt-4">
-              <button
-                type="submit"
-                className="bg-gray-300 text-black py-2 px-4 rounded hover:bg-gray-600 transition"
-                disabled={!selectedDate} // 날짜가 선택되지 않았으면 비활성화
-              >
-                운세확인하기
-              </button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
+    </QueryClientProvider>
   );
 };
 
-export default Page;
+export default HoroscopePage;
 
 // //SSG 방식 렌더링
 // //날짜를 정하고 제출하기를 눌렀을떄

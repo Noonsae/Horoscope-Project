@@ -1,4 +1,4 @@
-import supabase from '@/supabase/supabase';
+import supabase from '@/supabase/clientSupabase';
 import { Comment } from '@/types/guestbook-type';
 
 // user Id 가져오기
@@ -17,35 +17,32 @@ import { Comment } from '@/types/guestbook-type';
 //   return id;
 // };
 
-const user_id = '2be39632-2fbf-4815-96b0-71bc02a3cd5e';
+// const user_id = '2be39632-2fbf-4815-96b0-71bc02a3cd5e';
 
-// 코멘트 가져오기
-export const fetchnewyearfortunesData = async () => {
-  const { data, error } = await supabase
-    .from('stellas')
-    .select('*, users(nickname, profile_img)')
-    .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error('코멘트 불러오기 실패!');
-    throw error;
-  }
-  return data;
-};
+// export const fetchstellassData = async (id: string) => {
+//   const { data, error } = await supabase.from('stellas').select('id, name, description, img_url').eq('id', id).single();
 
-// 코멘트 저장
-export const addComment = async (newComment: Comment['comment']) => {
-  const { data, error } = await supabase
-    .from('guestbook')
-    .insert([{ comment: newComment, user_id: user_id }])
-    .select();
+//   if (error) {
+//     console.error('코멘트 불러오기 실패!');
+//     throw error;
+//   }
+//   return data;
+// };
 
-  if (error) {
-    console.error('코멘트 저장 실패!');
-    throw error;
-  }
-  return data;
-};
+// // 코멘트 저장
+// export const addComment = async (newComment: Comment['comment']) => {
+//   const { data, error } = await supabase
+//     .from('guestbook')
+//     .insert([{ comment: newComment, user_id: user_id }])
+//     .select();
+
+//   if (error) {
+//     console.error('코멘트 저장 실패!');
+//     throw error;
+//   }
+//   return data;
+// };
 
 // // 코멘트 업데이트
 // type updateCommentProps = {

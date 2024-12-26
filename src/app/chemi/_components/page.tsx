@@ -1,6 +1,6 @@
 'use client';
 
-import supabase from '@/supabase/supabase';
+import supabase from '@/lib/supabase-client';
 import { useEffect, useState } from 'react';
 
 interface Stella {
@@ -25,7 +25,7 @@ const Chemi = () => {
   }, []);
   const handleSelect = (selectedStella: Stella) => {
     if (chemi.length >= 2) return;
-    
+
     setChemi((prev) => [...prev, selectedStella]);
   };
 

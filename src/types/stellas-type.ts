@@ -1,9 +1,10 @@
 import { Tables } from './supabase-type';
 
-export type Comment = Tables<'stellas'> & {
+export type stellas = Tables<'stellas'> & {
   users: {
     id: string;
     name: String;
     description: String;
+    img_url: string;
   };
 };
