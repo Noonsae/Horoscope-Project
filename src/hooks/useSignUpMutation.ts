@@ -1,10 +1,8 @@
 'use client';
 
-import browserClient from '@/lib/supabase-client';
-
 import { useMutation } from '@tanstack/react-query';
 import { getStellaId } from './useStellaHelpers';
-
+import clientSupabase from '@/lib/supabase-client';
 
 interface Stella {
   id: string;
@@ -37,7 +35,7 @@ export const useSignUpMutation = () => {
         throw new Error('유효한 생년월일을 입력해주세요.');
       }
 
-      const { data: authData, error: authError } = await browserClient.auth.signUp({
+      const { data: authData, error: authError } = await clientSupabase.auth.signUp({
         email,
         password,
         options: { data: { nickname } }
@@ -56,7 +54,7 @@ export const useSignUpMutation = () => {
       const stellaId = getStellaId(birth_date);
 
       // `users` 테이블에 추가 정보 저장
-      const { error: dbError } = await browserClient.from('users').insert([
+      const { error: dbError } = await clientSupabase.from('users').insert([
         {
           id: userId, // Auth의 user.id
           nickname, // 닉네임

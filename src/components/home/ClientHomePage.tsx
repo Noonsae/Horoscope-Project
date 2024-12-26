@@ -26,7 +26,7 @@ const ClientHomePage = () => {
     };
   }, []);
 
-  return isLogin ? <UserHomePage/> : <GuestHomePage />;
+  return isLogin ? <UserHomePage /> : <GuestHomePage />;
 };
 
 export default ClientHomePage;
