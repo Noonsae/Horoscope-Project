@@ -1,6 +1,7 @@
 'use client';
 
 import supabase from '@/supabase/supabase';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 interface Stella {
@@ -10,6 +11,7 @@ interface Stella {
 }
 
 const Chemi = () => {
+  const router = useRouter();
   const [stellas, setStellas] = useState<Stella[]>([]);
   const [chemi, setChemi] = useState<Stella[]>([]);
   useEffect(() => {
@@ -23,12 +25,20 @@ const Chemi = () => {
     };
     fetchStellas();
   }, []);
-  const handleSelect = (selectedStella: Stella) => {
-    if (chemi.length >= 2) return;
-    
-    setChemi((prev) => [...prev, selectedStella]);
-  };
+  const handleSelect = (stella: Stella) => {
+    const newChemi = [...chemi, stella];
+    setChemi(newChemi);
 
+    if (newChemi.length === 2) {
+      const params = new URLSearchParams({
+        first: JSON.stringify(newChemi[0].name),
+        second: JSON.stringify(newChemi[1].name)
+      });
+
+      router.push(`/chemi/result?${params.toString()}`);
+    }
+  };
+  // 서치파람스로 url 에 정보넣어서 보내거나
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4 text-center">
