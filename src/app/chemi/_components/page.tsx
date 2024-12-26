@@ -56,4 +56,4 @@ const Chemi = () => {
   );
 };
 
-export default Chemi;
+// export default Chemi;

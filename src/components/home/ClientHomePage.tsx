@@ -5,6 +5,7 @@ import UserHomePage from "./UserHomePage";
 import GuestHomePage from "./GuestHomePage";
 import clientSupabase from "@/lib/supabase-client";
 
+const supabase = browserClient;
 
 const ClientHomePage = () => {
   const [isLogin, setIsLogin] = useState(false);
