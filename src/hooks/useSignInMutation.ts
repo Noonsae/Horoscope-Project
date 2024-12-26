@@ -1,5 +1,6 @@
 import useAuthStore from '@/store/useAuth';
-import browserClient from '@/supabase/clientSupabase';
+
+import browserClient from '@/lib/supabase-client';
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';

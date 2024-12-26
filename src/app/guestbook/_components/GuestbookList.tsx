@@ -1,6 +1,6 @@
 'use client';
 
-import { Comment } from '@/types/guestbook.type';
+import { Comment } from '@/types/guestbook-type';
 import { useState } from 'react';
 import { updateComment, deleteComment, fetchCommentData } from '@/utils/guestbook'; // Supabase 함수 가져오기
 import Image from 'next/image';
