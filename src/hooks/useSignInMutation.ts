@@ -1,5 +1,5 @@
 import useAuthStore from '@/store/useAuth';
-import browserClient from '@/supabase/supabase';
+import browserClient from '@/lib/supabase-client';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
