@@ -1,3 +1,5 @@
+import { Tables } from "./supabase";
+
 export interface DailyResult {
   id: number;
   created_at: string;
@@ -10,4 +12,24 @@ export interface NewYearResult {
   created_at: string;
   new_year_fortune_id: string;
   user_id: string;
+}
+
+export type DailyList = Tables<'daily_results'> & {
+  users: {
+    nickname: string;
+    profile_img: string | null;
+  },
+  daily_fortunes: {
+    content: string;
+  }
+}
+
+export type YearList = Tables<'new_year_results'> & {
+  users: {
+    nickname: string;
+    profile_img: string | null;
+  },
+  new_year_fortunes: {
+    content: string;
+  }
 }
