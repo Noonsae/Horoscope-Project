@@ -1,5 +1,7 @@
 import useAuthStore from '@/store/useAuth';
+
 import browserClient from '@/lib/supabase-client';
+
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
@@ -11,6 +13,7 @@ interface SignInPayload {
 
 export const useSignInMutation = () => {
   const setUser = useAuthStore((state) => state.setUser);
+  const setSession = useAuthStore((state) => state.setSession);
 
   const router = useRouter();
 
@@ -30,10 +33,18 @@ export const useSignInMutation = () => {
       if (error) {
         throw new Error(error.message);
       }
-      return data.user;
+      return data;
     },
-    onSuccess: (user) => {
+    onSuccess: (data) => {
+      const { user, session } = data;
+      if (session) {
+        setSession({
+          accessToken: session.access_token,
+          refreshToken: session.refresh_token
+        });
+      }
       setUser(user);
+      Swal.fire('로그인 성공', '로그인에 성공하였습니다.');
       router.push('/');
     },
     onError: (error) => {

@@ -1,8 +1,10 @@
 'use client';
 
 import browserClient from '@/lib/supabase-client';
+
 import { useMutation } from '@tanstack/react-query';
 import { getStellaId } from './useStellaHelpers';
+
 
 interface Stella {
   id: string;
