@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { chemiData } from '../data/data';
+import { chemiData } from '../MOCK_DATA/data';
 
 const ChemiResult = () => {
   const searchParams = useSearchParams();

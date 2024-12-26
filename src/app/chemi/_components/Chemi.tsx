@@ -1,19 +1,15 @@
 'use client';
 
 import supabase from '@/supabase/supabase';
+import { Chemi as ChemiType } from '@/types/chemi-type';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-interface Stella {
-  id: number;
-  name: string;
-  description: string;
-}
+import Swal from 'sweetalert2';
 
 const Chemi = () => {
   const router = useRouter();
-  const [stellas, setStellas] = useState<Stella[]>([]);
-  const [chemi, setChemi] = useState<Stella[]>([]);
+  const [stellas, setStellas] = useState<ChemiType[]>([]);
+  const [chemi, setChemi] = useState<ChemiType[]>([]);
   useEffect(() => {
     const fetchStellas = async () => {
       const { data, error } = await supabase.from('stellas').select('*');
@@ -25,16 +21,56 @@ const Chemi = () => {
     };
     fetchStellas();
   }, []);
-  const handleSelect = (stella: Stella) => {
+  const handleSelect = (stella: ChemiType) => {
     const newChemi = [...chemi, stella];
-    setChemi(newChemi);
 
+    if (newChemi.length === 1) {
+      Swal.fire({
+        title: `${stella.name} 선택했습니다 `,
+        text: '다시 되돌릴 수 없습니다. 신중하세요.',
+        icon: 'warning',
+
+        showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+        confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+        cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+        confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+        cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+
+        reverseButtons: false // 버튼 순서 거꾸로
+      }).then((result) => {
+        // 만약 Promise리턴을 받으면,
+        if (result.isConfirmed) {
+          // 만약 모달창에서 confirm 버튼을 눌렀다면
+          setChemi(newChemi);
+          Swal.fire(`${stella.name}선택이 완료되었습니다.', 'success`);
+        }
+      });
+    }
     if (newChemi.length === 2) {
+      Swal.fire({
+        title: `${stella.name} 선택했습니다 `,
+        text: '궁합을 알고싶은 상대방의 별자리가 맞나요?',
+        icon: 'warning',
+
+        showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+        confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+        cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+        confirmButtonText: '확인', // confirm 버튼 텍스트 지정
+        cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+
+        reverseButtons: false // 버튼 순서 거꾸로
+      }).then((result) => {
+        // 만약 Promise리턴을 받으면,
+        if (result.isConfirmed) {
+          // 만약 모달창에서 confirm 버튼을 눌렀다면
+          setChemi(newChemi);
+          Swal.fire(`${stella.name}선택이 완료되었습니다.', 'success`);
+        }
+      });
       const params = new URLSearchParams({
         first: JSON.stringify(newChemi[0].name),
         second: JSON.stringify(newChemi[1].name)
       });
-
       router.push(`/chemi/result?${params.toString()}`);
     }
   };
