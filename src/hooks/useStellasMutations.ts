@@ -1,6 +1,6 @@
 'use client';
 
-import browserClient from '@/supabase/supabase';
+import browserClient from '@/supabase/clientSupabase';
 import { useMutation } from '@tanstack/react-query';
 
 export const useStellasMutation = () => {
