@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import clientSupabase from '@/lib/supabase-client';
+
 import { DailyResult, NewYearResult } from '@/types/stella-result-type';
+import { supabase } from '@/lib/supabase';
 
 const useFetchFortuneResults = () => {
 
   // Daily Results Fetcher
   const fetchDailyResults = async (): Promise<DailyResult[]> => {
-    const { data, error } = await clientSupabase
+    const { data, error } = await supabase
       .from('daily_results') // 명시적 타입 지정
       .select('*')
       .order('created_at', { ascending: false });
@@ -21,7 +22,7 @@ const useFetchFortuneResults = () => {
 
   // New Year Results Fetcher
   const fetchNewYearResults = async (): Promise<NewYearResult[]> => {
-    const { data, error } = await clientSupabase
+    const { data, error } = await supabase
       .from('new_year_results') // 명시적 타입 지정
       .select('*')
       .order('created_at', { ascending: false });

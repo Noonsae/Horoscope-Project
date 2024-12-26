@@ -1,6 +1,7 @@
 import { useCallback, useEffect } from 'react';
+
+import { supabase } from '@/lib/supabase';
 import useAuthStore from '@/store/useAuthStore';
-import browserClient from '@/lib/supabase-client';
 
 import Swal from 'sweetalert2'; // 사용자 알림에 사용
 import { User } from '@/types/user-type';
@@ -40,9 +41,7 @@ export const useProfileUploadImage = (
 
       try {
         // Supabase storage에 이미지 업로드
-        const { data, error } = await browserClient.storage
-          .from('profile_img')
-          .upload(`profile_img${Date.now()}.png`, file);
+        const { data, error } = await supabase.storage.from('profile_img').upload(`profile_img${Date.now()}.png`, file);
 
         if (error) {
           throw new Error(`이미지 업로드 에러: ${error.message}`);

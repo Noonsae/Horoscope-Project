@@ -1,4 +1,4 @@
-export const chemiData = {
+export const STELLA_INFO_DATA = {
   양자리: {
     양자리: {
       percent: 75,
