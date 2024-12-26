@@ -1,9 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import UserHomePage from './UserHomePage';
-import GuestHomePage from './GuestHomePage';
-import clientSupabase from '@/lib/supabase-client';
+import { useEffect, useState } from "react";
+import UserHomePage from "./UserHomePage";
+import GuestHomePage from "./GuestHomePage";
+import clientSupabase from "@/lib/supabase-client";
+
 
 const ClientHomePage = () => {
   const [isLogin, setIsLogin] = useState(false);

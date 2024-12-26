@@ -20,9 +20,9 @@ export default function RootLayout({
     <html lang="ko" suppressHydrationWarning={true}>
       <link rel="icon" href="/icons/bee.png" sizes="any" />
       <MyProvider>
-        <body className="dark:bg-[#0a1428]">
+        <body className="dark:bg-[#0a1428] min-h-screen flex flex-col">
           <Header />
-          <main>{children}</main>
+          <main className="flex-grow">{children}</main>
           <Footer />
         </body>
       </MyProvider>
