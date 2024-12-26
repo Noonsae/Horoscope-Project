@@ -9,7 +9,7 @@ const UserHomePage = () => {
         className="w-full text-center py-20 mb-10 max-w-none"
         style={{ backgroundColor: '#9E9E9E', height: '640px' }}
       >
-        <h1 className="text-4xl font-bold">Hero</h1>
+        <h1 className="text-4xl font-bold">오늘의 운세</h1>
       </div>
 
       {/* Cards Section */}
@@ -55,7 +55,7 @@ const UserHomePage = () => {
               별자리가 전해준 새해의 행운처럼, 서로에게 따뜻한 마음을 나눠보세요.
             </p>
             <Link
-              href="/guestbook"
+              href="/compati"
               className="inline-block text-black py-3 px-5 rounded-md hover:bg-gray-400"
               style={{
                 backgroundColor: '#D9D9D9',

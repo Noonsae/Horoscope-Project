@@ -1,14 +1,12 @@
 'use client';
-import { createClient } from "@supabase/supabase-js";
+
 import { useEffect, useState } from "react";
 import UserHomePage from "./UserHomePage";
 import GuestHomePage from "./GuestHomePage";
+import browserClient from "@/supabase/supabase";
 
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!, 
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+const supabase = browserClient
 
 
 
