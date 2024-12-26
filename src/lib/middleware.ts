@@ -1,53 +1,46 @@
+// utils/supabase/middleware.ts
+import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
-import serverSupabase from '@/lib/supabase-server'; // 서버 전용 Supabase 클라이언트 임포트
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
     request
   });
 
-  // 서버 전용 Supabase 클라이언트를 사용하여 인증 처리
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
+          supabaseResponse = NextResponse.next({
+            request
+          });
+          cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
+        }
+      }
+    }
+  );
+
   const {
     data: { user }
-  } = await serverSupabase.auth.getUser();
+  } = await supabase.auth.getUser();
 
+  // 로그인 필요 페이지에 접근 시 비로그인 상태라면 /login으로 리다이렉트
   if (!user && !request.nextUrl.pathname.startsWith('/login')) {
-    // 로그인하지 않은 사용자는 로그인 페이지로 리다이렉트
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
   }
 
+  // 로그인 상태인데 로그인 페이지로 가려는 경우 메인 페이지로 리다이렉트
   if (user && request.nextUrl.pathname.startsWith('/login')) {
-    // 이미 로그인한 사용자는 홈 페이지로 리다이렉트
-    const url = request.nextUrl.clone();
-    url.pathname = '/';
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(request.nextUrl.origin);
   }
 
-  // 필요한 경우, 다른 서버 전용 Supabase API 호출
-  // 예: 특정 데이터베이스 테이블에서 사용자 정보를 가져오기
-  const { data: userProfile, error } = await serverSupabase.from('profiles').select('*').eq('id', user?.id).single();
-
-  if (error) {
-    console.error('Error fetching user profile:', error);
-    return NextResponse.redirect('/error');
-  }
-
-  console.log('User Profile:', userProfile);
-
-  // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
-  // creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
-
-  return supabaseResponse;
+  return NextResponse.next();
 }

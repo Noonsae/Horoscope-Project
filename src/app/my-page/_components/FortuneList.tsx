@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { useFetchFortuneResults } from '@/hooks/useFetchFortuneResults';
+
+import useFetchFortuneResults from '@/hooks/useFetchFortuneResults';
 
 const FortuneList: React.FC = () => {
   const { dailyResults, newYearResults, isLoading, isError } = useFetchFortuneResults();

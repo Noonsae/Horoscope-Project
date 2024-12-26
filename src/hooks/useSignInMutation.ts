@@ -1,4 +1,5 @@
-import clientSupabase from '@/lib/supabase-client';
+
+import { supabase } from '@/lib/supabase';
 import useAuthStore from '@/store/useAuth';
 
 import { useMutation } from '@tanstack/react-query';
@@ -25,7 +26,7 @@ export const useSignInMutation = () => {
         throw new Error('비밀번호는 최소 8자 이상으로 입력력해주세요.');
       }
 
-      const { data, error } = await clientSupabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
