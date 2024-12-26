@@ -12,6 +12,7 @@ interface SignInPayload {
 
 export const useSignInMutation = () => {
   const setUser = useAuthStore((state) => state.setUser);
+  const setSession = useAuthStore((state) => state.setSession);
 
   const router = useRouter();
 
@@ -36,8 +37,10 @@ export const useSignInMutation = () => {
     onSuccess: (data) => {
       const { user, session } = data;
       if (session) {
-        localStorage.setItem('access_token', session.access_token);
-        localStorage.setItem('refresh_token', session.refresh_token);
+        setSession({
+          accessToken: session.access_token,
+          refreshToken: session.refresh_token
+        });
       }
       setUser(user);
       Swal.fire('로그인 성공', '로그인에 성공하였습니다.');
