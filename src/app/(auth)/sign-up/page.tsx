@@ -1,7 +1,7 @@
 'use client';
 
 import { useSignUpMutation } from '@/hooks/useSignUpMutation';
-import ReactDayPicker from '@/library/datepicker';
+import ReactDayPicker from '@/components/ui/ReactDayPicker';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
