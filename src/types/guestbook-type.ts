@@ -1,4 +1,4 @@
-import { Tables } from './supabase';
+import { Tables } from './supabase-type';
 
 export type Comment = Tables<'guestbook'> & {
   users: {
@@ -7,15 +7,3 @@ export type Comment = Tables<'guestbook'> & {
   };
 };
 
-export interface GuestbookComment {
-  id: string;
-  created_at: string;
-  comment: string;
-  user_id: string;
-};
-
-export interface UseFetchGuestbookCommentsResult {
-  comments: Comment[];
-  commentsPending: boolean;
-  commentsError: boolean;
-};
