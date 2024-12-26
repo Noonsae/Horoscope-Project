@@ -6,3 +6,4 @@ export type Comment = Tables<'guestbook'> & {
     profile_img: string | null;
   };
 };
+

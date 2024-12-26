@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import UserHomePage from './UserHomePage';
-import GuestHomePage from './GuestHomePage';
-import browserClient from '@/lib/supabase-client';
+import { useEffect, useState } from "react";
+import UserHomePage from "./UserHomePage";
+import GuestHomePage from "./GuestHomePage";
+import clientSupabase from "@/lib/supabase-client";
 
 const supabase = browserClient;
 
@@ -12,13 +12,13 @@ const ClientHomePage = () => {
 
   useEffect(() => {
     const ckeckLoginStatus = async () => {
-      const { data } = await supabase.auth.getSession();
+      const { data } = await clientSupabase.auth.getSession();
       setIsLogin(!!data.session);
     };
 
     ckeckLoginStatus();
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_envent, session) => {
+    const { data: listener } = clientSupabase.auth.onAuthStateChange((_envent, session) => {
       setIsLogin(!!session);
     });
 
