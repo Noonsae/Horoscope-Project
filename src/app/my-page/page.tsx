@@ -1,28 +1,50 @@
-'use client';
+"use client"
 
 import { useState } from 'react';
 
-import { Profile, Contents } from './_components';
+import { Contents, MyProfile } from './_components';
+
+import useFetchGuestbookComments from '@/hooks/profile/useFetchGuestbookComments';
+import { useUpdateProfile } from '@/hooks/profile/useUpdateProfile';
+import useAuthStore from '@/store/useAuth';
+import { User } from '@/types/user-type';
 
 const MyPage = () => {
-  const [activeTab, setActiveTab] = useState<'fortune' | 'comments'>('fortune');
+  const user = useAuthStore((state) => state.user) as User | null;
+  const [activeTab, setActiveTab] = useState<'fortune' | 'comments' | 'profile'>('fortune');
+  const [newProfileImg, setNewProfileImg] = useState<string | File | null>(null);
+  const [newNickname, setNewNickname] = useState<string>('');
+
+  const { comments, commentsPending, commentsError } = useFetchGuestbookComments(user?.id || null);
+
+  const confirmDeleteComment = (id: string) => {
+    if (window.confirm('댓글을 정말 삭제하시겠습니까?')) {
+      console.log(`삭제할 댓글 ID: ${id}`);
+      // 여기에 Supabase 삭제 로직 추가
+    }
+  };
+
+  const { handleSubmit } = useUpdateProfile(
+    newNickname,
+    setNewNickname,
+    newProfileImg,
+    user || { id: '', nickname: '', profile_img: null }
+  );
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* 프로필 섹션 */}
-      <div className="text-center py-10">
-        <Profile />
-      </div>
+    <section className="min-h-screen flex flex-col">
+      <article className="text-center py-10">
+        <MyProfile newProfileImg={newProfileImg} setNewProfileImg={(value) => setNewProfileImg(value)} />
+      </article>
 
-      {/* 탭 메뉴 */}
-      <div className="max-w-[1200px] mx-auto flex flex-row justify-start gap-4 py-4">
+      <article className="max-w-[1200px] mx-auto flex flex-row justify-start gap-4 py-4">
         <button
           className={`px-6 py-2 rounded ${
             activeTab === 'fortune' ? 'bg-gray-800 text-white' : 'bg-gray-300 hover:bg-gray-400'
           }`}
           onClick={() => setActiveTab('fortune')}
         >
-          오늘의 운세 기록 보기
+          별자리 운세
         </button>
         <button
           className={`px-6 py-2 rounded ${
@@ -30,14 +52,31 @@ const MyPage = () => {
           }`}
           onClick={() => setActiveTab('comments')}
         >
-          덕담나누기 기록 보기
+          댓글
         </button>
-      </div>
+        <button
+          className={`px-6 py-2 rounded ${
+            activeTab === 'profile' ? 'bg-gray-800 text-white' : 'bg-gray-300 hover:bg-gray-400'
+          }`}
+          onClick={() => setActiveTab('profile')}
+        >
+          프로필 변경
+        </button>
+      </article>
 
-      {/* 탭 콘텐츠 */}
-      <Contents activeTab={activeTab} />
-    </div>
+      <Contents
+        activeTab={activeTab}
+        comments={comments || []}
+        newProfileImg={newProfileImg}
+        confirmDeleteComment={confirmDeleteComment}
+        newNickname={newNickname}
+        setNewNickname={setNewNickname}
+        handleSubmit={handleSubmit}
+        commentsPending={commentsPending}
+        commentsError={commentsError}
+      />
+    </section>
   );
-}
+};
 
-export default MyPage
+export default MyPage;
