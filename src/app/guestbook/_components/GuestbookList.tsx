@@ -4,7 +4,7 @@ import { Comment } from '@/types/guestbook-type';
 import { useEffect, useState } from 'react';
 import { updateComment, deleteComment, fetchCommentData, getId } from '@/utils/guestbook'; // Supabase 함수 가져오기
 import Image from 'next/image';
-import defaultImg from '/public/images/default.png';
+import defaultImg from '/public/images/default_profile_img.webp';
 import changeTime from '@/utils/changeTime';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -14,7 +14,7 @@ type ContextVariable = { previousComments: Comment[] | undefined };
 const GuestbookList = () => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>('');
-  const [currentId, setCurrentId] = useState<string | null >(null);
+  const [currentId, setCurrentId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
   useEffect(() => {
