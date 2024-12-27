@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko" suppressHydrationWarning={true}>
-      <link rel="icon" href="/icons/bee.png" sizes="any" />
+      <link rel="icon" href="" sizes="any" />
       <MyProvider>
         <body className="dark:bg-[#0a1428] min-h-screen flex flex-col">
           <Header />
