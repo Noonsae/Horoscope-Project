@@ -5,7 +5,6 @@ import { supabase } from '@/lib/supabase';
 import { Tables } from '@/types/supabase-type';
 import { useEffect, useState } from 'react';
 
-const supabase = browserSupabase();
 type Stella = Tables<'stellas'>;
 
 const Constellation = () => {
