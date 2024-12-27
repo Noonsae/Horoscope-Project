@@ -1,6 +1,6 @@
 import React from 'react';
-import Details from '@/app/horoscope/[id]/details';
-
+import Details from '@/app/horoscope/_components/details';
+export const dynamic = 'force-dynamic';
 const page = () => {
   return (
     <div>

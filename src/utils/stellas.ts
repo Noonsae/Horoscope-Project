@@ -1,4 +1,4 @@
-import supabase from '@/supabase/clientSupabase';
+// import supabase from '@/supabase/clientSupabase';
 import { Comment } from '@/types/guestbook-type';
 
 // user Id 가져오기
