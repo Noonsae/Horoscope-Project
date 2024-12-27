@@ -1,24 +1,15 @@
-'use client';
-
 import React from 'react';
 import InputGroup from './_components/InputGroup';
-import PickerBtn from './_components/PickerBtn';
+import { submitSignUp } from './actions';
 
-import useFormData from '@/hooks/useFormData';
-
-const SignUpPage: React.FC = () => {
-  const { formData, handleInputChange, handleDateChange, handleSubmit, isFormComplete, setFormData } = useFormData();
-
+const SignUpPage = () => {
   return (
-    <>
-      <div className="flex flex-col items-center justify-center min-h-screen w-full h-64 bg-gradient">
-        {!isFormComplete ? (
-          <InputGroup formData={formData} handleInputChange={handleInputChange} />
-        ) : (
-          <PickerBtn handleDateChange={handleDateChange} handleSubmit={handleSubmit} setFormData={setFormData} />
-        )}
-      </div>
-    </>
+    <div className="flex flex-col items-center justify-center min-h-screen w-full h-64 bg-gradient">
+      <InputGroup handleSubmit={submitSignUp} />
+            <button type="submit" className="w-full p-2 bg-blue-600 text-white rounded hover:bg-blue-700 mt-4">
+        회원가입
+      </button>
+    </div>
   );
 };
 
