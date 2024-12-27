@@ -1,7 +1,7 @@
 'use client';
 
-import clientSupabase from '@/lib/supabase-client';
-import { Tables } from '@/types/supabase';
+import { supabase } from '@/lib/supabase';
+import { Tables } from '@/types/supabase-type';
 import { useEffect, useState } from 'react';
 
 type Stella = Tables<'stellas'>;
@@ -14,7 +14,7 @@ const Constellation = () => {
 
   useEffect(() => {
     const fetchConstellations = async () => {
-      const { data } = await clientSupabase.from('stellas').select('*');
+      const { data } = await supabase.from('stellas').select('*');
       setConstellations(data || []);
     };
 

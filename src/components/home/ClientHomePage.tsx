@@ -3,22 +3,21 @@
 import { useEffect, useState } from "react";
 import UserHomePage from "./UserHomePage";
 import GuestHomePage from "./GuestHomePage";
-import clientSupabase from "@/lib/supabase-client";
+import { supabase } from "@/lib/supabase";
 
-const supabase = browserClient;
 
 const ClientHomePage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const ckeckLoginStatus = async () => {
-      const { data } = await clientSupabase.auth.getSession();
+      const { data } = await supabase.auth.getSession();
       setIsLogin(!!data.session);
     };
 
     ckeckLoginStatus();
 
-    const { data: listener } = clientSupabase.auth.onAuthStateChange((_envent, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((_envent, session) => {
       setIsLogin(!!session);
     });
 
