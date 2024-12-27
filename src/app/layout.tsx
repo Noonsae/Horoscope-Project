@@ -17,8 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning={true}>
-      <link rel="icon" href="" sizes="any" />
+    <html lang="ko">
       <MyProvider>
         <body className="dark:bg-[#0a1428] min-h-screen flex flex-col">
           <Header />

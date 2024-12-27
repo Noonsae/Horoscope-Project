@@ -1,5 +1,6 @@
 import GuestbookForm from '@/app/guestbook/_components/GuestbookForm';
 import GuestbookList from '@/app/guestbook/_components/GuestbookList';
+import GoMoveToTopButton from '@/components/ui/GoMoveToTopButton';
 
 const GuestbookPage = () => {
   return (
@@ -11,6 +12,7 @@ const GuestbookPage = () => {
       </div>
       <GuestbookForm />
       <GuestbookList />
+      <GoMoveToTopButton />
     </>
   );
 };
