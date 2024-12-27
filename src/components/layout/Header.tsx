@@ -34,13 +34,6 @@ const Header = () => {
     router.push('/');
   };
 
-      setLoggedIn(false);
-      window.location.href = '/';
-    } catch (err) {
-      console.error('로그아웃 중 오류 발생:', err);
-    }
-  };
-
   // const { isAuthenticated, logout } = useAuthStore();
   return (
     <nav className="w-full bg-gray-800 text-white">
@@ -89,5 +82,4 @@ const Header = () => {
     </nav>
   );
 };
-
 export default Header;

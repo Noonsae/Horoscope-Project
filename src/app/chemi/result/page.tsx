@@ -1,17 +1,15 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { chemiData } from '../../../data/stella_info_data';
+import { STELLA_INFO_DATA } from '../../../data/stella_info_data';
 
 const ChemiResult = () => {
   const searchParams = useSearchParams();
   const first = JSON.parse(searchParams.get('first')!);
   const second = JSON.parse(searchParams.get('second')!);
-  console.log('first', first);
-  console.log('second', second);
   const firstStella = first;
   const secondStella = second;
 
-  const result = chemiData[first]?.[second];
+  const result = STELLA_INFO_DATA[first]?.[second];
 
   return (
     <div className="p-4">
@@ -28,3 +26,6 @@ const ChemiResult = () => {
 };
 
 export default ChemiResult;
+
+// 이미지 조사 
+// 
