@@ -1,3 +1,3 @@
-import { Tables } from './supabase';
+import { Tables } from './supabase-type';
 
 export type Chemi = Tables<'stellas'>;
