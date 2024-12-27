@@ -2,39 +2,37 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
-import { getStellaId } from '../useStellaHelpers';
-
-interface Stella {
-  id: string;
-  name: string;
-  birth_data: string;
-}
+import { getStellaId } from '../../utils/stellaCalculator';
 
 interface SignUpPayload {
   email: string;
   password: string;
   nickname: string;
-  birth_date: Date; // 선택한 생년월일
+  birth_date: string | Date; // 생년월일은 문자열 또는 Date 타입
 }
 
-export const useSignUpMutation = () => {
-  // const fetchStellas = useStellasMutation();
+const useSignUpMutation = () => {
   return useMutation({
     mutationFn: async ({ email, password, nickname, birth_date }: SignUpPayload) => {
-      //  Supabase Auth 사용자 등록
+      // 유효성 검사
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         throw new Error('유효하지 않은 이메일 형식입니다.');
       }
       if (password.length < 8) {
-        throw new Error('비밀번호는 최소 8자 이상으로 입력력해주세요.');
+        throw new Error('비밀번호는 최소 8자 이상으로 입력해주세요.');
       }
       if (!nickname || nickname.trim().length === 0) {
         throw new Error('닉네임을 입력해주세요.');
       }
-      if (!birth_date || isNaN(new Date(birth_date).getTime())) {
+      if (nickname.length > 30) {
+        throw new Error('닉네임은 30자 이하로 입력해주세요.');
+      }
+      const parsedDate = new Date(birth_date);
+      if (!(parsedDate instanceof Date) || isNaN(parsedDate.getTime())) {
         throw new Error('유효한 생년월일을 입력해주세요.');
       }
 
+      // Supabase Auth 사용자 등록
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email,
         password,
@@ -51,14 +49,18 @@ export const useSignUpMutation = () => {
         throw new Error('유저 ID를 생성하지 못했습니다.');
       }
 
-      const stellaId = getStellaId(birth_date);
+      // Stella ID 생성
+      const stellaId = getStellaId(parsedDate);
+      if (!stellaId) {
+        throw new Error('별자리 ID를 생성할 수 없습니다.');
+      }
 
       // `users` 테이블에 추가 정보 저장
       const { error: dbError } = await supabase.from('users').insert([
         {
           id: userId, // Auth의 user.id
-          nickname, // 닉네임
-          birth_date, // 생년월일
+          nickname: nickname.trim(), // 닉네임
+          birth_date: parsedDate.toISOString(), // ISO 형식으로 저장
           stella_id: stellaId
         }
       ]);
@@ -71,3 +73,5 @@ export const useSignUpMutation = () => {
     }
   });
 };
+
+export default useSignUpMutation;
