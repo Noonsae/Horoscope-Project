@@ -3,8 +3,7 @@
 import React from 'react';
 import InputGroup from './_components/InputGroup';
 import PickerBtn from './_components/PickerBtn';
-
-import useFormData from '@/hooks/useFormData';
+import useFormData from '@/hooks/signup/useFormData';
 
 const SignUpPage: React.FC = () => {
   const { formData, handleInputChange, handleDateChange, handleSubmit, isFormComplete, setFormData } = useFormData();
