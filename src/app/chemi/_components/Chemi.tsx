@@ -32,7 +32,7 @@ const Chemi = () => {
   // }, []);
   if (isLoading) <>"Loading..."</>;
 
-//슈파베이스 랑 립 뭐쓸지 뭐쓰고있는지 
+  //슈파베이스 랑 립 뭐쓸지 뭐쓰고있는지
 
   const handleSelect = (stella: ChemiType) => {
     const newChemi = [...chemi, stella];
