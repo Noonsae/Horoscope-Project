@@ -26,11 +26,11 @@ const Constellation = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       {/* Hero Section */}
       <div
-        className="w-full flex flex-col justify-center items-center text-center"
-        style={{ backgroundColor: '#9E9E9E', height: '400px' }}
+        className="w-full bg-gradient-to-b from-black to-purple-900  flex flex-col justify-center items-center text-center"
+        style={{ height: '400px' }}
       >
-        <h1 className="text-4xl font-bold mb-6">점성술이란?</h1>
-        <p className="text-lg w-full leading-relaxed">
+        <h1 className="text-4xl text-white font-bold mb-6">점성술이란?</h1>
+        <p className="text-lg  text-white w-full leading-relaxed">
           천문학적 현상과 천체의 움직임을 관찰하여 미래를 예측하는 고대 점술입니다.
           <br /> 하늘의 별자리와 행성의 움직임을 통해 인간의 성격과 운명을 해석합니다.
           <br /> 서양에서는 황도 12궁, 동양에서는 사주와 천문학적 요소를 바탕으로 사용됩니다.

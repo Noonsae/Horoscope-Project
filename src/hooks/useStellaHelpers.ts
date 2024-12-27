@@ -1,4 +1,4 @@
-const zodiacSigns = [
+export const zodiacSigns = [
   { id: '0796176d-8d17-4e0d-8c50-138f2beb60ec', start: '02-19', end: '03-20' },
   { id: '2f1cf84f-828c-4d43-9393-730410c6beb4', start: '01-20', end: '02-18' },
   { id: '3bc8f1f1-f5a3-4d16-936a-66e011201adf', start: '03-21', end: '04-19' },

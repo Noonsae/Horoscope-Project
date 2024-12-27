@@ -2,7 +2,7 @@ import ClientHomePage from '@/components/home/ClientHomePage';
 import { supabase } from '@/lib/supabase';
 import { Tables } from '@/types/supabase-type';
 
-export const revalidate = 86400; // 하루마다 갱신
+export const revalidate = 86400; // ISR: 하루마다 갱신
 
 type DailyFortune = Tables<'daily_fortunes'>;
 
@@ -11,7 +11,6 @@ const HomePage = async () => {
   const { data: dailyFortunes, error } = await supabase.from('daily_fortunes').select('*');
 
   if (error) {
-    console.error('Error fetching daily fortunes:', error);
     return <p>운세를 불러오는 중 오류가 발생했습니다.</p>;
   }
 
