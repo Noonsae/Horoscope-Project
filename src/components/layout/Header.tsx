@@ -1,9 +1,39 @@
+'use client';
+
 // import useAuthStore from '@/utils/useAuthStore';
+import { supabase } from '@/lib/supabase';
+import { isLogin } from '@/utils/isLogin';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
-  // const { isAuthenticated, logout } = useAuthStore();
+  const [loggedIn, setLoggedIn] = useState(false);
 
+  useEffect(() => {
+    const checkLogin = async () => {
+      const result = await isLogin(); // isLogin 호출
+      setLoggedIn(result);
+    };
+
+    checkLogin();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error('로그아웃 실패:', error.message);
+        return;
+      }
+
+      setLoggedIn(false);
+      window.location.href = '/';
+    } catch (err) {
+      console.error('로그아웃 중 오류 발생:', err);
+    }
+  };
+
+  // const { isAuthenticated, logout } = useAuthStore();
   return (
     <nav className="w-full bg-gray-800 text-white">
       <div className="flex justify-between items-center px-8 py-3">
@@ -35,11 +65,13 @@ const Header = () => {
             로그인
           </Link>
         </div>
-        {/* <div>
-          {isAuthenticated ? (
+        <div>
+          {loggedIn ? (
             <div>
-              <Link href="/my-page" className="hover:text-yellow-400>마이페이지</Link>
-              <button onClick={logout} className="hover:text-yellow-400">
+              <Link href="/my-page" className="hover:text-yellow-400">
+                마이페이지
+              </Link>
+              <button onClick={handleLogout} className="hover:text-yellow-400">
                 로그아웃
               </button>
             </div>
@@ -48,7 +80,7 @@ const Header = () => {
               로그인
             </Link>
           )}
-        </div> */}
+        </div>
       </div>
     </nav>
   );
