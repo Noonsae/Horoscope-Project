@@ -1,12 +1,16 @@
 "use server"
+// @lib/supabase-server.ts
+
+import { Database } from '@/types/supabase-type';
 
 import { createServerClient } from '@supabase/ssr';
+
 import { cookies } from 'next/headers';
 
 export const serverSupabase = () => {
   const cookieStore = cookies();
 
-  return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
+  return createServerClient<Database>(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
     cookies: {
       getAll() {
         return cookieStore.getAll();
@@ -24,12 +28,4 @@ export const serverSupabase = () => {
       }
     }
   });
-};
-
-export const getIsLogin = async () => {
-  const serverClient = serverSupabase();
-  const {
-    data: { session }
-  } = await serverClient.auth.getSession();
-  return !!session;
 };
