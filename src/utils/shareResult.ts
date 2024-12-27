@@ -1,4 +1,5 @@
-import supabase from '@/lib/supabase-client';
+import { supabase } from "@/lib/supabase";
+
 
 export const fetchDailyResults = async () => {
     const { data, error } = await supabase

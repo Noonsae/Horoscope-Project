@@ -1,6 +1,7 @@
 'use client';
 
-import supabase from '@/supabase/supabase';
+
+import { supabase } from '@/lib/supabase';
 import { Chemi as ChemiType } from '@/types/chemi-type';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';

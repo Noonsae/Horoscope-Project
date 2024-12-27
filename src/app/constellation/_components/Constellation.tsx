@@ -1,9 +1,9 @@
 'use client';
 
+import { supabase } from '@/lib/supabase';
 
 import { Tables } from '@/types/supabase-type';
 import { useEffect, useState } from 'react';
-import { browserSupabase } from '@/lib/supabase-client';
 
 const supabase = browserSupabase();
 type Stella = Tables<'stellas'>;
