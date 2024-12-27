@@ -16,7 +16,6 @@ type Props = {
 const ClientHomePage = ({ dailyFortunes }: Props) => {
   const [isLogin, setIsLogin] = useState(false);
   const [userMonthDay, setUserMonthDay] = useState<string | null>(null);
-  const supabase = browserSupabase();
 
   useEffect(() => {
 
