@@ -47,12 +47,15 @@ const useFormData = () => {
       return;
     }
 
+    // birth_date를 ISO 문자열로 변환
+    const formattedBirthDate = formData.birth_date.toISOString().split('T')[0];
+
     signUpMutation.mutate(
       {
         email: formData.email,
         password: formData.password,
         nickname: formData.nickname,
-        birth_date: formData.birth_date
+        birth_date: formattedBirthDate // 문자열 형식으로 전달
       },
       {
         onSuccess: () => {

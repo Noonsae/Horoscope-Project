@@ -14,7 +14,10 @@ const config: Config = {
       },
       backgroundImage: {
         gradient: 'linear-gradient(to right bottom, #03020C, #070425);'
-      }
+      },
+      animation: {
+        'spin-slow': 'spin 1s linear infinite',
+      },
     }
   },
   plugins: [require('tailwindcss-textshadow')]

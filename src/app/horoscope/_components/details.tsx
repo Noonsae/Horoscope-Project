@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchStellaData } from '@/hooks/useStellaQuery';
 import { useNewYearFortune } from '@/hooks/useNewYearFortuneQuery';
+import ErrorPage from '@/components/ui/ErrorPage';
+import Loading from '@/app/loading';
 export const dynamic = 'force-dynamic'; // 신년운세버튼에만 적용시키려는 용도로 있는 로직직
 
 const Details: React.FC = () => {
@@ -33,8 +35,8 @@ const Details: React.FC = () => {
   // Use new year fortune query
   const { data: fortuneContent, isLoading: fortuneLoading } = useNewYearFortune(stella?.id || '');
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>에러 발생: {error}</div>;
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorPage />;
   if (!stella) return <div>별자리를 찾을 수 없습니다.</div>;
 
   const handleShowFortune = () => {
