@@ -1,30 +1,38 @@
 'use client';
 
-// import useAuthStore from '@/utils/useAuthStore';
 import { supabase } from '@/lib/supabase';
-import { isLogin } from '@/utils/isLogin';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const Header = () => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<any>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    const checkLogin = async () => {
-      const result = await isLogin(); // isLogin 호출
-      setLoggedIn(result);
+    // 초기 유저 상태 가져오기
+    const fetchUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setIsAuthenticated(data.user);
     };
+    fetchUser();
 
-    checkLogin();
+    // 로그인/로그아웃 상태 변화 감지
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(session?.user || null);
+    });
+
+    // 컴포넌트 언마운트 시 구독 해제
+    return () => {
+      data.subscription.unsubscribe()
+    };
   }, []);
 
-  const handleLogout = async () => {
-    try {
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error('로그아웃 실패:', error.message);
-        return;
-      }
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setIsAuthenticated(null);
+    router.push('/');
+  };
 
       setLoggedIn(false);
       window.location.href = '/';
@@ -59,19 +67,15 @@ const Header = () => {
             </Link>
           </div>
         </div>
-
         <div>
-          <Link href="/sign-in" className="hover:text-yellow-400">
-            로그인
-          </Link>
-        </div>
-        <div>
-          {loggedIn ? (
-            <div>
+          
+          {isAuthenticated ? (
+            <div className="flex items-center space-x-4">
               <Link href="/my-page" className="hover:text-yellow-400">
                 마이페이지
               </Link>
-              <button onClick={handleLogout} className="hover:text-yellow-400">
+              <button onClick={logout} className="hover:text-yellow-400">
+
                 로그아웃
               </button>
             </div>

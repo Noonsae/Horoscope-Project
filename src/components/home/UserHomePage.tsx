@@ -1,20 +1,45 @@
 import React from 'react';
+import { getStellaId } from '@/hooks/useStellaHelpers';
+import { Tables } from '@/types/supabase-type';
 import Link from 'next/link';
 
-const UserHomePage = () => {
+type DailyFortune = Tables<'daily_fortunes'>;
+
+type Props = {
+  dailyFortunes: DailyFortune[];
+  userMonthDay: string | null;
+};
+
+const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
+  if (!userMonthDay) {
+    return <p>별자리 정보를 찾을 수 없습니다.</p>;
+  }
+
+  // 사용자 별자리 ID 가져오기
+  const stellaId = getStellaId(new Date(`2000-${userMonthDay}`)); //
+
+  // stella_id 기반 오늘의 운세 찾기
+  const todayFortune = dailyFortunes.find((fortune) => {
+    const stellaMatch = fortune.stella_id === stellaId;
+    return stellaMatch;
+  });
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       {/* Hero Section */}
       <div
         className="w-full text-center py-20 mb-10 max-w-none"
-        style={{ backgroundColor: '#9E9E9E', height: '640px' }}
+        style={{ backgroundColor: '#9E9E9E', height: '400px' }}
       >
         <h1 className="text-4xl font-bold">오늘의 운세</h1>
+        <h1 className="text-4xl font-bold">
+          {todayFortune ? todayFortune.content : '오늘의 운세를 찾을 수 없습니다.'}
+        </h1>
       </div>
 
       {/* Cards Section */}
       <div className="w-full space-y-6 max-w-none">
-        {/*첫번째 카드*/}
+        {/* 첫 번째 카드 */}
         <div className="flex rounded-lg p-6 items-center h-[640px] bg-gray-200" style={{ backgroundColor: '#EEEEEE' }}>
           <div className="w-[400px] h-[400px] rounded-lg ml-32" style={{ backgroundColor: '#9E9E9E' }}></div>
           <div className="mr-8 flex-1 flex flex-col justify-center items-center text-center">
@@ -41,7 +66,7 @@ const UserHomePage = () => {
           </div>
         </div>
 
-        {/*두번째 카드*/}
+        {/* 두 번째 카드 */}
         <div
           className="flex flex-row-reverse rounded-lg p-6 items-center h-[640px] bg-gray-200"
           style={{ backgroundColor: '#EEEEEE' }}
