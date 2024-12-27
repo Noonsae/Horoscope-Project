@@ -1,5 +1,5 @@
 import ReactDayPicker from '@/components/ui/ReactDayPicker';
-import { FormData } from '@/types/sign-up.type';
+import { FormData } from '@/types/auth-type/sign-up.type';
 import React from 'react';
 
 interface PickerBtnProps {

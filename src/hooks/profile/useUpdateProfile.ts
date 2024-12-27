@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import useAuthStore from '@/store/useAuthStore';
 
-import { User } from '@/types/user-type';
+import { User } from '@/types/supabase/user-type';
 import { supabase } from '@/lib/supabase';
 
 interface UseUpdateProfileReturn {
@@ -41,9 +41,9 @@ export const useUpdateProfile = (
       useAuthStore.getState().updateProfile(newNickname, profileImageUrl);
 
       // React Query 캐시 무효화
-       queryClient.invalidateQueries({
-         queryKey: ['users', currentUserId] // 쿼리 키 명확히 설정
-       });
+      queryClient.invalidateQueries({
+        queryKey: ['users', currentUserId] // 쿼리 키 명확히 설정
+      });
     },
     [newNickname, newProfileImg, queryClient]
   );

@@ -1,19 +1,7 @@
-import { User } from '@supabase/supabase-js';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface Session {
-  accessToken: string;
-  refreshToken: string;
-}
-
-interface AuthState {
-  isLoggedIn: boolean;
-  user: User | null;
-  session: Session | null;
-  setAuth: (user: User | null, session: Session | null) => void;
-  clearAuth: () => void;
-}
+import { AuthState } from '@/types/zustand-type/auth-state-type';
 
 const useAuthStore = create<AuthState>()(
   persist(
@@ -39,6 +27,4 @@ const useAuthStore = create<AuthState>()(
     }
   )
 );
-
 export default useAuthStore;
-

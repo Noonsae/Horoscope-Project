@@ -1,8 +1,7 @@
 'use client';
 
-import { DailyList as DailyListType } from '@/types/stella-result-type';
+import { DailyList as DailyListType } from '@/types/supabase/stella-result-type';
 import { fetchDailyResults } from '@/utils/shareResult';
-import defaultImg from '/public/images/default.png';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import changeTime from '@/utils/changeTime';
@@ -30,7 +29,7 @@ const DailyList = () => {
           <div className="absolute top-4 left-4 flex items-center gap-2">
             <Image
               className="w-8 h-8 bg-gray-500 rounded-full border border-gray-300"
-              src={result.users?.profile_img || defaultImg}
+              src={result.users?.profile_img || '/images/default_profile_img.webp'}
               alt="프로필 이미지"
               width={100}
               height={100}

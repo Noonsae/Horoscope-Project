@@ -1,5 +1,5 @@
-import { Comment } from '@/types/guestbook-type'; // 타입 파일 경로에 맞게 수정
-import defaultImg from '@/public/images/default_profile_img.webp';
+import { Comment } from '@/types/supabase/guestbook-type'; // 타입 파일 경로에 맞게 수정
+
 import TrashCanIcon from './TrashCanIcon';
 
 // CommentListProps 정의
@@ -51,7 +51,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments, newProfileImg, conf
             </p>
 
             <button type="button" onClick={() => confirmDeleteComment(comment.id)}>
-              <TrashCanIcon/>
+              <TrashCanIcon />
             </button>
           </div>
         </li>

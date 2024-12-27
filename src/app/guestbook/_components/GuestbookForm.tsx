@@ -1,10 +1,13 @@
 'use client';
 
-import { supabase } from '@/lib/supabase';
-import { Comment } from '@/types/guestbook-type';
-import { addComment } from '@/utils/guestbook';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react'; // React 관련
+import { useMutation, useQueryClient } from '@tanstack/react-query'; // React Query 관련
+
+import { supabase } from '@/lib/supabase'; // Supabase 클라이언트
+
+import { Comment } from '@/types/supabase'; // 타입 정의
+
+import { addComment } from '@/utils/guestbook'; // 유틸리티 함수
 
 const GuestbookForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -50,17 +53,15 @@ const GuestbookForm = () => {
         placeholder="새해 덕담을 나눠보세요."
         ref={inputRef}
       />
-<button
-  className={`rounded px-2 py-1 ${
-    isAuthenticated
-      ? 'bg-white text-black'
-      : 'bg-gray-600 text-gray-200 cursor-not-allowed'
-  }`}
-  type="submit"
-  disabled={!isAuthenticated}
->
-  저장
-</button>
+      <button
+        className={`rounded px-2 py-1 ${
+          isAuthenticated ? 'bg-white text-black' : 'bg-gray-600 text-gray-200 cursor-not-allowed'
+        }`}
+        type="submit"
+        disabled={!isAuthenticated}
+      >
+        저장
+      </button>
     </form>
   );
 };

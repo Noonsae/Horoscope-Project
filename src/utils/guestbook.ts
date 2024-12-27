@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { Comment } from '@/types/guestbook-type';
+import { Comment } from '@/types/supabase/guestbook-type';
 
 // user Id 가져오기
 export const getId = async (): Promise<string | null> => {
@@ -10,7 +10,6 @@ export const getId = async (): Promise<string | null> => {
   }
   return data.user.id;
 };
-
 
 // 코멘트 가져오기
 export const fetchCommentData = async () => {
@@ -29,10 +28,15 @@ export const fetchCommentData = async () => {
 // 코멘트 저장
 export const addComment = async (newComment: Comment['comment']) => {
   const user_id = await getId();
-  console.log('user_id', user_id)
+  console.log('user_id', user_id);
   const { data, error } = await supabase
     .from('guestbook')
-    .insert([{ comment: newComment, user_id: user_id }])
+    .insert([
+      {
+        comment: newComment,
+        user_id: user.id
+      }
+    ])
     .select();
 
   if (error) {

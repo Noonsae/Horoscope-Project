@@ -1,7 +1,8 @@
-'use server';
+"use server"
+
 // @lib/supabase-server.ts
 
-import { Database } from '@/types/supabase-type';
+import { Database } from '@/types/supabase';
 
 import { createServerClient } from '@supabase/ssr';
 

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import useAuthStore from '@/store/useAuthStore';
+import useAuthStore from '@/store/useAuth';
 
 type CommentId = string;
 
@@ -9,7 +9,6 @@ export const useDeleteComment = () => {
   const user = useAuthStore((state) => state.user);
   const queryClient = useQueryClient();
 
-  // Supabase API 요청을 API 라우트로 대체
   const deleteComment = useCallback(async (commentId: CommentId): Promise<void> => {
     const response = await fetch('/api/delete-comment', {
       method: 'DELETE',
@@ -18,7 +17,7 @@ export const useDeleteComment = () => {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();
+      const errorData = (await response.json()) as { error?: string };
       throw new Error(errorData.error || 'Failed to delete comment.');
     }
   }, []);
@@ -28,7 +27,7 @@ export const useDeleteComment = () => {
     onSuccess: () => {
       if (user?.id) {
         queryClient.invalidateQueries({
-          queryKey: ['users', user.id] // 쿼리 키 명확히 설정
+          queryKey: ['users', user.id]
         });
       }
     },
@@ -52,7 +51,7 @@ export const useDeleteComment = () => {
         cancelButtonColor: '#3085d6',
         confirmButtonText: '삭제',
         cancelButtonText: '취소'
-      }).then((result) => {
+      }).then((result: { isConfirmed: boolean }) => {
         if (result.isConfirmed) {
           Swal.fire({
             title: '삭제 중...',

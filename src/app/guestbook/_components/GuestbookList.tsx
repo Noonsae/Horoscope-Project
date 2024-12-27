@@ -1,10 +1,10 @@
 'use client';
 
-import { Comment } from '@/types/guestbook-type';
+import { Comment } from '@/types/supabase/guestbook-type';
 import { useEffect, useState } from 'react';
 import { updateComment, deleteComment, fetchCommentData, getId } from '@/utils/guestbook'; // Supabase 함수 가져오기
 import Image from 'next/image';
-import defaultImg from '/public/images/default_profile_img.webp';
+
 import changeTime from '@/utils/changeTime';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -88,7 +88,7 @@ const GuestbookList = () => {
             <div className="flex items-center gap-2">
               <Image
                 className="w-10 h-10 bg-gray-500 rounded-full"
-                src={comment.users?.profile_img || defaultImg}
+                src={comment.users?.profile_img || '/images/default_profile_img.webp'}
                 alt="프로필 이미지"
                 width={100}
                 height={100}

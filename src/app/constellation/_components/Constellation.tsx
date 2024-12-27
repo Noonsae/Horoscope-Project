@@ -2,7 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 
-import { Tables } from '@/types/supabase-type';
+import { Tables } from '@/types/supabase/supabase-type';
 import { useEffect, useState } from 'react';
 
 type Stella = Tables<'stellas'>;
