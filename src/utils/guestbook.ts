@@ -1,23 +1,16 @@
-import supabase from '@/lib/supabase-client';
+import { supabase } from '@/lib/supabase';
 import { Comment } from '@/types/guestbook-type';
 
 // user Id 가져오기
-// export const getId = async () => {
-//   const {
-//     data: {
-//       session: {
-//         user: { id }
-//       }
-//     },
-//     error
-//   } = await supabase.auth.getSession();
-//   if (error || !id) {
-//     return alert('로그인 상태가 아닙니다.');
-//   }
-//   return id;
-// };
+export const getId = async (): Promise<string | null> => {
+  const { data, error } = await supabase.auth.getUser();
+  if (error || !data.user) {
+    console.error('유저 아이디 불러오기 실패!', error);
+    return null;
+  }
+  return data.user.id;
+};
 
-const user_id = '2be39632-2fbf-4815-96b0-71bc02a3cd5e';
 
 // 코멘트 가져오기
 export const fetchCommentData = async () => {
@@ -35,6 +28,8 @@ export const fetchCommentData = async () => {
 
 // 코멘트 저장
 export const addComment = async (newComment: Comment['comment']) => {
+  const user_id = await getId();
+  console.log('user_id', user_id)
   const { data, error } = await supabase
     .from('guestbook')
     .insert([{ comment: newComment, user_id: user_id }])

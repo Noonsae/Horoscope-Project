@@ -1,12 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
-import clientSupabase from '@/lib/supabase-client';
+
 import { Comment, UseFetchGuestbookCommentsResult } from '@/types/guestbook-type';
+import { supabase } from '@/lib/supabase';
 
 // 훅 정의
 const useFetchGuestbookComments = (userId: string | null): UseFetchGuestbookCommentsResult => {
   const fetchGuestbookComments = async (): Promise<Comment[]> => {
     if (!userId) return [];
-    const { data, error } = await clientSupabase
+    const { data, error } = await supabase
       .from('guestbook')
       .select('*')
       .eq('user_id', userId)

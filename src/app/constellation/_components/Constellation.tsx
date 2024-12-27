@@ -1,9 +1,11 @@
 'use client';
 
-import clientSupabase from '@/lib/supabase-client';
-import { Tables } from '@/types/supabase';
+import { supabase } from '@/lib/supabase';
+
+import { Tables } from '@/types/supabase-type';
 import { useEffect, useState } from 'react';
 
+const supabase = browserSupabase();
 type Stella = Tables<'stellas'>;
 
 const Constellation = () => {
@@ -14,7 +16,7 @@ const Constellation = () => {
 
   useEffect(() => {
     const fetchConstellations = async () => {
-      const { data } = await clientSupabase.from('stellas').select('*');
+      const { data } = await supabase.from('stellas').select('*');
       setConstellations(data || []);
     };
 
@@ -26,7 +28,7 @@ const Constellation = () => {
       {/* Hero Section */}
       <div
         className="w-full flex flex-col justify-center items-center text-center"
-        style={{ backgroundColor: '#9E9E9E', height: '640px' }}
+        style={{ backgroundColor: '#9E9E9E', height: '400px' }}
       >
         <h1 className="text-4xl font-bold mb-6">점성술이란?</h1>
         <p className="text-lg w-full leading-relaxed">

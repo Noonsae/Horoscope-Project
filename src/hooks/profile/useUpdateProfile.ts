@@ -2,8 +2,9 @@ import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import useAuthStore from '@/store/useAuthStore';
-import browserClient from '@/lib/supabase-client';
+
 import { User } from '@/types/user-type';
+import { supabase } from '@/lib/supabase';
 
 interface UseUpdateProfileReturn {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
@@ -23,7 +24,7 @@ export const useUpdateProfile = (
       const profileImageUrl = typeof newProfileImg === 'string' ? newProfileImg : null;
 
       // Supabase 업데이트
-      const { error } = await browserClient
+      const { error } = await supabase
         .from('users')
         .update({
           profile_image_url: profileImageUrl, // File 객체는 null로 변환

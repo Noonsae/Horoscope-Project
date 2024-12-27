@@ -1,24 +1,49 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import UserHomePage from "./UserHomePage";
-import GuestHomePage from "./GuestHomePage";
-import clientSupabase from "@/lib/supabase-client";
+import { useEffect, useState } from 'react';
+import UserHomePage from './UserHomePage';
+import GuestHomePage from './GuestHomePage';
 
-const supabase = browserClient;
+import { supabase } from "@/lib/supabase";
+import { Tables } from '@/types/supabase-type';
 
-const ClientHomePage = () => {
+type DailyFortune = Tables<'daily_fortunes'>;
+
+type Props = {
+  dailyFortunes: DailyFortune[];
+};
+
+const ClientHomePage = ({ dailyFortunes }: Props) => {
   const [isLogin, setIsLogin] = useState(false);
+  const [userMonthDay, setUserMonthDay] = useState<string | null>(null);
+  const supabase = browserSupabase();
 
   useEffect(() => {
-    const ckeckLoginStatus = async () => {
-      const { data } = await clientSupabase.auth.getSession();
-      setIsLogin(!!data.session);
+
+    const fetchUserData = async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const session = sessionData?.session;
+
+      setIsLogin(!!session);
+
+      if (session) {
+        const { data: userData, error: userError } = await supabase
+          .from('users')
+          .select('birth_date')
+          .eq('id', session.user.id)
+          .single();
+
+        if (userData?.birth_date) {
+          const monthDay = userData.birth_date.slice(5, 10); // "MM-DD" 형식
+          setUserMonthDay(monthDay);
+        }
+      }
     };
 
-    ckeckLoginStatus();
+    fetchUserData();
 
-    const { data: listener } = clientSupabase.auth.onAuthStateChange((_envent, session) => {
+    const { data: listener } = supabase.auth.onAuthStateChange((_envent, session) => {
+
       setIsLogin(!!session);
     });
 
@@ -27,7 +52,7 @@ const ClientHomePage = () => {
     };
   }, []);
 
-  return isLogin ? <UserHomePage /> : <GuestHomePage />;
+  return isLogin ? <UserHomePage dailyFortunes={dailyFortunes} userMonthDay={userMonthDay} /> : <GuestHomePage />;
 };
 
 export default ClientHomePage;

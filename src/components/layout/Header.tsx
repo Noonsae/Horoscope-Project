@@ -1,9 +1,47 @@
-// import useAuthStore from '@/utils/useAuthStore';
+'use client';
+
+import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
-  // const { isAuthenticated, logout } = useAuthStore();
+  const [isAuthenticated, setIsAuthenticated] = useState<any>(null);
+  const router = useRouter();
 
+  useEffect(() => {
+    // 초기 유저 상태 가져오기
+    const fetchUser = async () => {
+      const { data } = await supabase.auth.getUser();
+      setIsAuthenticated(data.user);
+    };
+    fetchUser();
+
+    // 로그인/로그아웃 상태 변화 감지
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      setIsAuthenticated(session?.user || null);
+    });
+
+    // 컴포넌트 언마운트 시 구독 해제
+    return () => {
+      data.subscription.unsubscribe()
+    };
+  }, []);
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setIsAuthenticated(null);
+    router.push('/');
+  };
+
+      setLoggedIn(false);
+      window.location.href = '/';
+    } catch (err) {
+      console.error('로그아웃 중 오류 발생:', err);
+    }
+  };
+
+  // const { isAuthenticated, logout } = useAuthStore();
   return (
     <nav className="w-full bg-gray-800 text-white">
       <div className="flex justify-between items-center px-8 py-3">
@@ -29,17 +67,15 @@ const Header = () => {
             </Link>
           </div>
         </div>
-
         <div>
-          <Link href="/sign-in" className="hover:text-yellow-400">
-            로그인
-          </Link>
-        </div>
-        {/* <div>
+          
           {isAuthenticated ? (
-            <div>
-              <Link href="/my-page" className="hover:text-yellow-400>마이페이지</Link>
+            <div className="flex items-center space-x-4">
+              <Link href="/my-page" className="hover:text-yellow-400">
+                마이페이지
+              </Link>
               <button onClick={logout} className="hover:text-yellow-400">
+
                 로그아웃
               </button>
             </div>
@@ -48,7 +84,7 @@ const Header = () => {
               로그인
             </Link>
           )}
-        </div> */}
+        </div>
       </div>
     </nav>
   );
