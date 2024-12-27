@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { chemiData } from '../../../data/stella_info_data';
+import { STELLA_INFO_DATA } from '@/data/stella_info_data';
 
 const ChemiResult = () => {
   const searchParams = useSearchParams();
@@ -11,7 +11,7 @@ const ChemiResult = () => {
   const firstStella = first;
   const secondStella = second;
 
-  const result = chemiData[first]?.[second];
+  const result = STELLA_INFO_DATA[first]?.[second];
 
   return (
     <div className="p-4">
