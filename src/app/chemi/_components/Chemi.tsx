@@ -2,7 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 
-import { stellas as ChemiType } from '@/types/supabase-type';
+import { stellas as ChemiType } from '@/types/supabase';
 
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';

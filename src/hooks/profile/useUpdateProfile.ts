@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
-import useAuthStore from '@/store/useAuthStore';
+import useAuthStore from '@/store/useAuth';
 
 import { User } from '@/types/supabase/user-type';
 import { supabase } from '@/lib/supabase';
