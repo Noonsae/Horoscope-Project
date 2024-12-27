@@ -24,7 +24,7 @@ const Header = () => {
 
     // 컴포넌트 언마운트 시 구독 해제
     return () => {
-      data.subscription.unsubscribe()
+      data.subscription.unsubscribe();
     };
   }, []);
 
@@ -32,13 +32,6 @@ const Header = () => {
     await supabase.auth.signOut();
     setIsAuthenticated(null);
     router.push('/');
-  };
-
-      setLoggedIn(false);
-      window.location.href = '/';
-    } catch (err) {
-      console.error('로그아웃 중 오류 발생:', err);
-    }
   };
 
   // const { isAuthenticated, logout } = useAuthStore();
@@ -68,14 +61,12 @@ const Header = () => {
           </div>
         </div>
         <div>
-          
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
               <Link href="/my-page" className="hover:text-yellow-400">
                 마이페이지
               </Link>
               <button onClick={logout} className="hover:text-yellow-400">
-
                 로그아웃
               </button>
             </div>
