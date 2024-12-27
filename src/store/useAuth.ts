@@ -1,4 +1,4 @@
-import { User } from '@supabase/ssr';
+import { User } from '@supabase/supabase-js';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -8,24 +8,37 @@ interface Session {
 }
 
 interface AuthState {
+  isLoggedIn: boolean;
   user: User | null;
   session: Session | null;
-  setUser: (user: User | null) => void;
-  setSession: (session: Session | null) => void;
+  setAuth: (user: User | null, session: Session | null) => void;
+  clearAuth: () => void;
 }
 
-const useAuthStore = create(
-  persist<AuthState>(
+const useAuthStore = create<AuthState>()(
+  persist(
     (set) => ({
+      isLoggedIn: false,
       user: null,
       session: null,
-      setUser: (user) => set({ user }),
-      setSession: (session) => set({ session })
+      setAuth: (user, session) =>
+        set(() => ({
+          isLoggedIn: !!user,
+          user,
+          session
+        })),
+      clearAuth: () =>
+        set(() => ({
+          isLoggedIn: false,
+          user: null,
+          session: null
+        }))
     }),
     {
       name: 'auth-storage' // 로컬 스토리지 키
     }
   )
 );
+
 export default useAuthStore;
 

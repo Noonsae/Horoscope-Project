@@ -1,8 +1,8 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { getStellaId } from './useStellaHelpers';
 import { supabase } from '@/lib/supabase';
+import { getStellaId } from '../useStellaHelpers';
 
 interface Stella {
   id: string;

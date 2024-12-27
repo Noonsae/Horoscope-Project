@@ -27,8 +27,15 @@ export async function updateSession(request: NextRequest) {
   );
 
   const {
-    data: { user }
-  } = await supabase.auth.getUser();
+    data: { session },
+    error
+  } = await supabase.auth.getSession();
+  console.log('세션 데이터:', session);
+  if (error) {
+    console.error('세션 가져오기 실패:', error.message);
+  }
+
+  const user = session?.user; // 세션에서 사용자 정보 가져오기
 
   // 로그인 필요 페이지에 접근 시 비로그인 상태라면 /login으로 리다이렉트
   if (!user && !request.nextUrl.pathname.startsWith('/login')) {
