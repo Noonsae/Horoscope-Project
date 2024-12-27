@@ -4,7 +4,8 @@ import { useParams } from 'next/navigation';
 import { fetchStellaData } from '@/hooks/useStellaQuery';
 import { useNewYearFortune } from '@/hooks/useNewYearFortuneQuery'; // Existing hook for New Year fortune
 import { useNewDailyFortune } from '@/hooks/useDailyFortuneQuery';
-// New hook for Daily fortune
+import Loading from '@/app/loading';
+import ErrorPage from '@/components/ui/ErrorPage';
 
 const Details: React.FC = () => {
   const params = useParams();
@@ -38,8 +39,8 @@ const Details: React.FC = () => {
   // Use the Daily fortune query
   const { data: dailyFortuneContent, isLoading: dailyFortuneLoading } = useNewDailyFortune(stella?.id || '');
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) return <div>에러 발생: {error}</div>;
+  if (isLoading) return <Loading />;
+  if (error) return <ErrorPage />;
   if (!stella) return <div>별자리를 찾을 수 없습니다.</div>;
 
   const handleShowFortune = () => {
