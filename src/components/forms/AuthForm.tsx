@@ -4,17 +4,25 @@ import { LOGIN_FIELDS, SIGNUP_FIELDS } from '@/constants/input_fields';
 
 interface AuthFormProps {
   mode: 'signup' | 'login';
-  onSubmit: (formData: { name: string; email: string; password: string }) => void;
+  onSubmit: (formData: {    
+    email: string;
+    nickname: string;
+    password: string;
+    checkPassword: string;
+    birth_date: string;
+  }) => void;
 }
 
 const AuthForm: React.FC<AuthFormProps> = ({ mode, onSubmit }) => {
   const [formData, setFormData] = useState({
-    nickname: '',
-    email: '',
+    email : '',
+    nickname: '',    
     password: '',
-    checkPassword: ''
+    checkPassword: '',
+    birth_date: '',
   });
 
+  // 에러 상태
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // 모드에 따라 적절한 입력 필드 선택
@@ -27,7 +35,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ mode, onSubmit }) => {
     // keyof formData로 key 타입을 제한
     (Object.keys(formData) as (keyof typeof formData)[]).forEach((key) => {
       const error = PasswordValidator(key, formData[key]);
-      if (error) {
+      if (typeof error === 'string' && error) {
         newErrors[key] = error;
       }
     });

@@ -57,7 +57,7 @@ export const useSignInMutation = (): CustomMutationResult => {
       // 사용자와 세션 정보를 로컬 스토리지에 저장
       if (user) localStorage.setItem('user', JSON.stringify(user));
       if (session) localStorage.setItem('session', JSON.stringify(session));
-
+      
       // 성공 알림
       Swal.fire('로그인 성공', '정상적으로 로그인되었습니다.', 'success');
 

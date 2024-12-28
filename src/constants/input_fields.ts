@@ -12,9 +12,9 @@ export const SIGNUP_FIELDS: InputField[] = [
     placeholder: '별명을 입력해주세요.'
   },
   {
-    name: 'id',
+    name: 'email',
     type: 'e-mail',
-    placeholder: '아이디를 입력해주세요.',
+    placeholder: '이메일을 입력해주세요.',
     autoComplete: 'current-id'
   },
   {
@@ -27,14 +27,14 @@ export const SIGNUP_FIELDS: InputField[] = [
     name: 'checkPassword',
     type: 'password',
     placeholder: '비밀번호를 한번 더 입력해주세요.'
-  }
+  },  
 ];
 
 export const LOGIN_FIELDS: InputField[] = [
   {
-    name: 'id',
+    name: 'email',
     type: 'e-mail',
-    placeholder: '아이디를 입력해주세요.',
+    placeholder: '이메일을 입력해주세요.',
     autoComplete: 'current-id'
   },
   {

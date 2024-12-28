@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 interface InputGroupProps {
   handleSubmit: (formData: {
-    name: string;
+    id: string;
     email: string;
     password: string;
     birthDate: string;
@@ -17,7 +17,8 @@ interface InputGroupProps {
 
 const InputGroup: React.FC<InputGroupProps> = ({ handleSubmit }) => {
   const [formData, setFormData] = useState({
-    name: '',
+    id: '',
+    nickname: '',
     email: '',
     password: '',
     birthDate: ''
