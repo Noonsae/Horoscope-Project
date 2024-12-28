@@ -9,7 +9,7 @@ interface SignUpPayload {
   password: string;
   checkPassword: string;
   nickname: string;
-  birth_date: string | Date; // 생년월일은 문자열 또는 Date 타입
+  birth_date: string;
 }
 
 const useSignUpMutation = () => {

@@ -6,11 +6,10 @@ import useSignUpMutation from './useSignUpMutation';
 
 const useFormData = () => {
   const [formData, setFormData] = useState<FormData>({
-    name : '',
     email: '',
     nickname: '',
     password: '',
-    confirmPassword: '',
+    checkPassword: '',
     birth_date: null
   });
 
@@ -37,8 +36,8 @@ const useFormData = () => {
     formData.email &&
     formData.nickname &&
     formData.password &&
-    formData.confirmPassword &&
-    formData.password === formData.confirmPassword;
+    formData.checkPassword &&
+    formData.password === formData.checkPassword;
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -55,8 +54,9 @@ const useFormData = () => {
       {
         email: formData.email,
         password: formData.password,
+        checkPassword: formData.checkPassword, // 추가된 필드
         nickname: formData.nickname,
-        birth_date: formattedBirthDate // 문자열 형식으로 전달
+        birth_date: formattedBirthDate // 문자를 형식에 맞게 변환 후 전달
       },
       {
         onSuccess: () => {
