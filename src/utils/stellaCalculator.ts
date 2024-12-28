@@ -13,8 +13,8 @@ const zodiacSigns = [
   { id: 'ba84f353-766b-454e-8d97-46792ccf2dde', start: '12-22', end: '01-19' }
 ];
 
-export const getStellaId = (birthDate: Date): string => {
-  const monthDay = birthDate.toISOString().slice(5, 10); // "MM-DD" 형식으로 변환
+export const getStellaId = (birth_date: Date): string => {
+  const monthDay = birth_date.toISOString().slice(5, 10); // "MM-DD" 형식으로 변환
 
   for (const zodiac of zodiacSigns) {
     if (

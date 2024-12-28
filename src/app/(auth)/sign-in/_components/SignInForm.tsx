@@ -1,40 +1,45 @@
-import { useSignInMutation } from '@/hooks/signIn/useSignInMutation';
+'use client';
+
 import React, { useState } from 'react';
+import { useSignInMutation } from '@/hooks/auth/useSignInMutation'; // React Query 훅 사용
 
 const SignInForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { mutate } = useSignInMutation();
+  const { mutate, isLoading } = useSignInMutation(); // React Query의 mutation 훅
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    mutate({ email, password });
+    mutate({ email, password }); // useSignInMutation의 mutation 호출
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center bg-[111]">
       <form onSubmit={handleLogin} className="bg-[#262626] p-6 rounded-lg shadow-md w-80">
         <label className="block text-white text-sm font-medium mb-2">이메일</label>
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
+          required
           placeholder="아이디를 입력해주세요."
-          className="block w-full px-4 py-2 border rounded-lg text-sm bg-[#555555] text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
         />
-        <label className="block text-white text-sm font-medium mt-4 mb-2">비밀번호</label>
+        <label className="block text-white text-sm font-medium mb-2 mt-4">비밀번호</label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="비밀번호를 입력해주세요."
-          className="block w-full px-4 py-2 border rounded-lg text-sm bg-[#555555] text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
+          required
+          placeholder="비밀번호를 입력해주세요."          
         />
         <button
           type="submit"
-          className="w-full mt-6 bg-[#A82626] text-[#F0F0F0] py-2 rounded-lg focus:ring-4 transition font-bold"
+          className="w-full mt-6 bg-blue-500 text-white py-2 px-4 rounded-md"
+          disabled={isLoading} // 로딩 중 버튼 비활성화
         >
-          로그인
+          {isLoading ? '로그인 중...' : '로그인'}
         </button>
       </form>
     </div>

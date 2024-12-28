@@ -1,4 +1,5 @@
 // store/useAuth.ts
+
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -39,5 +40,4 @@ const useAuthStore = create<AuthState>()(
     }
   )
 );
-
 export default useAuthStore;

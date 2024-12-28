@@ -1,58 +1,47 @@
-import { FormData } from '@/types/sign-up.type';
-import React from 'react';
+'use client';
+
+import AuthForm from '@/components/forms/AuthForm';
+
+import { User } from '@/types/auth-type/sign-in.type';
+import { Session } from '@/types/zustand-type/auth-state-type';
+import React, { useState } from 'react';
 
 interface InputGroupProps {
-  formData: FormData;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (formData: {    
+    nickname: string;
+    email: string;
+    password: string;
+    checkPassword: string;
+    birth_date: string;
+  }) => Promise<{ user: User | null; session: Session | null }>;
 }
 
-const InputGroup: React.FC<InputGroupProps> = ({ formData, handleInputChange }) => {
+const InputGroup: React.FC<InputGroupProps> = ({ handleSubmit }) => {
+  const [formData, setFormData] = useState({
+    nickname: '',
+    email: '',
+    password: '',
+    checkPassword: '',
+    birth_date: '',
+  });
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await handleSubmit(formData);
+      alert('회원가입 성공!');
+    } catch (error: any) {
+      alert('회원가입 실패: ' + error.message);
+    }
+  };
+
   return (
-    <div>
-      <h1 className="text-[#FFEAB8] text-[34px] font-bold flex justify-center"> 회원가입 </h1>
-      <form className="bg-[#262626] p-6 rounded-lg shadow-md w-80">
-        <label className="block text-white text-sm font-medium mb-2">이메일</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          placeholder="이메일을 입력해주세요."
-          className="block w-full px-4 py-2 border rounded-lg text-sm text-[#F1F1F1] border-gray-300 bg-[#555555] placeholder-white"
-          required
-        />
-        <label className="block text-white text-sm font-medium mt-4 mb-2">닉네임</label>
-        <input
-          type="text"
-          name="nickname"
-          value={formData.nickname}
-          onChange={handleInputChange}
-          placeholder="닉네임을 입력해주세요."
-          className="block w-full px-4 py-2 border rounded-lg text-sm text-[#F1F1F1] border-gray-300 bg-[#555555] placeholder-white"
-          required
-        />
-        <label className="block text-white text-[16px] font-medium mt-4 mb-2">비밀번호</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          placeholder="비밀번호를 입력해주세요."
-          className="block w-full px-4 py-2 border rounded-lg text-sm text-[#F1F1F1] border-gray-300 bg-[#555555] placeholder-white"
-          required
-        />
-        <label className="block text-white text-sm font-medium mt-4 mb-2">비밀번호 확인</label>
-        <input
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-          placeholder="비밀번호를 다시 입력해주세요."
-          className="block w-full px-4 py-2 border rounded-lg text-sm text-[#F1F1F1] border-gray-300 bg-[#555555] placeholder-white"
-          required
-        />
-      </form>
-    </div>
+    <form onSubmit={onSubmit} className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-md">
+      <AuthForm
+        mode="signup" // AuthForm에 필요한 mode를 전달합니다.
+        onSubmit={(data) => handleSubmit({ ...data, birth_date: formData.birth_date })}
+      />
+    </form>
   );
 };
 

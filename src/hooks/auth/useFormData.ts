@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
-import { FormData } from '@/types/sign-up.type';
-import { useSignUpMutation } from './useSignUpMutation';
+import { FormData } from '@/types/auth-type/sign-up.type';
+import useSignUpMutation from './useSignUpMutation';
 
 const useFormData = () => {
   const [formData, setFormData] = useState<FormData>({
+    name : '',
     email: '',
     nickname: '',
     password: '',
