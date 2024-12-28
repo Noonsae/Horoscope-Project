@@ -2,7 +2,7 @@
 
 import { supabase } from "@/lib/supabase";
 
-export const submitSignUp = async (formData: { name: string; email: string; password: string; birthDate: string }) => {
+export const submitSignUp = async (formData: { name: string; email: string; password: string; birth_date: string }) => {
   // Supabase에 사용자 추가
   const { data, error } = await supabase.auth.signUp({
     email: formData.email,
@@ -10,7 +10,7 @@ export const submitSignUp = async (formData: { name: string; email: string; pass
     options: {
       data: {
         name: formData.name,
-        birthDate: formData.birthDate
+        birth_date: formData.birth_date
       }
     }
   });

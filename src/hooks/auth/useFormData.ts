@@ -6,6 +6,7 @@ import useSignUpMutation from './useSignUpMutation';
 
 const useFormData = () => {
   const [formData, setFormData] = useState<FormData>({
+    name : '',
     email: '',
     nickname: '',
     password: '',
