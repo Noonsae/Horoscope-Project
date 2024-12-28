@@ -1,8 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import DailyList from './_components/dailyList';
-import YearList from './_components/yearList';
+import DailyList from './_components/DailyResultList';
+import YearList from './_components/YearResultList';
+import GoMoveToTopButton from '@/components/ui/GoMoveToTopButton';
+import YearResultList from './_components/YearResultList';
+import DailyResultList from './_components/DailyResultList';
 
 const ShareResultsPage = () => {
   const [activeTab, setActiveTab] = useState<'daily' | 'year'>('daily');
@@ -10,11 +13,9 @@ const ShareResultsPage = () => {
   return (
     <>
       <div className="w-full h-[150px] bg-gradient-to-b from-black to-purple-900 flex items-center justify-center">
-        <h2 className="text-white text-xl font-bold text-center">
-          별자리가 들려준 이야기를 다른 사람과 공유해보세요.
-        </h2>
+        <h2 className="text-white text-xl font-bold text-center">별자리가 들려준 이야기를 다른 사람과 공유해보세요.</h2>
       </div>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-20 py-8">
         <div className="flex justify-start mb-8">
           <button
             className={`${
@@ -34,8 +35,9 @@ const ShareResultsPage = () => {
           </button>
         </div>
 
-        {activeTab === 'daily' && <DailyList />}
-        {activeTab === 'year' && <YearList />}
+        {activeTab === 'daily' && <DailyResultList />}
+        {activeTab === 'year' && <YearResultList />}
+        <GoMoveToTopButton />
       </div>
     </>
   );

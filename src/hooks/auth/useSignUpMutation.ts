@@ -2,18 +2,20 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
-import { getStellaId } from '../../utils/stellaCalculator';
+import { getStellaId } from '@/utils/stellaCalculator';
 
 interface SignUpPayload {
   email: string;
   password: string;
+  checkPassword: string;
   nickname: string;
   birth_date: string | Date; // 생년월일은 문자열 또는 Date 타입
 }
 
 const useSignUpMutation = () => {
   return useMutation({
-    mutationFn: async ({ email, password, nickname, birth_date }: SignUpPayload) => {
+    mutationFn: async ({ email, password, checkPassword, nickname, birth_date: birth_date }: SignUpPayload) => {
+
       // 유효성 검사
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         throw new Error('유효하지 않은 이메일 형식입니다.');
@@ -24,8 +26,11 @@ const useSignUpMutation = () => {
       if (!nickname || nickname.trim().length === 0) {
         throw new Error('닉네임을 입력해주세요.');
       }
-      if (nickname.length > 30) {
-        throw new Error('닉네임은 30자 이하로 입력해주세요.');
+      if (nickname.length > 10) {
+        throw new Error('닉네임은 10자 이하로 입력해주세요.');
+      }
+      if (password !== checkPassword) {
+        throw new Error('입력하신 비밀번호와 같지 않습니다. 다시 확인해주세요.');
       }
       const parsedDate = new Date(birth_date);
       if (!(parsedDate instanceof Date) || isNaN(parsedDate.getTime())) {
@@ -56,6 +61,7 @@ const useSignUpMutation = () => {
       }
 
       // `users` 테이블에 추가 정보 저장
+      const formattedBirthDate = new Date(birth_date).toISOString().split('T')[0];
       const { error: dbError } = await supabase.from('users').insert([
         {
           id: userId, // Auth의 user.id
@@ -70,6 +76,14 @@ const useSignUpMutation = () => {
       }
 
       return authData;
+    },
+    onSuccess: (data) => {
+      console.log('회원가입 성공:', data);
+      // 성공 상태 처리
+    },
+    onError: (error: Error) => {
+      console.error('회원가입 실패:', error.message);
+      // 에러 상태 처리
     }
   });
 };

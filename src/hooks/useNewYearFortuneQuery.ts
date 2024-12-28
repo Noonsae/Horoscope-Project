@@ -19,3 +19,5 @@ export const useNewYearFortune = (stellaId: string) => {
     enabled: !!stellaId // Only run query if stellaId is available
   });
 };
+
+

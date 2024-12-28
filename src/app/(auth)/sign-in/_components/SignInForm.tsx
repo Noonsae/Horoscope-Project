@@ -23,6 +23,7 @@ const SignInForm: React.FC = () => {
           onChange={(e) => setEmail(e.target.value)}
           className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
           required
+          placeholder="아이디를 입력해주세요."
         />
         <label className="block text-white text-sm font-medium mb-2 mt-4">비밀번호</label>
         <input
@@ -31,6 +32,7 @@ const SignInForm: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
           required
+          placeholder="비밀번호를 입력해주세요."          
         />
         <button
           type="submit"

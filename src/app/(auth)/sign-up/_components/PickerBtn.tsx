@@ -24,8 +24,8 @@ const PickerBtn: React.FC<PickerBtnProps> = ({ handleDateChange, handleSubmit, s
               email: '',
               nickname: '',
               password: '',
-              confirmPassword: '',
-              birth_date: null
+              checkPassword: '',
+              birth_date: null,
             })
           }
         >

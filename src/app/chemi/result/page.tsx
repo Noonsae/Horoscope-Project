@@ -1,13 +1,12 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
+
 import { STELLA_INFO_DATA } from '@/data/stella_info_data';
 
 const ChemiResult = () => {
   const searchParams = useSearchParams();
   const first = JSON.parse(searchParams.get('first')!);
   const second = JSON.parse(searchParams.get('second')!);
-  console.log('first', first);
-  console.log('second', second);
   const firstStella = first;
   const secondStella = second;
 

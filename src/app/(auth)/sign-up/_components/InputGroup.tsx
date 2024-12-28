@@ -7,21 +7,22 @@ import { Session } from '@/types/zustand-type/auth-state-type';
 import React, { useState } from 'react';
 
 interface InputGroupProps {
-  handleSubmit: (formData: {
-    id: string;
+  handleSubmit: (formData: {    
+    nickname: string;
     email: string;
     password: string;
-    birthDate: string;
+    checkPassword: string;
+    birth_date: string;
   }) => Promise<{ user: User | null; session: Session | null }>;
 }
 
 const InputGroup: React.FC<InputGroupProps> = ({ handleSubmit }) => {
   const [formData, setFormData] = useState({
-    id: '',
     nickname: '',
     email: '',
     password: '',
-    birthDate: ''
+    checkPassword: '',
+    birth_date: '',
   });
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -38,7 +39,7 @@ const InputGroup: React.FC<InputGroupProps> = ({ handleSubmit }) => {
     <form onSubmit={onSubmit} className="w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-md">
       <AuthForm
         mode="signup" // AuthForm에 필요한 mode를 전달합니다.
-        onSubmit={(data) => handleSubmit({ ...data, birthDate: formData.birthDate })}
+        onSubmit={(data) => handleSubmit({ ...data, birth_date: formData.birth_date })}
       />
     </form>
   );
