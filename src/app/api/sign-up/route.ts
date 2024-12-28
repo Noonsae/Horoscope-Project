@@ -1,3 +1,5 @@
+'use server';
+
 import { serverSupabase } from '@/lib/supabase-server';
 import { NextResponse } from 'next/server';
 
@@ -12,7 +14,7 @@ export async function POST(request: Request) {
       options: {
         data: {
           nickname,
-          birth_date,
+          birth_date
         }
       }
     });
