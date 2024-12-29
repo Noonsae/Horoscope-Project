@@ -8,6 +8,7 @@ import changeTime from '@/utils/changeTime';
 import Loading from '@/app/loading';
 import useGuestbookData from '@/hooks/guestbook/useQuery';
 import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useMutation';
+import Swal from 'sweetalert2';
 
 const GuestbookList = () => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
@@ -28,7 +29,13 @@ const GuestbookList = () => {
 
   const handleSave = (id: string) => {
     if (!editedComment.trim()) {
-      return alert('덕담을 입력해주세요.');
+      Swal.fire({
+        title: '오류',
+        text: '덕담을 입력해주세요.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
+      return;
     }
     updateMutation.mutate({ editingComment: editedComment, editingId: id });
     setEditingCommentId(null);

@@ -1,9 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-<<<<<<< HEAD
-=======
 
 import { supabase } from '@/lib/supabase';
->>>>>>> f00abaae8af916b7812e6a7bee4e433620e5cf47
 import { stellas } from '@/types/stellas-type';
 export const fetchStellaData = async (id: string): Promise<stellas> => {
   const { data, error } = await supabase.from('stellas').select('id, name, description, img_url').eq('id', id).single();

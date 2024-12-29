@@ -1,7 +1,7 @@
 import React from 'react';
-import { getStellaId } from '@/hooks/useStellaHelpers';
 import { Tables } from '@/types/supabase-type';
 import Link from 'next/link';
+import { getStellaId } from '@/utils/stellaCalculator';
 
 type DailyFortune = Tables<'daily_fortunes'>;
 
