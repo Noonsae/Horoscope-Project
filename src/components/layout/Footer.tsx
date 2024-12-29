@@ -31,7 +31,7 @@ const Footer = () => {
   return (
     // full-back
 
-    <footer className="bg-[#000] w-full h-[120px]">
+    <footer className="bg-[#000] w-full h-[200px] py-[40px]">
       {/* footer - inner */}
       <div className="mx-auto w-full h-full max-w-[600px] py-6 text-center flex flex-col items-center justify-around">
         {/* copyright text */}

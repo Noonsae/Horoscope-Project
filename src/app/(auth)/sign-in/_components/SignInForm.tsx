@@ -78,7 +78,7 @@ const SignInForm: React.FC = () => {
       />
       {errors.email && <p className="text-[16px] text-red-500 mt-[10px]">{errors.email}</p>}
 
-      <label className="block text-white text-sm font-medium mt-[40px] mb-[20px] text-[16px]">비밀번호</label>
+      <label className="block text-white text-sm font-medium my-[20px] text-[16px]">비밀번호</label>
       <input
         type="password"
         name="password"
