@@ -3,27 +3,34 @@
 import React, { useState } from 'react';
 import { useSignUpMutation } from '@/hooks/auth';
 import PickerBtn from './PickerBtn';
-import Swal from 'sweetalert2';
+import { SignUpPayload } from '@/types/auth-type/sign-up.type';
+
+export interface FormData {
+  email: string;
+  nickname: string;
+  password: string;
+  checkPassword: string;
+  birth_date: string | null;
+}
 
 const SignUpForm: React.FC = () => {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: '',
     nickname: '',
     password: '',
     checkPassword: '',
-    birth_date: ''
+    birth_date: null
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
   const [showPicker, setShowPicker] = useState(false);
-
   const { mutate } = useSignUpMutation();
 
   const validate = (name: string, value: string): string => {
     switch (name) {
       case 'email':
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return '유효한 이메일을 입력해주세요.';
+        const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        if (!isValidEmail) return '유효한 이메일을 입력해주세요.';
         break;
       case 'nickname':
         if (!value.trim()) return '닉네임을 입력해주세요.';
@@ -46,39 +53,18 @@ const SignUpForm: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     const error = validate(name, value);
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  const handleNext = () => {
-    Swal.fire({
-      title: '입력한 정보가 맞습니까?',
-      html: `
-        <p><strong>이메일:</strong> ${formData.email}</p>
-        <p><strong>닉네임:</strong> ${formData.nickname}</p>
-      `,
-      icon: 'question',
-      showCancelButton: true,
-      confirmButtonText: '확인',
-      cancelButtonText: '취소'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setShowPicker(true); // PickerBtn 표시
-      }
-    });
-  };
-
   const handleDateChange = (selectedDate: Date | null) => {
-    if (selectedDate) {
-      const formattedDate = selectedDate.toISOString().split('T')[0];
-      setFormData((prev) => ({ ...prev, birth_date: formattedDate }));
+    const formattedDate = selectedDate ? selectedDate.toISOString().split('T')[0] : null;
+    setFormData((prev) => ({ ...prev, birth_date: formattedDate }));
 
-      const error = validate('birth_date', formattedDate);
-      setErrors((prevErrors) => ({ ...prevErrors, birth_date: error }));
-    }
+    const error = validate('birth_date', formattedDate || '');
+    setErrors((prevErrors) => ({ ...prevErrors, birth_date: error }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -86,7 +72,7 @@ const SignUpForm: React.FC = () => {
 
     const newErrors: Record<string, string> = {};
     Object.keys(formData).forEach((key) => {
-      const error = validate(key, formData[key as keyof typeof formData]);
+      const error = validate(key, formData[key as keyof FormData]?.toString() || '');
       if (error) {
         newErrors[key] = error;
       }
@@ -99,7 +85,12 @@ const SignUpForm: React.FC = () => {
       return;
     }
 
-    mutate(formData);
+    const payload: SignUpPayload = {
+      ...formData,
+      birth_date: formData.birth_date || ''
+    };
+
+    mutate(payload);
   };
 
   return (
@@ -151,28 +142,30 @@ const SignUpForm: React.FC = () => {
             />
             {errors.checkPassword && <p className="text-sm text-red-500 mt-1">{errors.checkPassword}</p>}
 
-            {formData.checkPassword && (
-              <button
-                type="button"
-                className={`w-full mt-6 py-2 px-4 rounded-md ${
-                  Object.values(errors).some((error) => error)
-                    ? 'bg-gray-500 cursor-not-allowed text-gray-300'
-                    : 'bg-blue-500 text-white hover:bg-blue-600'
-                }`}
-                onClick={handleNext}
-                disabled={Object.values(errors).some((error) => error)} // 오류가 있으면 비활성화
-              >
-                다음
-              </button>
-            )}
+            <label className="block text-white text-sm font-medium mb-2 mt-4">생년월일</label>
+            <button
+              type="button"
+              className="w-full py-2 px-4 rounded-md bg-gray-600 text-white hover:bg-gray-700"
+              onClick={() => setShowPicker(true)}
+            >
+              생년월일 선택
+            </button>
+            {errors.birth_date && <p className="text-sm text-red-500 mt-1">{errors.birth_date}</p>}
+
+            <button
+              type="submit"
+              className={`w-full mt-6 py-2 px-4 rounded-md ${
+                Object.values(errors).some((error) => error)
+                  ? 'bg-gray-500 cursor-not-allowed text-gray-300'
+                  : 'bg-blue-500 text-white hover:bg-blue-600'
+              }`}
+              disabled={Object.values(errors).some((error) => error)} // 오류가 있으면 비활성화
+            >
+              다음
+            </button>
           </>
         ) : (
-          <PickerBtn
-            handleDateChange={handleDateChange}
-            handleSubmit={handleSubmit} // 부모의 handleSubmit 연결
-            setFormData={setFormData}
-            setShowPicker={setShowPicker}
-          />
+          <PickerBtn handleDateChange={handleDateChange} setFormData={setFormData} setShowPicker={setShowPicker} />
         )}
       </form>
     </div>
