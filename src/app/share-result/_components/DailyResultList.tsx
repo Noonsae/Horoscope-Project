@@ -12,7 +12,7 @@ const DailyResultList = () => {
   if (isError) return <ErrorPage />;
 
   return (
-    <div className="flex flex-wrap gap-6">
+    <div className="gap-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {dailyResults.map((result) => (
         <DailyResultCard key={result.id} result={result} />
       ))}
