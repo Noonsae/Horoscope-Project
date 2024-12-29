@@ -50,7 +50,7 @@ const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
       >
         {/* 운세 카드 */}
         <div
-          className="relative top-1/4 w-[200px] h-[250px] rounded-lg shadow-lg cursor-pointer mx-auto"
+          className="relative top-1/4 w-[240px] h-[300px] rounded-lg shadow-lg cursor-pointer mx-auto"
           onClick={flipCard}
           style={{
             perspective: '1000px'
@@ -75,7 +75,7 @@ const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
                 width: '100%'
               }}
             >
-              <p className="text-xl font-medium text-white text-shadow-2xl">
+              <p className="text-xl font-bold text-white text-shadow-2xl text-center -mt-[180px]">
                 오늘의 운세를 <br></br> 확인하세요!
               </p>
             </div>
