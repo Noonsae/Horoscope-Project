@@ -48,7 +48,7 @@ const GuestbookList = () => {
   if (isError) return <div>에러 발생!</div>;
 
   return (
-    <div className="flex flex-col justify-center items-center mx-auto my-8 w-[800px] bg-gradient-to-b from-black to-purple-900 p-6 shadow-lg rounded gap-6">
+    <div className="w-full max-w-[1200px] flex flex-col justify-center items-center mx-auto mt-10 pb-[200px] shadow-lg rounded gap-10">
       {comments?.map((comment) => (
         <div
           key={comment.id}
