@@ -4,20 +4,13 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
 
-  const supabase = serverSupabase();
-  console.log('Supabase 객체:', supabase);
+  const supabase = await serverSupabase();
 
   const { email, password } = await request.json();
-  console.log('요청 데이터:', { email, password });
-
-  if (!supabase || typeof supabase.auth === 'undefined') {
-    console.error('Supabase 클라이언트가 제대로 초기화되지 않았습니다.');
-    return NextResponse.json({ errorMsg: 'Supabase 클라이언트 초기화 실패' }, { status: 500 });
-  }
   
   try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
+    
     if (error) {
       console.error('Supabase 인증 오류:', error.message);
       return NextResponse.json({ errorMsg: error.message }, { status: 401 });

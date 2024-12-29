@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { useMutation, UseMutationResult, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Swal from 'sweetalert2';
 
@@ -20,7 +20,10 @@ interface SignInResult {
 type CustomMutationResult = UseMutationResult<SignInResult, unknown, SignInPayload>;
 
 const useSignInMutation = (): CustomMutationResult => {
+
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   return useMutation<SignInResult, unknown, SignInPayload>({
     // 서버 액션 호출 함수
@@ -50,6 +53,7 @@ const useSignInMutation = (): CustomMutationResult => {
       }
 
       Swal.fire('로그인 성공', '정상적으로 로그인되었습니다.', 'success');
+      queryClient.invalidateQueries('session'); // 세션 정보 갱신
       router.push('/');
     },
 
