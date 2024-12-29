@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from 'react';
 
 import { supabase } from '@/lib/supabase';
-import useAuthStore from '@/store/useAuthStore';
+import useAuthStore from '@/store/useAuth';
 
 import Swal from 'sweetalert2'; // 사용자 알림에 사용
-import { User } from '@/types/user-type';
+import { User } from '@/types/supabase/user-type';
 
 // 타입 정의
 interface UseProfileUploadImageReturn {

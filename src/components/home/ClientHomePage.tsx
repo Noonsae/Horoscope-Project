@@ -5,7 +5,7 @@ import UserHomePage from './UserHomePage';
 import GuestHomePage from './GuestHomePage';
 
 import { supabase } from '@/lib/supabase';
-import { Tables } from '@/types/supabase-type';
+import { Tables } from '@/types/supabase/supabase-type';
 
 type DailyFortune = Tables<'daily_fortunes'>;
 

@@ -2,6 +2,6 @@ export interface FormData {
   email: string;
   nickname: string;
   password: string;
-  confirmPassword: string;
-  birth_date: Date | null;
+  checkPassword: string;
+  birth_date: Date | string | null;
 }

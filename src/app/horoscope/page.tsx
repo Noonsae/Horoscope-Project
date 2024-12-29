@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import ReactDayPicker from '@/app/horoscope/_components/dayPicker';
 import { getStellaId } from '@/utils/stellaCalculator';
 
-
 const queryClient = new QueryClient();
 
 const HoroscopePage: React.FC = () => {
