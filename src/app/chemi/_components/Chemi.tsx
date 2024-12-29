@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
 const Chemi = () => {
   const router = useRouter();
   const [chemi, setChemi] = useState<ChemiType[]>([]);
-
   const {
     data: stellas,
     isLoading,

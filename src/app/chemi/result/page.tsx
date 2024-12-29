@@ -4,11 +4,10 @@ import { STELLA_INFO_DATA } from '../../../data/stella_info_data';
 
 const ChemiResult = () => {
   const searchParams = useSearchParams();
-  const first = JSON.parse(searchParams.get('first')!);
-  const second = JSON.parse(searchParams.get('second')!);
+  const first: string = JSON.parse(searchParams.get('first')!);
+  const second: string = JSON.parse(searchParams.get('second')!);
   const firstStella = first;
   const secondStella = second;
-
   const result = STELLA_INFO_DATA[first]?.[second];
 
   return (
@@ -27,5 +26,5 @@ const ChemiResult = () => {
 
 export default ChemiResult;
 
-// 이미지 조사 
-// 
+// 이미지 조사
+//

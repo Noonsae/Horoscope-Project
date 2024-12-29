@@ -6,6 +6,7 @@ import YearList from './_components/yearList';
 
 const ShareResultsPage = () => {
   const [activeTab, setActiveTab] = useState<'daily' | 'year'>('daily');
+  
 
   return (
     <>
