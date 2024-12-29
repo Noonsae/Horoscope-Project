@@ -1,10 +1,12 @@
 import ClientHomePage from '@/components/home/ClientHomePage';
-import { supabase } from '@/lib/supabase';
+import { serverSupabase } from '@/lib/supabase-server';
 import { Tables } from '@/types/supabase-type';
 
 export const revalidate = 86400; // 하루마다 갱신
 
 type DailyFortune = Tables<'daily_fortunes'>;
+
+const supabase = serverSupabase();
 
 const HomePage = async () => {
   // 모든 daily_fortunes 데이터 가져오기 (stella_id와 매칭하기 위해)
