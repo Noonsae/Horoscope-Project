@@ -1,7 +1,4 @@
-'use server';
-import { Database } from '@/types/supabase';
-// @lib/supabase-server.ts
-
+"use server"
 
 // @lib/supabase-server.ts
 
@@ -29,9 +26,5 @@ export const serverSupabase = () => {
         }
       }
     }
-<<<<<<< HEAD
   });
-=======
-  );
->>>>>>> 713993da348d98ee9071186cf17f9d3040829a43
 };

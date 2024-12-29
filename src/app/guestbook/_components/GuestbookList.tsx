@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { getId } from '@/utils/guestbook';
 import Image from 'next/image';
-
 import changeTime from '@/utils/changeTime';
 import Loading from '@/app/loading';
 import useGuestbookData from '@/hooks/guestbook/useQuery';

@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { fetchCommentData } from '@/utils/guestbook';
-import { Comment } from '@/types/guestbook-type';
+import { Comment } from '@/types/supabase';
 
 const useGuestbookData = () => {
   return useQuery<Comment[], Error>({
