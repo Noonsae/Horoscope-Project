@@ -1,6 +1,6 @@
 import ClientHomePage from '@/components/home/ClientHomePage';
 import { serverSupabase } from '@/lib/supabase-server';
-import { Tables } from '@/types/supabase-type';
+import { Tables } from '@/types/supabase';
 
 export const revalidate = 86400; // 하루마다 갱신
 
