@@ -11,7 +11,7 @@ const ShareResultsPage = () => {
   const [activeTab, setActiveTab] = useState<'daily' | 'year'>('daily');
 
   return (
-    <div className="bg-gradient pb-200px;">
+    <div className="bg-gradient pb-[150px]">
       <section
         className="w-full h-[150px] bg-gradient flex items-center justify-center h-[320px] mb-[100px]"
         style={{
