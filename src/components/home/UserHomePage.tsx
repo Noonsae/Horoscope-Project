@@ -12,6 +12,7 @@ type Props = {
   userMonthDay: string | null;
 };
 
+
 const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
   const [isFlipped, setIsFlipped] = useState(false);
   useEffect(() => {
