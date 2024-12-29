@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import ClientHomePage from '@/components/home/ClientHomePage';
-import { serverSupabase } from '@/lib/supabase-server';
-import { Tables } from '@/types/supabase';
+import { supabase } from '@/lib/supabase';
+import { Tables } from '@/types/supabase/supabase-type';
 
 type DailyFortune = Tables<'daily_fortunes'>;
 
