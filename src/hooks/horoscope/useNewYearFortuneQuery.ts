@@ -1,6 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/lib/supabase';
 
+export const getNewYearFortuneId = async () => {
+  const { data, error } = await supabase
+  .from('new_year_fortunes')
+  .select('id')
+  
+  if (error) {
+  console.error('코멘트 불러오기 실패!');
+  throw error;
+  }
+  return data;
+  };
+
 export const fetchNewYearFortune = async (stellaId: string): Promise<string | null> => {
   const { data, error } = await supabase.from('new_year_fortunes').select('content').eq('stella_id', stellaId).single();
 
@@ -19,5 +31,9 @@ export const useNewYearFortune = (stellaId: string) => {
     enabled: !!stellaId // Only run query if stellaId is available
   });
 };
+
+
+
+
 
 

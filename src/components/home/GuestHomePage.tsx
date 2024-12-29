@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 
@@ -7,7 +9,7 @@ const GuestHomePage = () => {
       {/* Hero Section */}
       <div
         className="w-full text-center py-20 mb-10 max-w-none"
-        style={{ backgroundColor: '#9E9E9E', height: '640px' }}
+        style={{ backgroundColor: '#9E9E9E', height: '400px' }}
       >
         <h1 className="text-4xl font-bold">이미지</h1>
       </div>
