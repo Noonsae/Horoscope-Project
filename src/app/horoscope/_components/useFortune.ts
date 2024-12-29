@@ -3,11 +3,12 @@ import { useAddNewYearResultMutation } from '@/hooks/horoscope/useAddNewYearResu
 import { useNewDailyFortune } from '@/hooks/horoscope/useDailyFortuneQuery';
 import { useNewYearFortune } from '@/hooks/horoscope/useNewYearFortuneQuery';
 import { fetchStellaData } from '@/hooks/horoscope/useStellaQuery';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export const useFortune = () => {
   const params = useParams();
+  const router = useRouter();
   const id = params.id as string;
   const addNewYearMutation: any = useAddNewYearResultMutation(id);
   const addNewDailyMutation: any = useAddNewDailyResultMutation(id);
@@ -47,13 +48,16 @@ export const useFortune = () => {
     setCurrentFortuneType('daily');
   };
 
-  const handleySaveResult = () => {
+  const handleySaveResult = async () => {
     console.log('Saving result for:', currentFortuneType);
+
     if (currentFortuneType === 'newYear') {
-      addNewYearMutation.mutate(id);
+      await addNewYearMutation.mutateAsync(id);
     } else if (currentFortuneType === 'daily') {
-      addNewDailyMutation.mutate(id);
+      await addNewDailyMutation.mutateAsync(id);
     }
+
+    router.push('/share-result');
   };
 
   return {
