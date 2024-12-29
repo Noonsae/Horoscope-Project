@@ -3,13 +3,13 @@
 import React from 'react';
 import Loading from '@/app/loading';
 import ErrorPage from '@/components/ui/ErrorPage';
-import { useDailyResults, useYearResults } from '@/hooks/shareResult/useShareResultQuery';
 import DailyResultCard from '@/app/share-result/_components/DailyResultCard';
 import YearResultCard from '@/app/share-result/_components/YearResultCard';
+import { useDailyCardList, useYearCardList } from '@/hooks/shareResult/useQuery';
 
 const ResultList = () => {
-  const { data: dailyResults, isLoading: isDailyLoading, isError: isDailyError } = useDailyResults();
-  const { data: yearResults, isLoading: isYearLoading, isError: isYearError } = useYearResults();
+  const { data: dailyResults, isLoading: isDailyLoading, isError: isDailyError } = useDailyCardList();
+  const { data: yearResults, isLoading: isYearLoading, isError: isYearError } = useYearCardList();
 
   if (isDailyLoading || isYearLoading) return <Loading />;
   if (isDailyError || isYearError) return <ErrorPage message="데이터를 가져오는 중 오류가 발생했습니다." />;
