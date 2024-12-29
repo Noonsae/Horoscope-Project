@@ -8,7 +8,7 @@ const GuestHomePage = () => {
   return (
     <div className="w-full min-h-screen bg-gradient pb-[180px]">
       {/* Hero Section */}
-      <div
+      <section
         className="h-[640px] bg-cover bg-center mb-[150px]"
         style={{
           backgroundImage: "url('images/night_sky.webp')",
@@ -19,7 +19,7 @@ const GuestHomePage = () => {
         }}
       >
         <h1 className="text-4xl font-bold sr-only">Hero Section</h1>
-      </div>
+      </section>
 
       {/* Cards Section */}
       <div className="w-full space-y-6 max-w-none">
