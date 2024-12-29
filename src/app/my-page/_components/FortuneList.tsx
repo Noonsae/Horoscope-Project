@@ -3,7 +3,6 @@
 import React from 'react';
 import Loading from '@/app/loading';
 import ErrorPage from '@/components/ui/ErrorPage';
-
 import DailyResultCard from '@/app/share-result/_components/DailyResultCard';
 import YearResultCard from '@/app/share-result/_components/YearResultCard';
 import { useDailyCardList, useYearCardList } from '@/hooks/shareResult/useQuery';
