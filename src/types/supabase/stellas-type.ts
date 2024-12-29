@@ -6,5 +6,6 @@ export type stellas = Tables<'stellas'> & {
     name: String;
     description: String;
     img_url: string;
+    button_img: string;
   };
 };
