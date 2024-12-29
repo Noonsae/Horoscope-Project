@@ -1,13 +1,10 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import Loading from '@/app/loading';
+import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useMutation';
+import useGuestbookData from '@/hooks/guestbook/useQuery';
+import changeTime from '@/utils/changeTime';
 import { getId } from '@/utils/guestbook';
 import Image from 'next/image';
-
-import changeTime from '@/utils/changeTime';
-import Loading from '@/app/loading';
-import useGuestbookData from '@/hooks/guestbook/useQuery';
-import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useMutation';
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
 const CommentList = () => {
@@ -21,11 +18,13 @@ const CommentList = () => {
 
   useEffect(() => {
     const fetchUserId = async () => {
-      const userId = await getId();
+      const userId = await getId(); // 로그인된 사용자 ID 가져오기
       setCurrentId(userId);
     };
     fetchUserId();
   }, []);
+
+  const filteredComments = comments?.filter((comment) => comment.user_id === currentId); // 현재 사용자 ID와 일치하는 댓글만
 
   const handleSave = (id: string) => {
     if (!editedComment.trim()) {
@@ -50,7 +49,7 @@ const CommentList = () => {
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto my-8 w-[800px] bg-gradient-to-b from-black to-purple-900 p-6 shadow-lg rounded gap-6">
-      {comments?.map((comment) => (
+      {filteredComments?.map((comment) => (
         <div
           key={comment.id}
           className="flex flex-col justify-center items-center mx-auto w-[750px] bg-white p-6 shadow-lg rounded"
