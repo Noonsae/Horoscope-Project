@@ -58,7 +58,7 @@ const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
         >
           {/* 카드 컨테이너 */}
           <div
-            className={`w-full h-full rounded-sm transform transition-transform duration-700`}
+            className={`w-full h-full rounded-sm transform transition-transform duration-700 ]`}
             style={{
               transformStyle: 'preserve-3d',
               transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
@@ -66,23 +66,23 @@ const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
           >
             {/* 카드 앞면 */}
             <div
-              className="absolute w-full h-full flex items-center justify-center bg-gradient rounded-md"
+              className="absolute w-full h-full flex items-center justify-center bg-gradient rounded-md rounded-[10px] shadow-[0px_8px_8px_rgba(0,0,0,0.7)]"
               style={{
                 backgroundImage: "url('images/horoscope_card.webp')",
-                backgroundSize: 'cover',
+                backgroundSize: '120%',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 width: '100%'
               }}
             >
-              <p className="text-xl font-bold text-white text-shadow-2xl text-center -mt-[180px]">
+              <p className="text-xl font-medium  text-[#fff] text-shadow-2xl text-center -mt-[180px]">
                 오늘의 운세를 <br></br> 확인하세요!
               </p>
             </div>
 
             {/* 카드 뒷면 */}
             <div
-              className="absolute w-full h-full flex items-center justify-center text-[#FFDA68] bg-gradient text-center p-[30px]"
+              className="absolute w-full h-full flex items-center justify-center text-[#FFDA68] bg-gradient text-center p-[30px] rounded-[10px] shadow-[0px_8px_8px_rgba(0,0,0,0.7)]"
               style={{
                 transform: 'rotateY(180deg)',
                 backfaceVisibility: 'hidden'
