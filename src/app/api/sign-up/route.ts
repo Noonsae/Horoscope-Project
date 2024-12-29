@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const body = await request.json();
   console.log('API Received Payload:', body); // 여기서 전달된 데이터 확인
 
-  const supabase = serverSupabase();
+  const supabase = await serverSupabase();
 
   const { email, password, nickname, birth_date } = await request.json();
 
