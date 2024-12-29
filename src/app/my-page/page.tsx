@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import { Contents, MyProfile } from './_components';
 
@@ -9,6 +9,9 @@ import { useUpdateProfile } from '@/hooks/profile/useUpdateProfile';
 import useAuthStore from '@/store/useAuth';
 import { User } from '@/types/supabase/user-type';
 
+const DEFAULT_PROFILE_IMAGE =
+  'https://qxytgvrleqpskxcfuvja.supabase.co/storage/v1/object/public/profile_images/default_profile_img.webp';
+
 const MyPage = () => {
   const user = useAuthStore((state) => state.user) as User | null;
   const [activeTab, setActiveTab] = useState<'fortune' | 'comments' | 'profile'>('fortune');
@@ -16,6 +19,13 @@ const MyPage = () => {
   const [newNickname, setNewNickname] = useState<string>('');
 
   const { comments, commentsPending, commentsError } = useFetchGuestbookComments(user?.id || null);
+
+  // 기본 프로필 이미지 설정
+  const profileImgSrc = useMemo(() => {
+    return newProfileImg instanceof File
+      ? URL.createObjectURL(newProfileImg)
+      : user?.profile_img || DEFAULT_PROFILE_IMAGE;
+  }, [newProfileImg, user?.profile_img]);
 
   const confirmDeleteComment = (id: string) => {
     if (window.confirm('댓글을 정말 삭제하시겠습니까?')) {
@@ -34,7 +44,8 @@ const MyPage = () => {
   return (
     <section className="min-h-screen flex flex-col">
       <article className="text-center py-10">
-        <MyProfile newProfileImg={newProfileImg} setNewProfileImg={(value) => setNewProfileImg(value)} />
+        {/* MyProfile 컴포넌트에 기본 프로필 이미지 전달 */}
+        <MyProfile newProfileImg={profileImgSrc} setNewProfileImg={(value) => setNewProfileImg(value)} />
       </article>
 
       <article className="max-w-[1200px] mx-auto flex flex-row justify-start gap-4 py-4">

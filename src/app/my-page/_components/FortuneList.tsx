@@ -6,52 +6,34 @@ import ErrorPage from '@/components/ui/ErrorPage';
 import { useDailyResults, useYearResults } from '@/hooks/shareResult/useQuery';
 import DailyResultCard from '@/app/share-result/_components/DailyResultCard';
 import YearResultCard from '@/app/share-result/_components/YearResultCard';
-import useAuth from '@/hooks/guestbook/useAuth';
-
 
 const ResultList = () => {
-  // 현재 로그인된 사용자 정보 가져오기
-  const { user, isLoading: authLoading } = useAuth();
+  const { data: dailyResults, isLoading: isDailyLoading, isError: isDailyError } = useDailyResults();
+  const { data: yearResults, isLoading: isYearLoading, isError: isYearError } = useYearResults();
 
-  // 로딩 중일 때
-  if (authLoading) return <Loading />;
+  if (isDailyLoading || isYearLoading) return <Loading />;
+  if (isDailyError || isYearError) return <ErrorPage message="데이터를 가져오는 중 오류가 발생했습니다." />;
 
-  // 사용자가 로그인되어 있지 않을 때
-  if (!user) return <ErrorPage message="로그인이 필요합니다." />;
-
-  // 회원 ID
-  const userId = user.id;
-
-  // 오늘의 운세와 올해의 운세 쿼리 실행
-  const { data: dailyResults, isError: isDailyError, isPending: isDailyPending } = useDailyResults(userId);
-  const { data: yearResults, isError: isYearError, isPending: isYearPending } = useYearResults(userId);
-
-  // 로딩 상태: 두 쿼리 중 하나라도 로딩 중이라면 표시
-  if (isDailyPending || isYearPending) return <Loading />;
-
-  // 에러 상태: 두 쿼리 중 하나라도 에러가 발생하면 표시
-  if (isDailyError || isYearError) return <ErrorPage />;
-
-  // 렌더링
   return (
     <div className="flex flex-col gap-12">
-      {/* Daily Results */}
       <div>
         <h2 className="text-xl font-bold mb-4">오늘의 운세</h2>
         <div className="flex flex-wrap gap-6">
-          {dailyResults.map((result) => (
-            <DailyResultCard key={result.id} result={result} />
-          ))}
+          {dailyResults?.length ? (
+            dailyResults.map((result) => <DailyResultCard key={result.id} result={result} />)
+          ) : (
+            <p className="text-gray-500">오늘의 운세 데이터가 없습니다.</p>
+          )}
         </div>
       </div>
-
-      {/* Year Results */}
       <div>
         <h2 className="text-xl font-bold mb-4">올해의 운세</h2>
         <div className="flex flex-wrap gap-6">
-          {yearResults.map((result) => (
-            <YearResultCard key={result.id} result={result} />
-          ))}
+          {yearResults?.length ? (
+            yearResults.map((result) => <YearResultCard key={result.id} result={result} />)
+          ) : (
+            <p className="text-gray-500">올해의 운세 데이터가 없습니다.</p>
+          )}
         </div>
       </div>
     </div>

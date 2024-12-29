@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { HiOutlineX, HiOutlineMenu } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import useAuthStore from '@/store/useAuth';
 
 const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<any>(null);
@@ -18,8 +19,8 @@ const Header = () => {
 
   const closeMenu = () => {
     setMenuToggle((prev) => !prev);
-  }
- 
+  };
+
   useEffect(() => {
     // 초기 유저 상태 가져오기
     const fetchUser = async () => {
@@ -40,10 +41,12 @@ const Header = () => {
   }, []);
 
   const logout = async () => {
-    await supabase.auth.signOut();
-    setIsAuthenticated(null);
-    router.push('/');
-    closeMenu();
+    await supabase.auth.signOut(); // Supabase 세션 종료
+    setIsAuthenticated(null); // 상태 초기화
+    useAuthStore.getState().clearAuth(); // Zustand 상태 초기화
+    localStorage.removeItem('auth-storage'); // 로컬 스토리지에서 사용자 정보 삭제
+    router.push('/'); // 홈으로 리다이렉트
+    closeMenu(); // 모바일 메뉴 닫기
   };
 
   return (
