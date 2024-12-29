@@ -1,66 +1,68 @@
 import React from 'react';
-import { FortuneList, CommentList } from './'; // 각 콘텐츠 컴포넌트 임포트
-import { Comment } from '@/types/supabase/guestbook-type'; // Comment 타입 임포트
+import CommentList from './CommentList';
+import { FortuneList } from '.';
 
 interface ContentsProps {
-  activeTab: 'fortune' | 'comments' | 'profile';
-  comments: Comment[];
-  newProfileImg: string | File | null;
-  confirmDeleteComment: (id: string) => void;
-  newNickname: string;
-  setNewNickname: (value: string) => void;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>; // 수정된 부분
-  commentsPending: boolean;
-  commentsError: boolean;
+  activeTab: 'fortune' | 'comments' | 'profile'; // 활성화된 탭
+  comments: Array<any>; // 댓글 데이터
+  newNickname: string; // 닉네임 상태
+  setNewNickname: (value: string) => void; // 닉네임 상태 변경 함수
+  newProfileImg: string | File | null; // 프로필 이미지 상태
+  setNewProfileImg: (value: string | File | null) => void; // 프로필 이미지 변경 함수
+  confirmDeleteComment: (id: string) => void; // 댓글 삭제 함수
+  commentsPending: boolean; // 댓글 로딩 상태
+  commentsError: boolean; // 댓글 에러 상태
 }
 
 const Contents: React.FC<ContentsProps> = ({
   activeTab,
   comments,
-  newProfileImg,
-  confirmDeleteComment,
   newNickname,
   setNewNickname,
-  handleSubmit,
+  confirmDeleteComment,
   commentsPending,
   commentsError
 }) => {
-  return (
-    <div className="w-full h-[800px]">
-      {activeTab === 'fortune' && <FortuneList />}
-      {activeTab === 'comments' && (
-        <>
-          {commentsPending ? (
-            <p>로딩중입니다...</p>
-          ) : commentsError ? (
-            <p className="font-semibold">댓글 데이터를 가져오는 중 에러가 발생했습니다.</p>
-          ) : (
-            <CommentList
-              comments={comments}
-              newProfileImg={newProfileImg}
-              confirmDeleteComment={confirmDeleteComment}
+  if (activeTab === 'fortune') {
+    return <FortuneList/>;
+  }
+
+  if (activeTab === 'comments') {
+    return (
+      <CommentList/>
+    );
+  }
+
+  if (activeTab === 'profile') {
+    return (
+      <div className="max-w-[600px] mx-auto mt-10">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            alert(`닉네임: ${newNickname}, 프로필 이미지 업로드 완료!`);
+          }}
+        >
+          {/* 닉네임 변경 */}
+          <div className="mb-6">
+            <label className="block font-bold mb-2">닉네임 변경</label>
+            <input
+              type="text"
+              value={newNickname}
+              onChange={(e) => setNewNickname(e.target.value)}
+              placeholder="변경할 닉네임을 입력하세요."
+              className="border px-4 py-2 w-full rounded"
             />
-          )}
-        </>
-      )}
-      {activeTab === 'profile' && (
-        <div>
-          {activeTab === 'profile' && (
-            <form onSubmit={handleSubmit}>
-              <p>프로필 변경</p>
-              <input
-                type="text"
-                value={newNickname}
-                onChange={(e) => setNewNickname(e.target.value)}
-                placeholder="변경하실 닉네임을 입력해주세요."
-              />
-              <button type="submit">프로필 저장</button>
-            </form>
-          )}
-        </div>
-      )}
-    </div>
-  );
+          </div>
+
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            저장하기
+          </button>
+        </form>
+      </div>
+    );
+  }
+
+  return null;
 };
 
 export default Contents;

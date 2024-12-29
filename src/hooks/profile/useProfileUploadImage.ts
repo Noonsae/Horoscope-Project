@@ -47,7 +47,7 @@ export const useProfileUploadImage = (
           throw new Error(`이미지 업로드 에러: ${error.message}`);
         }
 
-        const newImg = `https://zvnqewxnkcdqqlskzqlz.supabase.co/storage/v1/object/public/profile_img/${data?.path}`;
+        const newImg = `https://qxytgvrleqpskxcfuvja.supabase.co/storage/v1/s3/object/public/profile_img/${data?.path}`;
         setNewProfileImg(newImg); // 업로드된 이미지 URL로 상태 업데이트
 
         // 성공 알림

@@ -44,7 +44,7 @@ const MyPage = () => {
           }`}
           onClick={() => setActiveTab('fortune')}
         >
-          별자리 운세
+          운세 기록
         </button>
         <button
           className={`px-6 py-2 rounded ${
@@ -52,7 +52,7 @@ const MyPage = () => {
           }`}
           onClick={() => setActiveTab('comments')}
         >
-          댓글
+          댓글 내역
         </button>
         <button
           className={`px-6 py-2 rounded ${
@@ -60,7 +60,7 @@ const MyPage = () => {
           }`}
           onClick={() => setActiveTab('profile')}
         >
-          프로필 변경
+          정보 수정
         </button>
       </article>
 
