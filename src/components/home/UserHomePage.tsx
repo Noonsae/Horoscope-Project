@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 import { getStellaId } from '@/utils/stellaCalculator';
 import { Tables } from '@/types/supabase/supabase-type';
 import Link from 'next/link';
@@ -11,34 +13,79 @@ type Props = {
 };
 
 const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
+  const [isFlipped, setIsFlipped] = useState(false);
+  useEffect(() => {
+    console.log('dailyFortunes:', dailyFortunes);
+    console.log('userMonthDay:', userMonthDay);
+  }, [dailyFortunes, userMonthDay]);
+
   if (!userMonthDay) {
     return <p>별자리 정보를 찾을 수 없습니다.</p>;
   }
 
   // 사용자 별자리 ID 가져오기
   const stellaId = getStellaId(new Date(`2000-${userMonthDay}`)); //
-
+  const flipCard = () => setIsFlipped((prev) => !prev);
   // stella_id 기반 오늘의 운세 찾기
-  const todayFortune = dailyFortunes.find((fortune) => {
-    const stellaMatch = fortune.stella_id === stellaId;
-    return stellaMatch;
-  });
+  const todayFortune = dailyFortunes.find((fortune) => fortune.stella_id === stellaId);
+
+  if (!todayFortune) {
+    return <p>오늘의 운세를 찾을 수 없습니다.</p>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       {/* Hero Section */}
       <div
-        className="w-full text-center py-20 mb-10 max-w-none"
-        style={{ backgroundColor: '#9E9E9E', height: '400px' }}
+        className="w-full text-center py-8 mb-10 max-w-none bg-gradient-to-b from-black to-purple-900 "
+        style={{ height: '400px' }}
       >
-        <h1 className="text-4xl font-bold">오늘의 운세</h1>
-        <h1 className="text-4xl font-bold">
-          {todayFortune ? todayFortune.content : '오늘의 운세를 찾을 수 없습니다.'}
-        </h1>
+        <h2 className="text-white text-xl font-bold">오늘의 운세</h2>
+
+        {/* 운세 카드 */}
+        <div
+          className="relative w-[200px] mt-10 h-[250px] rounded-lg shadow-lg cursor-pointer mx-auto"
+          onClick={flipCard}
+          style={{
+            perspective: '1000px'
+          }}
+        >
+          {/* 카드 컨테이너 */}
+          <div
+            className={`w-full h-full rounded-lg bg-white transform transition-transform duration-700`}
+            style={{
+              transformStyle: 'preserve-3d',
+              transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)'
+            }}
+          >
+            {/* 카드 앞면 */}
+            <div
+              className="absolute w-full h-full flex items-center justify-center text-black bg-white rounded-lg border border-gray-300"
+              style={{
+                backfaceVisibility: 'hidden'
+              }}
+            >
+              <p className="text-xl font-bold">
+                오늘의 운세를 <br></br> 확인하세요!
+              </p>
+            </div>
+
+            {/* 카드 뒷면 */}
+            <div
+              className="absolute w-full h-full flex items-center justify-center text-black bg-gray-100 rounded-lg border border-gray-300"
+              style={{
+                transform: 'rotateY(180deg)',
+                backfaceVisibility: 'hidden'
+              }}
+            >
+              <p className="text-lg">{todayFortune?.content || '오늘의 운세를 찾을 수 없습니다.'}</p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Cards Section */}
-      <div className="w-full space-y-6 max-w-none">
+      <div className="w-full space-y-6 max-w-none mt-10">
         {/* 첫 번째 카드 */}
         <div className="flex rounded-lg p-6 items-center h-[640px] bg-gray-200" style={{ backgroundColor: '#EEEEEE' }}>
           <div className="w-[400px] h-[400px] rounded-lg ml-32" style={{ backgroundColor: '#9E9E9E' }}></div>
