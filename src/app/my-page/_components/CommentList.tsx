@@ -1,51 +1,127 @@
-import { Comment } from '@/types/supabase/guestbook-type'; // 타입 파일 경로 확인
-import TrashCanIcon from './TrashCanIcon';
+import Loading from '@/app/loading';
+import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useGuestbookMutation';
+import useGuestbookData from '@/hooks/guestbook/useGuestbookQuery';
+import changeTime from '@/utils/changeTime';
+import { getId } from '@/utils/guestbook';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
 
-// CommentListProps 정의
-interface CommentListProps {
-  comments: Comment[];
-  confirmDeleteComment: (id: string) => void;
-}
+const CommentList = () => {
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editedComment, setEditedComment] = useState<string>('');
+  const [currentId, setCurrentId] = useState<string | null>(null);
 
-const CommentList: React.FC<CommentListProps> = ({ comments, confirmDeleteComment }) => {
+  const { data: comments, isError, isPending } = useGuestbookData();
+  const updateMutation = useUpdateComment();
+  const deleteMutation = useDeleteComment();
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const userId = await getId(); // 로그인된 사용자 ID 가져오기
+      setCurrentId(userId);
+    };
+    fetchUserId();
+  }, []);
+
+  const filteredComments = comments?.filter((comment) => comment.user_id === currentId); // 현재 사용자 ID와 일치하는 댓글만
+
+  const handleSave = (id: string) => {
+    if (!editedComment.trim()) {
+      Swal.fire({
+        title: '오류',
+        text: '덕담을 입력해주세요.',
+        icon: 'error',
+        confirmButtonText: '확인'
+      });
+      return;
+    }
+    updateMutation.mutate({ editingComment: editedComment, editingId: id });
+    setEditingCommentId(null);
+  };
+
+  const handleDelete = (id: string) => {
+    deleteMutation.mutate(id);
+  };
+
+  if (isPending) return <Loading />;
+  if (isError) return <div>에러 발생!</div>;
+
   return (
-    <ul>
-      {comments.map((comment) => (
-        <li
+    <div className="flex flex-col justify-center items-center mx-auto my-8 w-[800px] bg-gradient-to-b from-black to-purple-900 p-6 shadow-lg rounded gap-6">
+      {filteredComments?.map((comment) => (
+        <div
           key={comment.id}
-          className="w-[700px] p-4 flex flex-col items-start rounded-xl mb-8 text-black bg-white shadow-md"
+          className="flex flex-col justify-center items-center mx-auto w-[750px] bg-white p-6 shadow-lg rounded"
         >
-          <div className="flex items-center">
-            <img src={comment.users?.profile_img || ''} className="w-12 h-12 rounded-full" alt="프로필 사진" />
-            <div className="pl-3 flex flex-col justify-start">
-              <h1 className="font-semibold text-start">{comment.comment}</h1>
-              <p className="text-sm text-gray-500">게스트북</p>
+          <div className="flex justify-between items-center w-full">
+            <div className="flex items-center gap-2">
+              <Image
+                className="w-10 h-10 bg-gray-500 rounded-full"
+                src={comment.users?.profile_img || '/images/default_profile_img.webp'}
+                alt="프로필 이미지"
+                width={100}
+                height={100}
+              />
+              <p className="font-medium">{comment.users?.nickname}</p>
+              <p className="text-xs text-gray-500">{changeTime(comment.created_at)}</p>
+            </div>
+            <div className="flex space-x-2">
+              {currentId && currentId === comment.user_id && editingCommentId === comment.id ? (
+                <>
+                  <button
+                    className="border border-gray-300 rounded px-2 py-1"
+                    type="button"
+                    onClick={() => handleSave(comment.id)}
+                  >
+                    저장
+                  </button>
+                  <button
+                    className="border border-gray-300 rounded px-2 py-1"
+                    type="button"
+                    onClick={() => setEditingCommentId(null)}
+                  >
+                    취소
+                  </button>
+                </>
+              ) : (
+                currentId &&
+                currentId === comment.user_id && (
+                  <button
+                    className="border border-gray-300 rounded px-2 py-1"
+                    type="button"
+                    onClick={() => {
+                      setEditingCommentId(comment.id);
+                      setEditedComment(comment.comment);
+                    }}
+                  >
+                    수정
+                  </button>
+                )
+              )}
+              {currentId && currentId === comment.user_id && (
+                <button
+                  className="border border-gray-300 rounded px-2 py-1"
+                  type="button"
+                  onClick={() => handleDelete(comment.id)}
+                >
+                  &times;
+                </button>
+              )}
             </div>
           </div>
-
-          <div className="w-full flex justify-between items-center pl-[60px] mt-2">
-            <p className="text-sm text-gray-400">
-              {new Date(comment.created_at).toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit'
-              })}
-            </p>
-
-            <button
-              type="button"
-              onClick={() => confirmDeleteComment(comment.id)}
-              className="text-red-500 hover:text-red-700"
-              aria-label="댓글 삭제"
-            >
-              <TrashCanIcon />
-            </button>
-          </div>
-        </li>
+          {editingCommentId === comment.id ? (
+            <textarea
+              value={editedComment}
+              onChange={(e) => setEditedComment(e.target.value)}
+              className="leading-[1.8rem] mt-4 flex-grow px-2 py-1 border rounded w-full max-w-full h-10 resize-none"
+            />
+          ) : (
+            <p className="mr-auto mt-4 flex-grow px-2 py-1">{comment.comment}</p>
+          )}
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

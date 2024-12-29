@@ -1,4 +1,4 @@
-"use server"
+'use server';
 
 // @lib/supabase-server.ts
 

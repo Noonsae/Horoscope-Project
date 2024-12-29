@@ -5,10 +5,11 @@ import Link from 'next/link';
 import { HiOutlineX, HiOutlineMenu } from 'react-icons/hi';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import useAuthStore from '@/store/useAuth';
 
 const Header = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<any>(null);
   const [menuToggle, setMenuToggle] = useState(false);
+  const { isLoggedIn, fetchAndSetAuth, clearAuth } = useAuthStore();
 
   const router = useRouter();
 
@@ -17,33 +18,33 @@ const Header = () => {
   };
 
   const closeMenu = () => {
-    setMenuToggle((prev) => !prev);
-  }
- 
+    setMenuToggle(false);
+  };
+
   useEffect(() => {
     // 초기 유저 상태 가져오기
-    const fetchUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setIsAuthenticated(data.user);
-    };
-    fetchUser();
+    fetchAndSetAuth();
 
     // 로그인/로그아웃 상태 변화 감지
     const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsAuthenticated(session?.user || null);
+      if (session?.user) {
+        fetchAndSetAuth();
+      } else {
+        clearAuth();
+      }
     });
 
     // 컴포넌트 언마운트 시 구독 해제
     return () => {
       data.subscription.unsubscribe();
     };
-  }, []);
+  }, [fetchAndSetAuth, clearAuth]);
 
   const logout = async () => {
-    await supabase.auth.signOut();
-    setIsAuthenticated(null);
-    router.push('/');
-    closeMenu();
+    await supabase.auth.signOut(); // Supabase 세션 종료
+    clearAuth(); // Zustand 상태 초기화
+    router.push('/'); // 홈으로 리다이렉트
+    closeMenu(); // 모바일 메뉴 닫기
   };
 
   return (
@@ -73,7 +74,7 @@ const Header = () => {
           </div>
         </div>
         <div>
-          {isAuthenticated ? (
+          {isLoggedIn ? (
             <div className="flex items-center space-x-4">
               <Link href="/my-page" className="hover:text-yellow-400">
                 마이페이지
@@ -123,7 +124,7 @@ const Header = () => {
         <Link onClick={closeMenu} href="/guestbook" className="hover:text-yellow-400">
           덕담
         </Link>
-        {isAuthenticated ? (
+        {isLoggedIn ? (
           <div className="flex flex-col gap-2">
             <Link onClick={closeMenu} href="/my-page" className="hover:text-yellow-400">
               마이페이지
@@ -141,4 +142,5 @@ const Header = () => {
     </nav>
   );
 };
+
 export default Header;

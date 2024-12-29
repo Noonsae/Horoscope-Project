@@ -21,14 +21,14 @@ export const fetchNewYearFortune = async (stellaId: string): Promise<string | nu
     throw error;
   }
 
-  return data?.content || null; // Return content or null if not found
+  return data?.content || null; 
 };
 
 export const useNewYearFortune = (stellaId: string) => {
   return useQuery<string | null, Error>({
     queryKey: ['new_year_fortune', stellaId],
     queryFn: () => fetchNewYearFortune(stellaId),
-    enabled: !!stellaId // Only run query if stellaId is available
+    enabled: !!stellaId 
   });
 };
 

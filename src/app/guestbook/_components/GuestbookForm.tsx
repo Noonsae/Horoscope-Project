@@ -1,7 +1,7 @@
 'use client';
 
-import useAuth from '@/hooks/guestbook/useAuth';
-import { useAddCommentMutation } from '@/hooks/guestbook/useMutation';
+import useAuth from '@/hooks/guestbook/useGuestbookAuth';
+import { useAddCommentMutation } from '@/hooks/guestbook/useGuestbookMutation';
 import { useRef } from 'react';
 
 const GuestbookForm = () => {
@@ -14,6 +14,7 @@ const GuestbookForm = () => {
     if (inputRef.current && inputRef.current.value !== '') {
       const newComment = inputRef.current.value;
       addMutation.mutate(newComment);
+      inputRef.current!.value = '';
     }
   };
 

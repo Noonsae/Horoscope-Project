@@ -1,6 +1,6 @@
 import { Tables } from "./supabase-type";
 
-export type DailyList = Tables<'daily_results'> & {
+export type DailyListType = Tables<'daily_results'> & {
   users?: {
     nickname?: string;
     profile_img?: string | null;
@@ -10,7 +10,7 @@ export type DailyList = Tables<'daily_results'> & {
   };
 };
 
-export type YearList = Tables<'new_year_results'> & {
+export type YearListType = Tables<'new_year_results'> & {
   users: {
     nickname: string;
     profile_img: string | null;
