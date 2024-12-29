@@ -21,9 +21,13 @@ const ShareResultsPage = () => {
           backgroundRepeat: 'no-repeat'
         }}
       >
-        <h2 className="text-white text-[26px] font-bold text-center">
+        <h2 className="text-white text-[26px] font-bold text-center z-10">
           별자리가 들려준 이야기를 다른 사람과 공유해보세요.
         </h2>
+        {/* overlay */}
+        <div className="indent-[-9999px] absolute inset-0 w-full h-full bg-[rgba(0,0,0,0.2)]">
+          <span className="sr-only">overlay</span>
+        </div>
       </section>
 
       <div className="max-w-[1200px] mx-auto">
