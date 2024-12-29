@@ -11,7 +11,7 @@ async function getNewDailyFortune(stellaId: string) {
   const { data, error } = await supabase.from('daily_fortunes').select('content').eq('stella_id', stellaId).single();
 
   if (error) {
-    console.error('신년 운세 데이터 불러오기 실패!', error);
+    console.error('일일 운세 데이터 불러오기 실패!', error);
     return null;
   }
 
