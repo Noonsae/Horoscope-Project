@@ -2,6 +2,7 @@
 
 import { supabase } from '@/lib/supabase';
 import { useMutation } from '@tanstack/react-query';
+import Swal from 'sweetalert2';
 
 export const getId = async (): Promise<string | null> => {
   const { data, error } = await supabase.auth.getUser();
@@ -45,6 +46,22 @@ export const addNewYearResult = async (id: string): Promise<any> => {
 
 export const useAddNewYearResultMutation = (id: string) => {
   return useMutation<string, Error>({
-    mutationFn: (id) => addNewYearResult(id!)
+    mutationFn: (id) => addNewYearResult(id!),
+    onSuccess: () => {
+      Swal.fire({
+        title: '성공',
+        text: '신년운세가 성공적으로 추가되었습니다!',
+        icon: 'success',
+        confirmButtonText: '확인'
+      });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '오류',
+        text: '신년운세를 추가하는 도중 문제가 발생했습니다.',
+        icon: 'error',
+        confirmButtonText: '확인'
+      });
+    }
   });
 };

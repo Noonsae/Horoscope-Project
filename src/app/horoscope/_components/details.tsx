@@ -1,65 +1,24 @@
 'use client';
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
-import { fetchStellaData } from '@/hooks/horoscope/useStellaQuery';
-import { useNewYearFortune } from '@/hooks/horoscope/useNewYearFortuneQuery';
-import { useNewDailyFortune } from '@/hooks/horoscope/useDailyFortuneQuery';
+import React from 'react';
 import Loading from '@/app/loading';
 import ErrorPage from '@/components/ui/ErrorPage';
-import { useAddNewYearResultMutation } from '@/hooks/horoscope/useAddNewYearResult';
-import { useAddNewDailyResultMutation } from '@/hooks/horoscope/useAddNewDailyResult'; // Import your new hook
+import { useFortune } from './useFortune';
 
 const Details: React.FC = () => {
-  const params = useParams();
-  const id = params.id as string;
-  const addNewYearMutation: any = useAddNewYearResultMutation(id);
-  const addNewDailyMutation: any = useAddNewDailyResultMutation(id);
-  const [stella, setStella] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [showFortune, setShowFortune] = useState(false);
-  const [showDailyFortune, setShowDailyFortune] = useState(false);
-
-  const [currentFortuneType, setCurrentFortuneType] = useState<'newYear' | 'daily' | null>(null);
-  const { data: fortuneContent, isLoading: fortuneLoading } = useNewYearFortune(stella?.id || '');
-  const { data: dailyFortuneContent, isLoading: dailyFortuneLoading } = useNewDailyFortune(stella?.id || '');
-
-  // Fetch Stella data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchStellaData(id);
-        setStella(data);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [id]);
-
-  const handleShowFortune = () => {
-    setShowFortune(true);
-    setShowDailyFortune(false);
-    setCurrentFortuneType('newYear'); // Set current fortune type
-  };
-
-  const handleShowDailyFortune = () => {
-    setShowDailyFortune(true);
-    setShowFortune(false);
-    setCurrentFortuneType('daily'); // Set current fortune type
-  };
-
-  const handleySaveResult = () => {
-    console.log('Saving result for:', currentFortuneType);
-
-    if (currentFortuneType === 'daily') {
-      addNewDailyMutation.mutate(id); // Save Daily Fortune
-    } else if (currentFortuneType === 'newYear') {
-      addNewYearMutation.mutate(id); // Save New Year Fortune
-    }
-  };
+  const {
+    stella,
+    isLoading,
+    error,
+    showFortune,
+    showDailyFortune,
+    fortuneContent,
+    fortuneLoading,
+    dailyFortuneContent,
+    dailyFortuneLoading,
+    handleShowFortune,
+    handleShowDailyFortune,
+    handleySaveResult
+  } = useFortune();
 
   if (isLoading) return <Loading />;
   if (error) return <ErrorPage />;

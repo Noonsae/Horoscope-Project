@@ -9,13 +9,13 @@ export const fetchNewDailyFortune = async (stellaId: string): Promise<string | n
     throw error;
   }
 
-  return data?.content || null; // Return content or null if not found
+  return data?.content || null; 
 };
 
 export const useNewDailyFortune = (stellaId: string) => {
   return useQuery<string | null, Error>({
     queryKey: ['daily_fortunes', stellaId],
     queryFn: () => fetchNewDailyFortune(stellaId),
-    enabled: !!stellaId // Only run query if stellaId is available
+    enabled: !!stellaId 
   });
 };
