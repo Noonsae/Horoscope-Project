@@ -52,9 +52,9 @@ const Header = () => {
       {/* Desktop Menu */}
       <div className="w-full max-w-[1200px] mx-auto h-[80px] md:flex justify-between items-center px-8 py-3">
         <div className="flex items-center justify-between w-[80%]">
-          <div className="text-lg font-bold text-[30px] mr-10">
+          <h1 className="text-lg font-bold text-[30px] mr-10">
             <Link href="/">Stella</Link>
-          </div>
+          </h1>
           <div className="flex flex-row w-full justify-around items-center space-x-6 text-[16px]">
             <Link href="/constellation" className="hover:text-yellow-400 p-5">
               별자리소개
