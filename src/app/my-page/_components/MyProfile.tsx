@@ -25,7 +25,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ newProfileImg, setNewProfileImg }
       <label htmlFor="imgFile" className="relative group cursor-pointer block w-[138px] h-[138px] mx-auto">
         {/* 이미지 */}
         <img src={profileImgSrc} alt="프로필 사진" className="w-full h-full object-cover rounded-full" />
-        <div className="absolute inset-0 flex items-center justify-center text-white bg-black bg-opacity-50 rounded-full">
+        <div className="absolute inset-0 flex items-center justify-center text-white bg-black bg-opacity-50 rounded-full sr-only">
           프로필 사진
         </div>
 
@@ -51,7 +51,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ newProfileImg, setNewProfileImg }
       />
 
       {/* 닉네임 표시 */}
-      <h1 className="mt-[20px] text-white font-medium text-[20px]">{user?.nickname || '익명 사용자'}</h1>
+      <h1 className="mt-[20px] text-white font-medium text-[26px] font-bold">{user?.nickname || '익명 사용자'}</h1>
     </div>
   );
 };

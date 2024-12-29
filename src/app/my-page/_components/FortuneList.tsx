@@ -16,9 +16,9 @@ const ResultList = () => {
 
   return (
     <div className="flex flex-col gap-12">
-      <div>
-        <h2 className="text-xl font-bold mb-4">오늘의 운세</h2>
-        <div className="flex flex-wrap gap-6">
+      <div className="mt-10">
+        <h2 className="text-[26px] font-bold mb-4 text-white">오늘의 운세</h2>
+        <div className=" gap-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {dailyResults?.length ? (
             dailyResults.map((result) => <DailyResultCard key={result.id} result={result} />)
           ) : (
@@ -26,9 +26,10 @@ const ResultList = () => {
           )}
         </div>
       </div>
-      <div>
-        <h2 className="text-xl font-bold mb-4">올해의 운세</h2>
-        <div className="flex flex-wrap gap-6">
+      <hr className="mt-[30px]" />
+      <div className="mt-10">
+        <h2 className="text-[26px] font-bold mb-4 text-white">올해의 운세</h2>
+        <div className="gap-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {yearResults?.length ? (
             yearResults.map((result) => <YearResultCard key={result.id} result={result} />)
           ) : (

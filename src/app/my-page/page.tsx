@@ -42,51 +42,53 @@ const MyPage = () => {
   );
 
   return (
-    <section className="min-h-screen flex flex-col">
-      <article className="text-center py-10">
-        {/* MyProfile 컴포넌트에 기본 프로필 이미지 전달 */}
-        <MyProfile newProfileImg={profileImgSrc} setNewProfileImg={(value) => setNewProfileImg(value)} />
-      </article>
+    <div className=" bg-gradient py-[150px]">
+      <section className="w-full max-w-[1200px] mx-auto min-h-screen flex flex-col ">
+        <article className="text-center pb-[50px]">
+          {/* MyProfile 컴포넌트에 기본 프로필 이미지 전달 */}
+          <MyProfile newProfileImg={profileImgSrc} setNewProfileImg={(value) => setNewProfileImg(value)} />
+        </article>
 
-      <article className="max-w-[1200px] mx-auto flex flex-row justify-start gap-4 py-4">
-        <button
-          className={`px-6 py-2 rounded ${
-            activeTab === 'fortune' ? 'bg-gray-800 text-white' : 'bg-gray-300 hover:bg-gray-400'
-          }`}
-          onClick={() => setActiveTab('fortune')}
-        >
-          운세 기록
-        </button>
-        <button
-          className={`px-6 py-2 rounded ${
-            activeTab === 'comments' ? 'bg-gray-800 text-white' : 'bg-gray-300 hover:bg-gray-400'
-          }`}
-          onClick={() => setActiveTab('comments')}
-        >
-          댓글 내역
-        </button>
-        <button
-          className={`px-6 py-2 rounded ${
-            activeTab === 'profile' ? 'bg-gray-800 text-white' : 'bg-gray-300 hover:bg-gray-400'
-          }`}
-          onClick={() => setActiveTab('profile')}
-        >
-          정보 수정
-        </button>
-      </article>
+        <article className="max-w-[1200px] mx-auto flex flex-row justify-start gap-4 py-4">
+          <button
+            className={`px-6 py-2 rounded ${
+              activeTab === 'fortune' ? 'bg-white text-black' : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+            onClick={() => setActiveTab('fortune')}
+          >
+            운세 기록
+          </button>
+          <button
+            className={`px-6 py-2 rounded ${
+              activeTab === 'comments' ? 'bg-white text-black' : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+            onClick={() => setActiveTab('comments')}
+          >
+            댓글 내역
+          </button>
+          <button
+            className={`px-6 py-2 rounded ${
+              activeTab === 'profile' ? 'bg-white text-black' : 'bg-gray-300 hover:bg-gray-400'
+            }`}
+            onClick={() => setActiveTab('profile')}
+          >
+            정보 수정
+          </button>
+        </article>
 
-      <Contents
-        activeTab={activeTab}
-        comments={comments || []}
-        newProfileImg={newProfileImg}
-        confirmDeleteComment={confirmDeleteComment}
-        newNickname={newNickname}
-        setNewNickname={setNewNickname}
-        handleSubmit={handleSubmit}
-        commentsPending={commentsPending}
-        commentsError={commentsError}
-      />
-    </section>
+        <Contents
+          activeTab={activeTab}
+          comments={comments || []}
+          newProfileImg={newProfileImg}
+          confirmDeleteComment={confirmDeleteComment}
+          newNickname={newNickname}
+          setNewNickname={setNewNickname}
+          handleSubmit={handleSubmit}
+          commentsPending={commentsPending}
+          commentsError={commentsError}
+        />
+      </section>
+    </div>
   );
 };
 

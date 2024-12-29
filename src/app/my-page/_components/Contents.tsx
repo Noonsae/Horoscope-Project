@@ -35,8 +35,9 @@ const Contents: React.FC<ContentsProps> = ({
 
   if (activeTab === 'profile') {
     return (
-      <div className="max-w-[600px] mx-auto mt-10">
+      <div className="max-w-[600px] mx-auto mt-10 w-[400px]">
         <form
+          className="text-center"
           onSubmit={(e) => {
             e.preventDefault();
             alert(`닉네임: ${newNickname}, 프로필 이미지 업로드 완료!`);
@@ -44,7 +45,7 @@ const Contents: React.FC<ContentsProps> = ({
         >
           {/* 닉네임 변경 */}
           <div className="mb-6">
-            <label className="block font-bold mb-2">닉네임 변경</label>
+            <label className="block font-medium my-[20px] text-white text-[22px] float-left">닉네임 변경</label>
             <input
               type="text"
               value={newNickname}
@@ -54,7 +55,7 @@ const Contents: React.FC<ContentsProps> = ({
             />
           </div>
 
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+          <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700 w-[400px]">
             저장하기
           </button>
         </form>

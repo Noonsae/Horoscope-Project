@@ -10,7 +10,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ newNickname, setNewNickna
   return (
     <form onSubmit={handleSubmit} className="rounded-xl flex flex-col items-center">
       <div className="w-[500px] flex flex-col items-start mt-4">
-        <label className="text-[18px] mb-2">닉네임 변경</label>
+        <label className="text-[26px] mb-2 text-white">닉네임 변경</label>
         <input
           type="text"
           value={newNickname}
