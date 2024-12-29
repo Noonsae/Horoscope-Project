@@ -1,31 +1,27 @@
 'use client';
 
-import { useMutation, UseMutationResult } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+
 import Swal from 'sweetalert2';
 
 // 회원가입 요청에 사용할 데이터 타입 정의
 interface SignUpPayload {
   email: string;
-  password: string;
+  password: string;  
   nickname: string;
   birth_date: string;
 }
 
-// 회원가입 응답 데이터 타입 정의
-interface SignUpResult {
-  message: string;
-}
+// useSignUpMutation 훅 구현
+const useSignUpMutation = () => {
 
-// 커스텀 Mutation Result 타입 정의
-type CustomMutationResult = UseMutationResult<SignUpResult, unknown, SignUpPayload>;
-
-const useSignUpMutation = (): CustomMutationResult => {
   const router = useRouter();
 
-  return useMutation<SignUpResult, unknown, SignUpPayload>({
+  return useMutation({
     // 회원가입 요청 함수
     mutationFn: async (payload: SignUpPayload) => {
+
       const response = await fetch('/api/sign-up', {
         method: 'POST',
         headers: {
@@ -39,13 +35,15 @@ const useSignUpMutation = (): CustomMutationResult => {
         throw new Error(errorMsg || '회원가입에 실패했습니다.');
       }
 
-      return response.json();
+      return response.json(); // 성공 시 응답 데이터 반환
     },
 
     // 성공 시 처리
     onSuccess: () => {
       Swal.fire('회원가입 성공', '환영합니다!', 'success');
-      router.push('/sign-in');
+
+      // 회원가입 성공 후 경로 이동
+      router.push('/sing-in');
     },
 
     // 실패 시 처리

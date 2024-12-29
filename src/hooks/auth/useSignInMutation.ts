@@ -23,8 +23,6 @@ const useSignInMutation = (): CustomMutationResult => {
 
   const router = useRouter();
 
-  const queryClient = useQueryClient();
-
   return useMutation<SignInResult, unknown, SignInPayload>({
     // 서버 액션 호출 함수
     mutationFn: async ({ email, password }: SignInPayload) => {
@@ -52,8 +50,7 @@ const useSignInMutation = (): CustomMutationResult => {
         document.cookie = `access_token=${session.access_token}; path=/; secure;`;
       }
 
-      Swal.fire('로그인 성공', '정상적으로 로그인되었습니다.', 'success');
-      queryClient.invalidateQueries('session'); // 세션 정보 갱신
+      Swal.fire('로그인 성공', '정상적으로 로그인되었습니다.', 'success');      
       router.push('/');
     },
 
