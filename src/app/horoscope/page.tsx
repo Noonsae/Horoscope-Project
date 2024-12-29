@@ -2,9 +2,8 @@
 import React, { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import ReactDayPicker from '@/app/horoscope/_components/dayPicker';
 import { getStellaId } from '@/utils/stellaCalculator';
-import ReactDayPicker from './_components/dayPicker';
-
 
 
 const HoroscopePage: React.FC = () => {

@@ -3,11 +3,12 @@
 import { useEffect, useState } from 'react';
 import { getId } from '@/utils/guestbook';
 import Image from 'next/image';
-import defaultImg from '/public/images/default_profile_img.webp';
+
 import changeTime from '@/utils/changeTime';
 import Loading from '@/app/loading';
 import useGuestbookData from '@/hooks/guestbook/useQuery';
 import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useMutation';
+import Swal from 'sweetalert2';
 
 const GuestbookList = () => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
@@ -28,7 +29,13 @@ const GuestbookList = () => {
 
   const handleSave = (id: string) => {
     if (!editedComment.trim()) {
-      return alert('덕담을 입력해주세요.');
+      Swal.fire({
+        title: '오류',
+        text: '덕담을 입력해주세요.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
+      return;
     }
     updateMutation.mutate({ editingComment: editedComment, editingId: id });
     setEditingCommentId(null);
@@ -52,7 +59,7 @@ const GuestbookList = () => {
             <div className="flex items-center gap-2">
               <Image
                 className="w-10 h-10 bg-gray-500 rounded-full"
-                src={comment.users?.profile_img || defaultImg}
+                src={comment.users?.profile_img || '/images/default_profile_img.webp'}
                 alt="프로필 이미지"
                 width={100}
                 height={100}

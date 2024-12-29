@@ -1,6 +1,6 @@
 import React from 'react';
 import { FortuneList, CommentList } from './'; // 각 콘텐츠 컴포넌트 임포트
-import { Comment } from '@/types/guestbook-type'; // Comment 타입 임포트
+import { Comment } from '@/types/supabase/guestbook-type'; // Comment 타입 임포트
 
 interface ContentsProps {
   activeTab: 'fortune' | 'comments' | 'profile';

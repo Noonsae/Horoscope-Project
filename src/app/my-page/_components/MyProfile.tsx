@@ -2,7 +2,6 @@
 
 import React, { useMemo } from 'react';
 import { useProfileUploadImage } from '@/hooks/profile/useProfileUploadImage';
-import defaultImg from '@/public/images/default_profile_img.webp';
 
 interface MyProfileProps {
   newProfileImg: string | File | null;
@@ -17,7 +16,7 @@ const MyProfile: React.FC<MyProfileProps> = ({ newProfileImg, setNewProfileImg }
     if (typeof newProfileImg === 'string') {
       return newProfileImg;
     }
-    return user?.profile_img || defaultImg.src;
+    return user?.profile_img || ''; // 빈 문자열 반환
   }, [newProfileImg, user?.profile_img]);
 
   return (
