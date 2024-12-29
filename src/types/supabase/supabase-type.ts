@@ -179,6 +179,7 @@ export type Database = {
           id: string;
           img_url: string;
           name: string;
+          button_img: string;
         };
         Insert: {
           created_at?: string;
