@@ -23,7 +23,15 @@ const MyProfile: React.FC<MyProfileProps> = ({ newProfileImg, setNewProfileImg }
     <div className="text-center">
       {/* 프로필 이미지 업로드 */}
       <label htmlFor="imgFile" className="relative group cursor-pointer block w-[138px] h-[138px] mx-auto">
-        <img src={profileImgSrc} alt="프로필 사진" className="w-full h-full object-cover rounded-full" />
+        {/* 이미지 */}
+        <img src={profileImgSrc} alt="" className="w-full h-full object-cover rounded-full" />
+
+        {/* ALT 텍스트 */}
+        <div className="absolute inset-0 flex items-center justify-center text-white bg-black bg-opacity-50 rounded-full">
+          프로필 사진
+        </div>
+
+        {/* Hover 효과 */}
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full">
           <span className="text-white text-4xl font-bold">+</span>
         </div>
