@@ -53,7 +53,16 @@ export default async function NewYearFortunePage({ params }: { params: { id: str
 
           <div className="w-1/2 pl-4">
             <div className="bg-gray-200 h-full rounded-lg flex items-center justify-center">
-              <img src={stella.img_url} alt={stella.name} className="max-w-full max-h-full object-contain" />
+              <img
+                style={{
+                  backgroundImage: `url(${stella.img_url})`, 
+                  backgroundColor: 'transparent',
+                  backgroundSize: '120% 120%',
+                  backgroundPosition: 'center',
+                  textAlign: 'center'
+                }}
+                className="max-w-full max-h-full object-contain"
+              />
             </div>
           </div>
         </div>
