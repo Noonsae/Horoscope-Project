@@ -94,81 +94,79 @@ const SignUpForm: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-gray-900 min-h-screen">
-      <form onSubmit={handleSubmit} className="bg-gray-800 p-6 rounded-lg shadow-md w-80">
-        {!showPicker ? (
-          <>
-            <label className="block text-white text-sm font-medium mb-2">이메일</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
-              required
-            />
-            {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+    <form onSubmit={handleSubmit} className="w-[400px] p-6 rounded-lg shadow-md w-80 border border-[#aaa]">
+      {!showPicker ? (
+        <>
+          <label className="block text-white text-sm font-medium my-[20px] text-[16px]">이메일</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
+            required
+          />
+          {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
 
-            <label className="block text-white text-sm font-medium mb-2 mt-4">닉네임</label>
-            <input
-              type="text"
-              name="nickname"
-              value={formData.nickname}
-              onChange={handleChange}
-              className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
-              required
-            />
-            {errors.nickname && <p className="text-sm text-red-500 mt-1">{errors.nickname}</p>}
+          <label className="block text-white text-sm font-medium mb-2 mt-4">닉네임</label>
+          <input
+            type="text"
+            name="nickname"
+            value={formData.nickname}
+            onChange={handleChange}
+            className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
+            required
+          />
+          {errors.nickname && <p className="text-sm text-red-500 mt-1">{errors.nickname}</p>}
 
-            <label className="block text-white text-sm font-medium mb-2 mt-4">비밀번호</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
-              required
-            />
-            {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+          <label className="block text-white text-sm font-medium mb-2 mt-4">비밀번호</label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
+            required
+          />
+          {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
 
-            <label className="block text-white text-sm font-medium mb-2 mt-4">비밀번호 확인</label>
-            <input
-              type="password"
-              name="checkPassword"
-              value={formData.checkPassword}
-              onChange={handleChange}
-              className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
-              required
-            />
-            {errors.checkPassword && <p className="text-sm text-red-500 mt-1">{errors.checkPassword}</p>}
+          <label className="block text-white text-sm font-medium mb-2 mt-4">비밀번호 확인</label>
+          <input
+            type="password"
+            name="checkPassword"
+            value={formData.checkPassword}
+            onChange={handleChange}
+            className="w-full px-3 py-2 rounded-md bg-gray-700 text-white focus:outline-none"
+            required
+          />
+          {errors.checkPassword && <p className="text-sm text-red-500 mt-1">{errors.checkPassword}</p>}
 
-            <label className="block text-white text-sm font-medium mb-2 mt-4">생년월일</label>
-            <button
-              type="button"
-              className="w-full py-2 px-4 rounded-md bg-gray-600 text-white hover:bg-gray-700"
-              onClick={() => setShowPicker(true)}
-            >
-              생년월일 선택
-            </button>
-            {errors.birth_date && <p className="text-sm text-red-500 mt-1">{errors.birth_date}</p>}
+          <label className="block text-white text-sm font-medium mb-2 mt-4">생년월일</label>
+          <button
+            type="button"
+            className="w-full py-2 px-4 rounded-md bg-gray-600 text-white hover:bg-gray-700"
+            onClick={() => setShowPicker(true)}
+          >
+            생년월일 선택
+          </button>
+          {errors.birth_date && <p className="text-sm text-red-500 mt-1">{errors.birth_date}</p>}
 
-            <button
-              type="submit"
-              className={`w-full mt-6 py-2 px-4 rounded-md ${
-                Object.values(errors).some((error) => error)
-                  ? 'bg-gray-500 cursor-not-allowed text-gray-300'
-                  : 'bg-blue-500 text-white hover:bg-blue-600'
-              }`}
-              disabled={Object.values(errors).some((error) => error)} // 오류가 있으면 비활성화
-            >
-              다음
-            </button>
-          </>
-        ) : (
-          <PickerBtn handleDateChange={handleDateChange} setFormData={setFormData} setShowPicker={setShowPicker} />
-        )}
-      </form>
-    </div>
+          <button
+            type="submit"
+            className={`w-full mt-6 py-2 px-4 rounded-md ${
+              Object.values(errors).some((error) => error)
+                ? 'bg-gray-500 cursor-not-allowed text-gray-300'
+                : 'bg-blue-500 text-white hover:bg-blue-600'
+            }`}
+            disabled={Object.values(errors).some((error) => error)} // 오류가 있으면 비활성화
+          >
+            다음
+          </button>
+        </>
+      ) : (
+        <PickerBtn handleDateChange={handleDateChange} setFormData={setFormData} setShowPicker={setShowPicker} />
+      )}
+    </form>
   );
 };
 

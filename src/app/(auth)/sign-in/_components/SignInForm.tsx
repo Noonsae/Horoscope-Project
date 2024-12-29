@@ -65,45 +65,43 @@ const SignInForm: React.FC = () => {
   };
 
   return (
-    <div className="flex justify-center items-center bg-[111]">
-      <form onSubmit={handleLogin} className="bg-[#262626] p-6 rounded-lg shadow-md w-80">
-        <label className="block text-white text-sm font-medium mb-2">이메일</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
-          required
-          placeholder="이메일을 입력해주세요."
-        />
-        {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+    <form onSubmit={handleLogin} className="w-[400px] p-6 rounded-lg shadow-md w-80 border border-[#aaa]">
+      <label className="block text-white text-sm font-medium mb-[20px] text-[16px]">이메일</label>
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
+        required
+        placeholder="이메일을 입력해주세요."
+      />
+      {errors.email && <p className="text-[16px] text-red-500 mt-[10px]">{errors.email}</p>}
 
-        <label className="block text-white text-sm font-medium mb-2 mt-4">비밀번호</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
-          required
-          placeholder="비밀번호를 입력해주세요."
-        />
-        {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+      <label className="block text-white text-sm font-medium mt-[40px] mb-[20px] text-[16px]">비밀번호</label>
+      <input
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        className="w-full px-3 py-2 rounded-md bg-gray-800 text-white focus:outline-none"
+        required
+        placeholder="비밀번호를 입력해주세요."
+      />
+      {errors.password && <p className="text-[16px] text-red-500 mt-[10px] mt-[16px] ">{errors.password}</p>}
 
-        <button
-          type="submit"
-          className={`w-full mt-6 py-2 px-4 rounded-md ${
-            Object.values(errors).some((error) => error)
-              ? 'bg-gray-500 text-gray-300 cursor-not-allowed'
-              : 'bg-blue-500 text-white hover:bg-blue-600'
-          }`}
-          disabled={Object.values(errors).some((error) => error)} // 에러가 있으면 버튼 비활성화
-        >
-          로그인
-        </button>
-      </form>
-    </div>
+      <button
+        type="submit"
+        className={`w-full mt-6 py-2 px-4 rounded-md mt-[30px] ${
+          Object.values(errors).some((error) => error)
+            ? 'bg-gray-500 text-gray-300 cursor-not-allowed'
+            : 'bg-blue-500 text-white hover:bg-blue-600'
+        }`}
+        disabled={Object.values(errors).some((error) => error)} // 에러가 있으면 버튼 비활성화
+      >
+        로그인
+      </button>
+    </form>
   );
 };
 
