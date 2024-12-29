@@ -2,7 +2,8 @@ import Image from 'next/image';
 import React, { memo, useMemo } from 'react'
 import defaultImg from '/public/images/default_profile_img.webp';
 import changeTime from '@/utils/changeTime';
-import { DailyList } from '@/types/stella-result-type';
+import { DailyList } from '@/types/supabase';
+
 
 type DailyResultCardProps = {
     result: DailyList

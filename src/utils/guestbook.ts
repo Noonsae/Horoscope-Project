@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase';
-import { Comment } from '@/types/guestbook-type';
+import { Comment } from '@/types/supabase/guestbook-type';
 
 // user Id 가져오기
 export const getId = async (): Promise<string | null> => {

@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useState } from 'react';
 
@@ -7,7 +7,7 @@ import { Contents, MyProfile } from './_components';
 import useFetchGuestbookComments from '@/hooks/profile/useFetchGuestbookComments';
 import { useUpdateProfile } from '@/hooks/profile/useUpdateProfile';
 import useAuthStore from '@/store/useAuth';
-import { User } from '@/types/user-type';
+import { User } from '@/types/supabase/user-type';
 
 const MyPage = () => {
   const user = useAuthStore((state) => state.user) as User | null;

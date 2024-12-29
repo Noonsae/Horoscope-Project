@@ -3,6 +3,7 @@
 import useAuth from '@/hooks/guestbook/useAuth';
 import { useAddCommentMutation } from '@/hooks/guestbook/useMutation';
 import { useRef } from 'react';
+import Swal from 'sweetalert2';
 
 const GuestbookForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -18,6 +19,12 @@ const GuestbookForm = () => {
           if (inputRef.current) {
             inputRef.current.value = '';
           }
+          Swal.fire({
+            title: '성공!',
+            text: '코멘트가 성공적으로 저장되었습니다!',
+            icon: 'success',
+            confirmButtonText: '확인',
+          });
         },
       });
     }
