@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { getStellaId } from '@/utils/stellaCalculator';
 import { Tables } from '@/types/supabase/supabase-type';
+
 import Link from 'next/link';
 
 type DailyFortune = Tables<'daily_fortunes'>;
@@ -48,7 +49,8 @@ const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
           className="relative w-[200px] mt-10 h-[250px] rounded-lg shadow-lg cursor-pointer mx-auto"
           onClick={flipCard}
           style={{
-            perspective: '1000px'
+            perspective: '1000px' 
+
           }}
         >
           {/* 카드 컨테이너 */}
