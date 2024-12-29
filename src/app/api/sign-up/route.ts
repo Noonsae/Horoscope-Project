@@ -2,9 +2,14 @@ import { serverSupabase } from '@/lib/supabase-server';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
-  const supabase = serverSupabase();
+  
+  const body = await request.json();
+  console.log('API Received Payload:', body); // 여기서 전달된 데이터 확인
+
+  const supabase = await serverSupabase();
 
   const { email, password, nickname, birth_date } = await request.json();
+
   try {
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -12,7 +17,7 @@ export async function POST(request: Request) {
       options: {
         data: {
           nickname,
-          birth_date,
+          birth_date
         }
       }
     });

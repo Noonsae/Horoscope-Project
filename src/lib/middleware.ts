@@ -28,14 +28,27 @@ export async function updateSession(request: NextRequest) {
     data: { user }
   } = await supabase.auth.getUser();
 
-  if (!user && (request.nextUrl.pathname.startsWith('/sign-in') || request.nextUrl.pathname.startsWith('/sign-up'))) {
-    return supabaseResponse;
-  }
+  const url = request.nextUrl.clone();
 
-  if (user && (request.nextUrl.pathname.startsWith('/sign-in') || request.nextUrl.pathname.startsWith('/sign-up'))) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/';
-    return NextResponse.redirect(url);
+  // 로그인 상태인 경우
+  if (user) {
+    // 로그인 상태에서 접근 불가한 경로
+    if (
+      request.nextUrl.pathname.startsWith('/sign-in') ||
+      request.nextUrl.pathname.startsWith('/sign-up')
+    ) {
+      url.pathname = '/';
+      return NextResponse.redirect(url);
+    }
+  } else {
+    // 비로그인 상태에서 접근 불가한 경로 및 '/' 경로 차단
+    if (
+      request.nextUrl.pathname.startsWith('/my-page') ||
+      request.nextUrl.pathname.startsWith('/user-home')      
+    ) {
+      url.pathname = '/sign-in';
+      return NextResponse.redirect(url);
+    }
   }
 
   return supabaseResponse;

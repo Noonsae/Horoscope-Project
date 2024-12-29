@@ -3,5 +3,5 @@ export interface FormData {
   nickname: string;
   password: string;
   checkPassword: string;
-  birth_date: Date | null;
+  birth_date: Date | string | null;
 }
