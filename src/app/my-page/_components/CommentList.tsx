@@ -1,6 +1,6 @@
 import Loading from '@/app/loading';
-import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useMutation';
-import useGuestbookData from '@/hooks/guestbook/useQuery';
+import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useGuestbookMutation';
+import useGuestbookData from '@/hooks/guestbook/useGuestbookQuery';
 import changeTime from '@/utils/changeTime';
 import { getId } from '@/utils/guestbook';
 import Image from 'next/image';

@@ -2,8 +2,8 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addComment, updateComment, deleteComment } from '@/utils/guestbook';
-import { Comment } from '@/types/guestbook-type';
 import Swal from 'sweetalert2';
+import { Comment } from '@/types/supabase';
 
 // 코멘트 추가
 export const useAddCommentMutation = () => {
