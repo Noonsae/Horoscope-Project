@@ -3,6 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { addComment, updateComment, deleteComment } from '@/utils/guestbook';
 import { Comment } from '@/types/guestbook-type';
+import Swal from 'sweetalert2';
 
 // 코멘트 추가
 export const useAddCommentMutation = () => {
@@ -11,7 +12,21 @@ export const useAddCommentMutation = () => {
     mutationFn: (newComment) => addComment(newComment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
-    }
+      Swal.fire({
+        title: '성공',
+        text: '코멘트가 성공적으로 추가되었습니다!',
+        icon: 'success',
+        confirmButtonText: '확인',
+      });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '오류',
+        text: '코멘트를 추가하는 도중 문제가 발생했습니다.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
+    },
   });
 };
 
@@ -37,6 +52,20 @@ export const useUpdateComment = () => {
     },
     onError: (_, __, context) => {
       queryClient.setQueryData(['comments'], context?.previousComments);
+      Swal.fire({
+        title: '오류',
+        text: '코멘트를 수정하는 도중 문제가 발생했습니다.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
+    },
+    onSuccess: () => {
+      Swal.fire({
+        title: '성공',
+        text: '코멘트가 성공적으로 수정되었습니다!',
+        icon: 'success',
+        confirmButtonText: '확인',
+      });
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
@@ -51,6 +80,20 @@ export const useDeleteComment = () => {
     mutationFn: deleteComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments'] });
+      Swal.fire({
+        title: '삭제 완료',
+        text: '코멘트가 성공적으로 삭제되었습니다!',
+        icon: 'success',
+        confirmButtonText: '확인',
+      });
+    },
+    onError: () => {
+      Swal.fire({
+        title: '오류',
+        text: '코멘트를 삭제하는 도중 문제가 발생했습니다.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
     },
   });
 };

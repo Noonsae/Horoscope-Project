@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { getStellaId } from '@/utils/stellaCalculator';
 import { Tables } from '@/types/supabase/supabase-type';
+
 import Link from 'next/link';
 
 type DailyFortune = Tables<'daily_fortunes'>;
