@@ -1,4 +1,3 @@
-
 'use client';
 
 import React, { useEffect, useState } from 'react';
@@ -13,7 +12,6 @@ type Props = {
   dailyFortunes: DailyFortune[];
   userMonthDay: string | null;
 };
-
 
 const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -50,8 +48,7 @@ const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
           className="relative w-[200px] mt-10 h-[250px] rounded-lg shadow-lg cursor-pointer mx-auto"
           onClick={flipCard}
           style={{
-            perspective: '1000px' 
-
+            perspective: '1000px'
           }}
         >
           {/* 카드 컨테이너 */}
