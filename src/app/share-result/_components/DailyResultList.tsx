@@ -1,7 +1,7 @@
 'use client';
 
 import Loading from '@/app/loading';
-import { useDailyResults } from '@/hooks/shareResult/useQuery';
+import { useDailyResults } from '@/hooks/shareResult/useShareResultQuery';
 import DailyResultCard from './DailyResultCard';
 import ErrorPage from '@/components/ui/ErrorPage';
 

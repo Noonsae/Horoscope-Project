@@ -1,9 +1,8 @@
 'use client';
 
-import useAuth from '@/hooks/guestbook/useAuth';
-import { useAddCommentMutation } from '@/hooks/guestbook/useMutation';
+import useAuth from '@/hooks/guestbook/useGuestbookAuth';
+import { useAddCommentMutation } from '@/hooks/guestbook/useGuestbookMutation';
 import { useRef } from 'react';
-import Swal from 'sweetalert2';
 
 const GuestbookForm = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -14,19 +13,8 @@ const GuestbookForm = () => {
     e.preventDefault();
     if (inputRef.current && inputRef.current.value !== '') {
       const newComment = inputRef.current.value;
-      addMutation.mutate(newComment, {
-        onSuccess: () => {
-          if (inputRef.current) {
-            inputRef.current.value = '';
-          }
-          Swal.fire({
-            title: '성공!',
-            text: '코멘트가 성공적으로 저장되었습니다!',
-            icon: 'success',
-            confirmButtonText: '확인',
-          });
-        },
-      });
+      addMutation.mutate(newComment);
+      inputRef.current!.value = '';
     }
   };
 
@@ -43,9 +31,7 @@ const GuestbookForm = () => {
       />
       <button
         className={`rounded px-2 py-1 ${
-          isAuthenticated
-            ? 'bg-white text-black'
-            : 'bg-gray-600 text-gray-200 cursor-not-allowed'
+          isAuthenticated ? 'bg-white text-black' : 'bg-gray-600 text-gray-200 cursor-not-allowed'
         }`}
         type="submit"
         disabled={!isAuthenticated}

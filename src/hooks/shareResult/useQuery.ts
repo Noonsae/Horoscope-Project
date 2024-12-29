@@ -5,7 +5,7 @@ import { DailyList as DailyListType, YearList as YearListType } from '@/types/su
 import { fetchDailyResults, fetchNewYearResults } from '@/utils/shareResult';
 import useAuthStore from '@/store/useAuth';
 
-export const useDailyResults = () => {
+export const useDailyCardList = () => {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id;
 
@@ -18,7 +18,7 @@ export const useDailyResults = () => {
   });
 };
 
-export const useYearResults = () => {
+export const useYearCardList = () => {
   const user = useAuthStore((state) => state.user);
   const userId = user?.id;
 

@@ -26,6 +26,5 @@ export const serverSupabase = () => {
         }
       }
     }
-});
-
+  });
 };

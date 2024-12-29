@@ -1,7 +1,7 @@
 'use client';
 
 import Loading from '@/app/loading';
-import { useYearResults } from '@/hooks/shareResult/useQuery';
+import { useYearResults } from '@/hooks/shareResult/useShareResultQuery';
 import YearResultCard from './YearResultCard';
 import ErrorPage from '@/components/ui/ErrorPage';
 

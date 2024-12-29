@@ -3,18 +3,17 @@
 import { useEffect, useState } from 'react';
 import { getId } from '@/utils/guestbook';
 import Image from 'next/image';
-
 import changeTime from '@/utils/changeTime';
 import Loading from '@/app/loading';
-import useGuestbookData from '@/hooks/guestbook/useQuery';
-import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useMutation';
+import useGuestbookData from '@/hooks/guestbook/useGuestbookQuery';
+import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useGuestbookMutation';
 import Swal from 'sweetalert2';
 
 const GuestbookList = () => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>('');
   const [currentId, setCurrentId] = useState<string | null>(null);
-  
+
   const { data: comments, isError, isPending } = useGuestbookData();
   const updateMutation = useUpdateComment();
   const deleteMutation = useDeleteComment();
@@ -33,7 +32,7 @@ const GuestbookList = () => {
         title: '오류',
         text: '덕담을 입력해주세요.',
         icon: 'error',
-        confirmButtonText: '확인',
+        confirmButtonText: '확인'
       });
       return;
     }
@@ -45,7 +44,7 @@ const GuestbookList = () => {
     deleteMutation.mutate(id);
   };
 
-  if (isPending) return <Loading />
+  if (isPending) return <Loading />;
   if (isError) return <div>에러 발생!</div>;
 
   return (
