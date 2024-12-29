@@ -13,11 +13,11 @@ const config: Config = {
         foreground: 'var(--foreground)'
       },
       backgroundImage: {
-        gradient: 'linear-gradient(to right bottom, #000, #020D20);'
+        gradient: 'linear-gradient(to right bottom, #000, #020D20)',        
       },
       animation: {
         'spin-slow': 'spin 1s linear infinite'
-      },
+      }
     }
   },
   plugins: [require('tailwindcss-textshadow')]
