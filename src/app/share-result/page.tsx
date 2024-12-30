@@ -9,6 +9,7 @@ import DailyResultList from './_components/DailyResultList';
 
 const ShareResultsPage = () => {
   const [activeTab, setActiveTab] = useState<'daily' | 'year'>('daily');
+  
 
   return (
     <div className="bg-gradient pb-[150px]">

@@ -1,9 +1,6 @@
 'use client';
-
 import { supabase } from '@/lib/supabase';
-
 import { stellas as ChemiType } from '@/types/supabase';
-
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -12,7 +9,6 @@ import Swal from 'sweetalert2';
 const Chemi = () => {
   const router = useRouter();
   const [chemi, setChemi] = useState<ChemiType[]>([]);
-
   const {
     data: stellas,
     isLoading,
