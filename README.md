@@ -30,10 +30,15 @@
   <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white">
 
 # 와이어프레임
+<img src="https://velog.velcdn.com/images/gracejelly125/post/ebed3eb5-18c4-4477-8dd7-049b484d546d/image.JPG">
+
 
 # 프로젝트 구조
+<img src="https://velog.velcdn.com/images/gracejelly125/post/b70d1c80-c40a-4e35-bd58-4630586d4516/image.png">
+
 
 # 데이터베이스 구조
+<img src="https://velog.velcdn.com/images/gracejelly125/post/aa95215f-7ec7-4220-b6b8-19539d54f21c/image.JPG">
 
 # 기능 구현
 ### 1. 로그인 페이지
