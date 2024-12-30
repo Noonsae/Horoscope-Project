@@ -48,7 +48,7 @@ const CommentList = () => {
   if (isError) return <div>에러 발생!</div>;
 
   return (
-    <div className="flex flex-col justify-center items-center mx-auto my-8 w-[800px] bg-gradient-to-b from-black to-purple-900 p-6 shadow-lg rounded gap-6">
+    <div className="flex flex-col justify-center items-center mx-auto my-8 w-[800px] p-6 shadow-lg rounded gap-6">
       {filteredComments?.map((comment) => (
         <div
           key={comment.id}
@@ -70,14 +70,14 @@ const CommentList = () => {
               {currentId && currentId === comment.user_id && editingCommentId === comment.id ? (
                 <>
                   <button
-                    className="border border-gray-300 rounded px-2 py-1"
+                    className="border border-gray-300 rounded px-2 py-1 hover:bg-blue-500 hover:text-white"
                     type="button"
                     onClick={() => handleSave(comment.id)}
                   >
                     저장
                   </button>
                   <button
-                    className="border border-gray-300 rounded px-2 py-1"
+                    className="border border-gray-300 rounded px-2 py-1 hover:bg-red-500 hover:text-white"
                     type="button"
                     onClick={() => setEditingCommentId(null)}
                   >
@@ -88,7 +88,7 @@ const CommentList = () => {
                 currentId &&
                 currentId === comment.user_id && (
                   <button
-                    className="border border-gray-300 rounded px-2 py-1"
+                    className="border border-gray-300 rounded px-2 py-1 hover:bg-blue-500 hover:text-white"
                     type="button"
                     onClick={() => {
                       setEditingCommentId(comment.id);
@@ -101,7 +101,7 @@ const CommentList = () => {
               )}
               {currentId && currentId === comment.user_id && (
                 <button
-                  className="border border-gray-300 rounded px-2 py-1"
+                  className="border border-gray-300 rounded px-2 py-1 hover:bg-red-500 hover:text-white"
                   type="button"
                   onClick={() => handleDelete(comment.id)}
                 >

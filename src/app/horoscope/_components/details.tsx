@@ -25,9 +25,9 @@ const Details: React.FC = () => {
   if (!stella) return <div>별자리를 찾을 수 없습니다.</div>;
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 py-2 px-4">
-      <div className="text-center border border-gray-300 rounded-lg shadow-lg bg-white p-6 w-[800px] h-[500px] relative">
-        <div className="absolute top-6 left-6 flex space-x-2">
+    <div className="flex items-center justify-center min-h-[calc(100vh-280px)] bg-gray-100 bg-gradient">
+      <div className="text-center rounded-[20px] shadow-2xl bg-white py-[80px] px-[40px] w-[800px] h-[500px] relative">
+        <div className="absolute top-8 left-6 flex space-x-2">
           <button
             className="bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 transition text-sm"
             onClick={handleShowDailyFortune}
@@ -42,12 +42,10 @@ const Details: React.FC = () => {
           </button>
         </div>
 
-        <h1 className="mb-6 text-2xl font-bold text-gray-800">{stella.name}</h1>
-
         <div className="flex h-[350px]">
           <div className="w-1/2 pr-4 flex flex-col justify-between">
             <div className="text-left">
-              <h2 className="text-xl font-semibold mb-2">{stella.name}</h2>
+              <h2 className="text-[26px] font-semibold mt-[60px] mb-[20px] ">{stella.name}</h2>
               {showDailyFortune && dailyFortuneLoading ? (
                 <p>운세 로딩 중...</p>
               ) : showDailyFortune && dailyFortuneContent ? (

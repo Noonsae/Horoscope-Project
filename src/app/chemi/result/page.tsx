@@ -12,14 +12,31 @@ const ChemiResult = () => {
   const result = STELLA_INFO_DATA[first]?.[second];
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold text-center mb-4">궁합 결과</h1>
+    <div className="w-full min-h-[calc(100vh-280px)] bg-gradient flex flex-col justify-center items-center text-white">
       <div className="text-center">
-        <h2 className="text-xl font-semibold">
-          {firstStella}와 {secondStella}의 궁합
+        <h2 className="text-[34px] font-medium mb-[60px]">
+          {firstStella}와 {secondStella}의 궁합 결과입니다.
         </h2>
-        <p className="text-lg mt-2">궁합 점수: {result.percent}%</p>
-        <p className="text-gray-700 mt-4">{result.description}</p>
+        <div className="relative">
+          <div
+            className="w-[800px] h-[400px] rounded-[20px] flex flex-col items-center justify-center text-white"
+            style={{
+              backgroundImage: "url('/images/chemi.webp')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          >
+            <p className="text-[34px] mb-[16px] z-10 text-[#FFDA68] -mt-[30px]">궁합 점수: {result.percent}%</p>
+            <p className="text-[26px] z-10 ">{result.description}</p>
+          </div>
+
+          <div className="indent-[-9999px] absolute inset-0 w-full h-full bg-[rgba(0,0,0,0.4)]">
+            <span className="sr-only">overlay</span>
+          </div>
+
+          <div className=""></div>
+        </div>
       </div>
     </div>
   );
