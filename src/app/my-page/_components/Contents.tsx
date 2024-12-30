@@ -1,17 +1,17 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import CommentList from './CommentList';
 import { FortuneList } from '.';
+import Swal from 'sweetalert2';
+import { updateNickname } from '@/hooks/profile/useUpdateProfile';
 
 interface ContentsProps {
-  activeTab: 'fortune' | 'comments' | 'profile'; // 활성화된 탭
-  comments: Array<any>; // 댓글 데이터
-  newNickname: string; // 닉네임 상태
-  setNewNickname: (value: string) => void; // 닉네임 상태 변경 함수
-  newProfileImg: string | File | null; // 프로필 이미지 상태
-  setNewProfileImg: (value: string | File | null) => void; // 프로필 이미지 변경 함수
-  confirmDeleteComment: (id: string) => void; // 댓글 삭제 함수
-  commentsPending: boolean; // 댓글 로딩 상태
-  commentsError: boolean; // 댓글 에러 상태
+  activeTab: 'fortune' | 'comments' | 'profile';
+  comments: Array<any>;
+  newNickname: string;
+  setNewNickname: (value: string) => void;
+  confirmDeleteComment: (id: string) => void;
+  commentsPending: boolean;
+  commentsError: boolean;
 }
 
 const Contents: React.FC<ContentsProps> = ({
@@ -23,15 +23,16 @@ const Contents: React.FC<ContentsProps> = ({
   commentsPending,
   commentsError
 }) => {
-  if (activeTab === 'fortune') {
-    return <FortuneList/>;
-  }
+  const handleNicknameChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setNewNickname(e.target.value);
+    },
+    [setNewNickname]
+  );
 
-  if (activeTab === 'comments') {
-    return (
-      <CommentList/>
-    );
-  }
+  const handleNicknameSubmit = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
 
   if (activeTab === 'profile') {
     return (
@@ -62,8 +63,94 @@ const Contents: React.FC<ContentsProps> = ({
       </div>
     );
   }
+      if (!newNickname.trim()) {
+        Swal.fire({
+          icon: 'error',
+          title: '닉네임을 입력해주세요.',
+          confirmButtonColor: '#d33'
+        });
+        return;
+      }
 
-  return null;
+      const result = await Swal.fire({
+        icon: 'warning',
+        title: '닉네임을 변경하시겠습니까?',
+        showCancelButton: true,
+        confirmButtonColor: '#429f50',
+        cancelButtonColor: '#d33',
+        confirmButtonText: '변경',
+        cancelButtonText: '취소'
+      });
+
+      if (result.isConfirmed) {
+        const success = await updateNickname(newNickname);
+
+        if (success) {
+          Swal.fire({
+            icon: 'success',
+            title: '닉네임 변경 성공!',
+            confirmButtonColor: '#429f50'
+          }).then(() => {
+            window.location.reload();
+          });
+        }
+      }
+    },
+    [newNickname]
+  );
+
+  const nicknameInput = useMemo(
+    () => (
+      <input
+        type="text"
+        value={newNickname}
+        onChange={handleNicknameChange}
+        placeholder="변경할 닉네임을 입력하세요."
+        className="border px-4 py-2 w-full rounded"
+      />
+    ),
+    [newNickname, handleNicknameChange]
+  );
+
+  const renderActiveTab = useMemo(() => {
+    if (activeTab === 'fortune') {
+      return <FortuneList />;
+    }
+
+    if (activeTab === 'comments') {
+      return <CommentList />;
+    }
+
+    if (activeTab === 'profile') {
+      return (
+        <div className="max-w-[600px] mx-auto mt-10">
+          <form onSubmit={handleNicknameSubmit}>
+            <div className="mb-6">
+              <label className="block font-bold mb-2">닉네임 변경</label>
+              {nicknameInput}
+            </div>
+
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+              저장하기
+            </button>
+          </form>
+        </div>
+      );
+    }
+
+    return null;
+  }, [activeTab, nicknameInput, handleNicknameSubmit]);
+
+  return renderActiveTab;
 };
 
-export default Contents;
+export default React.memo(Contents, (prevProps, nextProps) => {
+  return (
+    prevProps.activeTab === nextProps.activeTab &&
+    prevProps.newNickname === nextProps.newNickname &&
+    prevProps.commentsPending === nextProps.commentsPending &&
+    prevProps.commentsError === nextProps.commentsError &&
+    prevProps.confirmDeleteComment === nextProps.confirmDeleteComment &&
+    prevProps.comments === nextProps.comments
+  );
+});
