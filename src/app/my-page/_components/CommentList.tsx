@@ -49,78 +49,82 @@ const CommentList = () => {
 
   return (
     <div className="flex flex-col justify-center items-center mx-auto my-8 w-[800px] p-6 shadow-lg rounded gap-6">
-      {filteredComments?.map((comment) => (
-        <div
-          key={comment.id}
-          className="flex flex-col justify-center items-center mx-auto w-[750px] bg-white p-6 shadow-lg rounded"
-        >
-          <div className="flex justify-between items-center w-full">
-            <div className="flex items-center gap-2">
-              <Image
-                className="w-10 h-10 bg-gray-500 rounded-full"
-                src={comment.users?.profile_img || '/images/default_profile_img.webp'}
-                alt="프로필 이미지"
-                width={100}
-                height={100}
-              />
-              <p className="font-medium">{comment.users?.nickname}</p>
-              <p className="text-xs text-gray-500">{changeTime(comment.created_at)}</p>
-            </div>
-            <div className="flex space-x-2">
-              {currentId && currentId === comment.user_id && editingCommentId === comment.id ? (
-                <>
-                  <button
-                    className="border border-gray-300 rounded px-2 py-1 hover:bg-blue-500 hover:text-white"
-                    type="button"
-                    onClick={() => handleSave(comment.id)}
-                  >
-                    저장
-                  </button>
+      {filteredComments && filteredComments.length === 0 ? (
+        <div className="text-gray-500 text-[26px] mt-[40px]">작성하신 댓글이 존재하지 않습니다.</div>
+      ) : (
+        filteredComments?.map((comment) => (
+          <div
+            key={comment.id}
+            className="flex flex-col justify-center items-center mx-auto w-[750px] bg-white p-6 shadow-lg rounded"
+          >
+            <div className="flex justify-between items-center w-full">
+              <div className="flex items-center gap-2">
+                <Image
+                  className="w-10 h-10 bg-gray-500 rounded-full"
+                  src={comment.users?.profile_img || '/images/default_profile_img.webp'}
+                  alt="프로필 이미지"
+                  width={100}
+                  height={100}
+                />
+                <p className="font-medium">{comment.users?.nickname}</p>
+                <p className="text-xs text-gray-500">{changeTime(comment.created_at)}</p>
+              </div>
+              <div className="flex space-x-2">
+                {currentId && currentId === comment.user_id && editingCommentId === comment.id ? (
+                  <>
+                    <button
+                      className="border border-gray-300 rounded px-2 py-1 hover:bg-blue-500 hover:text-white"
+                      type="button"
+                      onClick={() => handleSave(comment.id)}
+                    >
+                      저장
+                    </button>
+                    <button
+                      className="border border-gray-300 rounded px-2 py-1 hover:bg-red-500 hover:text-white"
+                      type="button"
+                      onClick={() => setEditingCommentId(null)}
+                    >
+                      취소
+                    </button>
+                  </>
+                ) : (
+                  currentId &&
+                  currentId === comment.user_id && (
+                    <button
+                      className="border border-gray-300 rounded px-2 py-1 hover:bg-blue-500 hover:text-white"
+                      type="button"
+                      onClick={() => {
+                        setEditingCommentId(comment.id);
+                        setEditedComment(comment.comment);
+                      }}
+                    >
+                      수정
+                    </button>
+                  )
+                )}
+                {currentId && currentId === comment.user_id && (
                   <button
                     className="border border-gray-300 rounded px-2 py-1 hover:bg-red-500 hover:text-white"
                     type="button"
-                    onClick={() => setEditingCommentId(null)}
+                    onClick={() => handleDelete(comment.id)}
                   >
-                    취소
+                    &times;
                   </button>
-                </>
-              ) : (
-                currentId &&
-                currentId === comment.user_id && (
-                  <button
-                    className="border border-gray-300 rounded px-2 py-1 hover:bg-blue-500 hover:text-white"
-                    type="button"
-                    onClick={() => {
-                      setEditingCommentId(comment.id);
-                      setEditedComment(comment.comment);
-                    }}
-                  >
-                    수정
-                  </button>
-                )
-              )}
-              {currentId && currentId === comment.user_id && (
-                <button
-                  className="border border-gray-300 rounded px-2 py-1 hover:bg-red-500 hover:text-white"
-                  type="button"
-                  onClick={() => handleDelete(comment.id)}
-                >
-                  &times;
-                </button>
-              )}
+                )}
+              </div>
             </div>
+            {editingCommentId === comment.id ? (
+              <textarea
+                value={editedComment}
+                onChange={(e) => setEditedComment(e.target.value)}
+                className="leading-[1.8rem] mt-4 flex-grow px-2 py-1 border rounded w-full max-w-full h-10 resize-none"
+              />
+            ) : (
+              <p className="mr-auto mt-4 flex-grow px-2 py-1">{comment.comment}</p>
+            )}
           </div>
-          {editingCommentId === comment.id ? (
-            <textarea
-              value={editedComment}
-              onChange={(e) => setEditedComment(e.target.value)}
-              className="leading-[1.8rem] mt-4 flex-grow px-2 py-1 border rounded w-full max-w-full h-10 resize-none"
-            />
-          ) : (
-            <p className="mr-auto mt-4 flex-grow px-2 py-1">{comment.comment}</p>
-          )}
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

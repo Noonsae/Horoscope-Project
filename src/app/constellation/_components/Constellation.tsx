@@ -78,27 +78,32 @@ const Constellation = () => {
           </div>
 
           {/* 별자리설명 article */}
-          <article
-            className="w-[500px] h-[400px] rounded-2xl"
-            style={{
-              backgroundImage: selectConstellation ? `url(${selectConstellation.img_url})` : 'none', // 선택된 별자리가 없을 경우 배경 이미지 제거
-              backgroundColor: selectConstellation ? 'transparent' : '#020d20',
-              backgroundSize: selectConstellation ? '120% 120%' : 'contain',
-              backgroundPosition: 'center',
-              textAlign: 'center'
-            }}
-          >
-            <div className="text-white flex flex-col justify-center items-center h-full">
-              {selectConstellation ? (
-                <div className='p-[40px]'>
-                  <h2 className="text-xl font-bold mb-[20px] text-[26px]">{selectConstellation.name}</h2>
-                  <p className="text-[18px] font-medium">{selectConstellation.description}</p>
-                </div>
-              ) : (
-                <p className="text-[26px] text-white">별자리를 선택해주세요</p>
-              )}
+          <div className="relative">
+            <article
+              className="w-[500px] h-[400px] rounded-2xl"
+              style={{
+                backgroundImage: selectConstellation ? `url(${selectConstellation.img_url})` : 'none', // 선택된 별자리가 없을 경우 배경 이미지 제거
+                backgroundColor: selectConstellation ? 'transparent' : '#020d20',
+                backgroundSize: selectConstellation ? '120% 120%' : 'contain',
+                backgroundPosition: 'center',
+                textAlign: 'center'
+              }}
+            >
+              <div className="text-white flex flex-col justify-center items-center h-full">
+                {selectConstellation ? (
+                  <div className="p-[40px] z-10">
+                    <h2 className="text-xl font-bold mb-[20px] text-[26px]">{selectConstellation.name}</h2>
+                    <p className="text-[18px] font-medium">{selectConstellation.description}</p>
+                  </div>
+                ) : (
+                  <p className="text-[26px] text-white">별자리를 선택해주세요</p>
+                )}
+              </div>
+            </article>
+            <div className="absolute left-0 top-0 w-[500px] h-[400px] rounded-2xl inset-0 bg-[rgba(0,0,0,0.4)]">
+              <p className="sr-only">overlay</p>
             </div>
-          </article>
+          </div>
         </div>
       </div>
     </div>

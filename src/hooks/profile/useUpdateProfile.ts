@@ -133,7 +133,7 @@ export const useUpdateProfile = (
           });
 
           setNewNickname('');
-        } catch (error) {
+        } catch (error: any) {
           Swal.fire({
             icon: 'error',
             title: error.message || '업데이트 실패',

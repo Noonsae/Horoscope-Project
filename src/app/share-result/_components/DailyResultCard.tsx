@@ -14,7 +14,7 @@ const DailyResultCard = ({ result }: DailyResultCardProps) => {
     return (
       <div
         key={result.id}
-        className="relative bg-white rounded-lg shadow-md border border-gray-300 p-4 w-[250px] h-[400px] transition-transform transform hover:scale-105"
+        className="relative bg-gray-100 rounded-lg shadow-md border border-gray-300 p-4 w-[250px] h-[400px] transition-transform transform hover:scale-105"
       >
         <div className="absolute top-4 left-4 flex items-center gap-2">
           <Image
