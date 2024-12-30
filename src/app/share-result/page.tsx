@@ -11,24 +11,39 @@ const ShareResultsPage = () => {
   const [activeTab, setActiveTab] = useState<'daily' | 'year'>('daily');
 
   return (
-    <>
-      <div className="w-full h-[150px] bg-gradient-to-b from-black to-purple-900 flex items-center justify-center">
-        <h2 className="text-white text-xl font-bold text-center">별자리가 들려준 이야기를 다른 사람과 공유해보세요.</h2>
-      </div>
-      <div className="container mx-auto px-20 py-8">
+    <div className="bg-gradient pb-[150px]">
+      <section
+        className="w-full h-[150px] bg-gradient flex items-center justify-center h-[320px] mb-[100px]"
+        style={{
+          backgroundImage: "url('/images/share.webp')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <h2 className="text-white text-[26px] font-bold text-center z-10">
+          별자리가 들려준 이야기를 다른 사람과 공유해보세요.
+        </h2>
+        {/* overlay */}
+        <div className="indent-[-9999px] absolute inset-0 w-full h-full bg-[rgba(0,0,0,0.2)]">
+          <span className="sr-only">overlay</span>
+        </div>
+      </section>
+
+      <div className="max-w-[1200px] mx-auto">
         <div className="flex justify-start mb-8">
           <button
             className={`${
-              activeTab === 'daily' ? 'bg-purple-900' : 'bg-gray-500'
-            } hover:bg-purple-900 text-white font-bold py-2 px-4 rounded mr-4`}
+              activeTab === 'daily' ? 'bg-blue-500' : 'bg-gray-600'
+            } hover:bg-blue-500 text-white font-bold py-2 px-4 rounded mr-4`}
             onClick={() => setActiveTab('daily')}
           >
             일일운세
           </button>
           <button
             className={`${
-              activeTab === 'year' ? 'bg-purple-900' : 'bg-gray-500'
-            } hover:bg-purple-900 text-white font-bold py-2 px-4 rounded`}
+              activeTab === 'year' ? 'bg-blue-500' : 'bg-gray-600'
+            } hover:bg-blue-500 text-white font-bold py-2 px-4 rounded`}
             onClick={() => setActiveTab('year')}
           >
             신년운세
@@ -39,7 +54,7 @@ const ShareResultsPage = () => {
         {activeTab === 'year' && <YearResultList />}
         <GoMoveToTopButton />
       </div>
-    </>
+    </div>
   );
 };
 

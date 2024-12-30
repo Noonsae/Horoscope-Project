@@ -48,28 +48,28 @@ const Header = () => {
   };
 
   return (
-    <nav className="w-full bg-gray-800 text-white">
+    <nav className="w-full h-[80px] bg-black text-[#FFDA68]">
       {/* Desktop Menu */}
-      <div className="hidden md:flex justify-between items-center px-8 py-3">
-        <div className="flex items-center">
-          <div className="text-lg font-bold mr-10">
+      <div className="w-full max-w-[1200px] mx-auto h-[80px] md:flex justify-between items-center px-8 py-3">
+        <div className="flex items-center justify-between w-[80%]">
+          <h1 className="text-lg font-bold text-[30px] mr-10">
             <Link href="/">Stella</Link>
-          </div>
-          <div className="space-x-6">
-            <Link href="/constellation" className="hover:text-yellow-400">
-              소개
+          </h1>
+          <div className="flex flex-row w-full justify-around items-center space-x-6 text-[16px]">
+            <Link href="/constellation" className="hover:text-yellow-400 p-5">
+              별자리소개
             </Link>
             <Link href="/horoscope" className="hover:text-yellow-400">
-              운세
+              운세보기
             </Link>
             <Link href="/chemi" className="hover:text-yellow-400">
-              궁합
+              궁합보기
             </Link>
             <Link href="/share-result" className="hover:text-yellow-400">
-              공유
+              공유하기
             </Link>
             <Link href="/guestbook" className="hover:text-yellow-400">
-              덕담
+              덕담나누기
             </Link>
           </div>
         </div>

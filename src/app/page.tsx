@@ -34,7 +34,11 @@ const HomePage = () => {
   }, []);
 
   if (isLoading) {
-    return <p>운세를 불러오는 중...</p>;
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient">
+        <p className="text-[50px] text-[#FFDA68] text-center -mt-[20px]">잠시만 기다려주세요...</p>
+      </div>
+    );
   }
 
   if (error) {

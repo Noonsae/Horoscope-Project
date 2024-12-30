@@ -33,7 +33,7 @@ const GoMoveToTopButton = () => {
       {isVisible && (
         <button
           onClick={moveToTop}
-          className="fixed bottom-8 right-8 p-3 bg-purple-900 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-red-600 focus:outline-none"
+          className="fixed bottom-8 right-8 p-3 bg-black text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-800 focus:outline-none"
         >
           <GoMoveToTop />
         </button>

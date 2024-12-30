@@ -12,7 +12,7 @@ const YearResultList = () => {
   if (isError) return <ErrorPage />;
 
   return (
-    <div className="flex flex-wrap gap-6">
+    <div className="gap-10 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {yearResults.map((result) => (
         <YearResultCard key={result.id} result={result} />
       ))}

@@ -19,10 +19,7 @@ const GuestbookForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="flex justify-center items-center mx-auto mt-8 w-[800px] bg-black p-6 shadow-lg rounded"
-    >
+    <form onSubmit={handleSubmit} className="flex justify-center items-center mx-auto mt-8 w-[800px] p-6 rounded">
       <input
         className="mr-4 flex-grow rounded px-2 py-1"
         type="text"
@@ -30,9 +27,7 @@ const GuestbookForm = () => {
         ref={inputRef}
       />
       <button
-        className={`rounded px-2 py-1 ${
-          isAuthenticated ? 'bg-white text-black' : 'bg-gray-600 text-gray-200 cursor-not-allowed'
-        }`}
+        className="rounded px-2 py-1 bg-blue-500 text-white hover:bg-blue-700"
         type="submit"
         disabled={!isAuthenticated}
       >
