@@ -1,4 +1,4 @@
-import TeamInfo from '../ui/teamInfo';
+import TeamInfo from '../ui/TeamInformation';
 
 const Footer = () => {
   const teamMembersInfo = [
