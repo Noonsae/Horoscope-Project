@@ -78,7 +78,7 @@ const Details: React.FC = () => {
                   backgroundPosition: 'center',
                   textAlign: 'center'
                 }}
-                className="max-w-full max-h-full object-contain"
+                className="w-full h-full object-contain"
               />
             </div>
           </div>

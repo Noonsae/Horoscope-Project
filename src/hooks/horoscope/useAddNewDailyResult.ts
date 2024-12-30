@@ -46,7 +46,6 @@ export const addNewDailyResult = async (id: string): Promise<any> => {
 };
 
 export const useAddNewDailyResultMutation = (id: string) => {
-  console.log('Mutaion_id', id);
   return useMutation<string, Error>({
     mutationFn: (id) => addNewDailyResult(id!),
     onSuccess: () => {

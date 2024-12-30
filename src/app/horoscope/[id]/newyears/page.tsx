@@ -61,7 +61,7 @@ export default async function NewYearFortunePage({ params }: { params: { id: str
                   backgroundPosition: 'center',
                   textAlign: 'center'
                 }}
-                className="max-w-full max-h-full object-contain"
+                className="w-full h-full object-contain"
               />
             </div>
           </div>
