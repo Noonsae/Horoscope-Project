@@ -3,6 +3,7 @@ import React from 'react';
 import Loading from '@/app/loading';
 import ErrorPage from '@/components/ui/ErrorPage';
 import { useFortune } from './useFortune';
+import Image from 'next/image';
 
 const Details: React.FC = () => {
   const {

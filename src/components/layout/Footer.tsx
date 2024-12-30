@@ -36,7 +36,7 @@ const Footer = () => {
       <div className="mx-auto w-full h-full max-w-[600px] py-6 text-center flex flex-col items-center justify-around">
         {/* copyright text */}
         <p className="mb-[15px] ml-[30px] text-[#FFDA68] text-[16px]">
-          @ Copyright 2024 pa5rangers. All rights reserved
+          @ Copyright 2024 never-give-up-porsche. All rights reserved
         </p>
         {/* developer intro */}
         <div className="mx-auto flex justify-between text-[13px] text-[#FFDA68]">
