@@ -17,8 +17,6 @@ type Props = {
 const UserHomePage = ({ dailyFortunes, userMonthDay }: Props) => {
   const [isFlipped, setIsFlipped] = useState(false);
   useEffect(() => {
-    console.log('dailyFortunes:', dailyFortunes);
-    console.log('userMonthDay:', userMonthDay);
   }, [dailyFortunes, userMonthDay]);
 
   if (!userMonthDay) {

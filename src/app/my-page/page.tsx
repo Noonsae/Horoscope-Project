@@ -38,7 +38,7 @@ const MyPage = () => {
     newNickname,
     setNewNickname,
     newProfileImg,
-    user || { id: '', nickname: '', profile_img: null }
+    user! || { id: '', nickname: '', profile_img: null }
   );
 
   return (

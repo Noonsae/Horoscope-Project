@@ -1,14 +1,14 @@
 "use client"
 
 import Image from 'next/image';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import defaultImg from '/public/images/default_profile_img.webp';
 import changeTime from '@/utils/changeTime';
-import { YearList } from '@/types/supabase';
+import { YearListType } from '@/types/supabase';
 
 
 type DailyResultCardProps = {
-  result: YearList;
+  result: YearListType;
 };
 
 const YearResultCard = memo(({ result }: DailyResultCardProps) => {

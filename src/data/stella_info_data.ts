@@ -1,4 +1,13 @@
-export const STELLA_INFO_DATA = {
+interface Data {
+  [key: string]: {
+    [key: string]: {
+      percent: number;
+      description: string;
+    };
+  };
+}
+
+export const STELLA_INFO_DATA: Data = {
   양자리: {
     양자리: {
       percent: 75,
