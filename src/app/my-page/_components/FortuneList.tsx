@@ -12,7 +12,7 @@ const ResultList = () => {
   const { data: yearResults, isLoading: isYearLoading, isError: isYearError } = useYearCardList();
 
   if (isDailyLoading || isYearLoading) return <Loading />;
-  if (isDailyError || isYearError) return <ErrorPage message="데이터를 가져오는 중 오류가 발생했습니다." />;
+  if (isDailyError || isYearError) return <ErrorPage />;
 
   return (
     <div className="flex flex-col gap-12">
