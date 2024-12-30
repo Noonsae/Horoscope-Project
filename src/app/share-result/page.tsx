@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import DailyList from './_components/DailyResultList';
-import YearList from './_components/YearResultList';
 import GoMoveToTopButton from '@/components/ui/GoMoveToTopButton';
 import YearResultList from './_components/YearResultList';
 import DailyResultList from './_components/DailyResultList';
@@ -14,7 +12,7 @@ const ShareResultsPage = () => {
   return (
     <div className="bg-gradient pb-[150px]">
       <section
-        className="w-full h-[150px] bg-gradient flex items-center justify-center h-[320px] mb-[100px]"
+        className="w-full h-[150px] bg-gradient flex items-center justify-center h-[320px] mb-[100px] relative"
         style={{
           backgroundImage: "url('/images/share.webp')",
           backgroundSize: 'cover',
@@ -26,7 +24,7 @@ const ShareResultsPage = () => {
           별자리가 들려준 이야기를 다른 사람과 공유해보세요.
         </h2>
         {/* overlay */}
-        <div className="absolute top-[80px] inset-0 w-full h-[320px] bg-[rgba(0,0,0,0.2)]">
+        <div className="absolute inset-0 w-full h-[320px] bg-[rgba(0,0,0,0.2)]">
           <span className="sr-only">overlay</span>
         </div>
       </section>

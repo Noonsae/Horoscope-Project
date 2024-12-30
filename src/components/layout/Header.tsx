@@ -48,9 +48,9 @@ const Header = () => {
   };
 
   return (
-    <nav className="w-full h-[80px] bg-black text-[#FFDA68]">
+    <nav className="w-full md:h-[80px] bg-black text-[#FFDA68]">
       {/* Desktop Menu */}
-      <div className="w-full max-w-[1200px] mx-auto h-[80px] md:flex justify-between items-center px-8 py-3">
+      <div className="hidden md:max-w-[1200px] md:flex mx-auto justify-between items-center px-8 py-3 ">
         <div className="flex items-center justify-between w-[80%]">
           <h1 className="text-lg font-bold text-[30px] mr-10">
             <Link href="/">Stella</Link>
@@ -93,7 +93,9 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div className="flex justify-between items-center py-4 px-6 text-foreground font-bold md:hidden">
-        <Link href="/">Stella</Link>
+        <Link onClick={closeMenu} href="/">
+          Stella
+        </Link>
         <button onClick={toggleMenu}>
           {menuToggle ? (
             <HiOutlineX className="text-xl text-white" />
