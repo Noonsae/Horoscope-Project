@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { useState } from 'react';
 
@@ -7,7 +7,7 @@ import { Contents, MyProfile } from './_components';
 import useFetchGuestbookComments from '@/hooks/profile/useFetchGuestbookComments';
 import { useUpdateProfile } from '@/hooks/profile/useUpdateProfile';
 import useAuthStore from '@/store/useAuth';
-import { User } from '@/types/user-type';
+import { User } from '@/types/supabase/user-type';
 
 const MyPage = () => {
   const user = useAuthStore((state) => state.user) as User | null;
@@ -44,7 +44,7 @@ const MyPage = () => {
           }`}
           onClick={() => setActiveTab('fortune')}
         >
-          별자리 운세
+          운세 기록
         </button>
         <button
           className={`px-6 py-2 rounded ${
@@ -52,7 +52,7 @@ const MyPage = () => {
           }`}
           onClick={() => setActiveTab('comments')}
         >
-          댓글
+          댓글 내역
         </button>
         <button
           className={`px-6 py-2 rounded ${
@@ -60,7 +60,7 @@ const MyPage = () => {
           }`}
           onClick={() => setActiveTab('profile')}
         >
-          프로필 변경
+          정보 수정
         </button>
       </article>
 

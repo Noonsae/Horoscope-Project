@@ -1,6 +1,9 @@
-"use server"
+'use server';
+
+// @lib/supabase-server.ts
 
 import { createServerClient } from '@supabase/ssr';
+
 import { cookies } from 'next/headers';
 
 export const serverSupabase = () => {
@@ -23,13 +26,6 @@ export const serverSupabase = () => {
         }
       }
     }
-  });
-};
+});
 
-export const getIsLogin = async () => {
-  const serverClient = serverSupabase();
-  const {
-    data: { session }
-  } = await serverClient.auth.getSession();
-  return !!session;
 };

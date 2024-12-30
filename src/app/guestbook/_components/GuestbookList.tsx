@@ -1,21 +1,23 @@
 'use client';
 
-import { Comment } from '@/types/guestbook-type';
 import { useEffect, useState } from 'react';
-import { updateComment, deleteComment, fetchCommentData, getId } from '@/utils/guestbook'; // Supabase 함수 가져오기
+import { getId } from '@/utils/guestbook';
 import Image from 'next/image';
-import defaultImg from '/public/images/default.png';
-import changeTime from '@/utils/changeTime';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-type MutationVariable = { editingComment: Comment['comment']; editingId: Comment['id'] };
-type ContextVariable = { previousComments: Comment[] | undefined };
+import changeTime from '@/utils/changeTime';
+import Loading from '@/app/loading';
+import useGuestbookData from '@/hooks/guestbook/useQuery';
+import { useDeleteComment, useUpdateComment } from '@/hooks/guestbook/useMutation';
+import Swal from 'sweetalert2';
 
 const GuestbookList = () => {
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editedComment, setEditedComment] = useState<string>('');
-  const [currentId, setCurrentId] = useState<string | null >(null);
-  const queryClient = useQueryClient();
+  const [currentId, setCurrentId] = useState<string | null>(null);
+  
+  const { data: comments, isError, isPending } = useGuestbookData();
+  const updateMutation = useUpdateComment();
+  const deleteMutation = useDeleteComment();
 
   useEffect(() => {
     const fetchUserId = async () => {
@@ -25,56 +27,25 @@ const GuestbookList = () => {
     fetchUserId();
   }, []);
 
-  // 코멘트 데이터 불러오기
-  const {
-    data: comments,
-    isError,
-    isLoading
-  } = useQuery<Comment[], Error>({
-    queryKey: ['comments'],
-    queryFn: () => fetchCommentData()
-  });
-
-  // 코멘트 업데이트
-  const updateMutation = useMutation<unknown, Error, MutationVariable, ContextVariable>({
-    mutationFn: ({ editingComment, editingId }) => updateComment({ editingComment, editingId }),
-    onMutate: async ({ editingComment, editingId }) => {
-      await queryClient.cancelQueries({ queryKey: ['comments'] });
-
-      const previousComments = queryClient.getQueryData<Comment[]>(['comments']);
-      queryClient.setQueryData<Comment[]>(['comments'], (prev) =>
-        prev?.map((comment) => (comment.id === editingId ? { ...comment, comment: editingComment } : comment))
-      );
-      return { previousComments };
-    },
-    onError: (err, _, context) => {
-      console.error('Error updating comment:', err);
-      queryClient.setQueryData(['comments'], context?.previousComments);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['comments'] });
-    }
-  });
-
   const handleSave = (id: string) => {
     if (!editedComment.trim()) {
-      return alert('덕담을 입력해주세요.');
+      Swal.fire({
+        title: '오류',
+        text: '덕담을 입력해주세요.',
+        icon: 'error',
+        confirmButtonText: '확인',
+      });
+      return;
     }
     updateMutation.mutate({ editingComment: editedComment, editingId: id });
     setEditingCommentId(null);
   };
 
-  // 코멘트 삭제
-  const deleteMutation = useMutation<unknown, Error, Comment['id']>({
-    mutationFn: deleteComment,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comments'] })
-  });
-
   const handleDelete = (id: string) => {
     deleteMutation.mutate(id);
   };
 
-  if (isLoading) return <div>로딩중..</div>;
+  if (isPending) return <Loading />
   if (isError) return <div>에러 발생!</div>;
 
   return (
@@ -88,7 +59,7 @@ const GuestbookList = () => {
             <div className="flex items-center gap-2">
               <Image
                 className="w-10 h-10 bg-gray-500 rounded-full"
-                src={comment.users?.profile_img || defaultImg}
+                src={comment.users?.profile_img || '/images/default_profile_img.webp'}
                 alt="프로필 이미지"
                 width={100}
                 height={100}
@@ -97,7 +68,6 @@ const GuestbookList = () => {
               <p className="text-xs text-gray-500">{changeTime(comment.created_at)}</p>
             </div>
             <div className="flex space-x-2">
-              {/* 현재 아이디가 로그인된 아이디와 같고, 해당 댓글을 수정하고 있는 경우에만 수정/저장 버튼 표시 */}
               {currentId && currentId === comment.user_id && editingCommentId === comment.id ? (
                 <>
                   <button
@@ -130,7 +100,6 @@ const GuestbookList = () => {
                   </button>
                 )
               )}
-              {/* 삭제 버튼은 로그인된 아이디가 해당 댓글의 작성자일 때만 표시 */}
               {currentId && currentId === comment.user_id && (
                 <button
                   className="border border-gray-300 rounded px-2 py-1"

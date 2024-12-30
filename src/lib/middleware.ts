@@ -1,12 +1,11 @@
-// utils/supabase/middleware.ts
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request
-  });
+  // 초기 응답 객체 생성
+  const response = NextResponse.next();
 
+  // Supabase 클라이언트 생성
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -16,38 +15,45 @@ export async function updateSession(request: NextRequest) {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value));
-          supabaseResponse = NextResponse.next({
-            request
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options);
           });
-          cookiesToSet.forEach(({ name, value, options }) => supabaseResponse.cookies.set(name, value, options));
         }
       }
     }
   );
 
+  // 로그인 상태 확인
   const {
-    data: { session },
+    data: { user },
     error
-  } = await supabase.auth.getSession();
-  console.log('세션 데이터:', session);
+  } = await supabase.auth.getUser();
+
+  const url = request.nextUrl.clone();
+
   if (error) {
-    console.error('세션 가져오기 실패:', error.message);
+    console.error('Error fetching user:', error.message);
   }
 
-  const user = session?.user; // 세션에서 사용자 정보 가져오기
-
-  // 로그인 필요 페이지에 접근 시 비로그인 상태라면 /login으로 리다이렉트
-  if (!user && !request.nextUrl.pathname.startsWith('/login')) {
-    const url = request.nextUrl.clone();
-    url.pathname = '/login';
-    return NextResponse.redirect(url);
+  // 로그인 상태 처리
+  if (user) {
+    // 로그인된 사용자는 /sign-in 또는 /sign-up 접근 불가
+    if (request.nextUrl.pathname.startsWith('/sign-in') || request.nextUrl.pathname.startsWith('/sign-up')) {
+      url.pathname = '/'; // 리디렉션 경로 설정
+      return NextResponse.redirect(url);
+    }
+  } else {
+    // 비로그인 사용자는 /my-page, /user-home 접근 불가
+    if (request.nextUrl.pathname.startsWith('/my-page') || request.nextUrl.pathname.startsWith('/user-home')) {
+      url.pathname = '/sign-in'; // 리디렉션 경로 설정
+      return NextResponse.redirect(url);
+    }
   }
 
-  // 로그인 상태인데 로그인 페이지로 가려는 경우 메인 페이지로 리다이렉트
-  if (user && request.nextUrl.pathname.startsWith('/login')) {
-    return NextResponse.redirect(request.nextUrl.origin);
-  }
-
-  return NextResponse.next();
+  return response;
 }
+
+// 미들웨어로 사용
+export const config = {
+  matcher: ['/my-page', '/user-home', '/sign-in', '/sign-up'] // 처리할 경로 설정
+};

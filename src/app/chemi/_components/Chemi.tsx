@@ -1,7 +1,6 @@
 'use client';
-
 import { supabase } from '@/lib/supabase';
-import { Chemi as ChemiType } from '@/types/chemi-type';
+import { stellas as ChemiType } from '@/types/supabase';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
