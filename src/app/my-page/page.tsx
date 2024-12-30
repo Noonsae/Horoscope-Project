@@ -42,7 +42,6 @@ const MyPage = () => {
   );
 
   return (
-    
     <div className=" bg-gradient py-[150px]">
       <section className="w-full max-w-[1200px] mx-auto min-h-screen flex flex-col ">
         <article className="text-center pb-[50px]">
@@ -53,7 +52,7 @@ const MyPage = () => {
         <article className="max-w-[1200px] mx-auto flex flex-row justify-start gap-4 py-4">
           <button
             className={`px-6 py-2 rounded ${
-              activeTab === 'fortune' ? 'bg-white text-black' : 'bg-gray-300 hover:bg-gray-400'
+              activeTab === 'fortune' ? 'bg-white text-black' : 'bg-gray-500 hover:bg-gray-100'
             }`}
             onClick={() => setActiveTab('fortune')}
           >
@@ -61,7 +60,7 @@ const MyPage = () => {
           </button>
           <button
             className={`px-6 py-2 rounded ${
-              activeTab === 'comments' ? 'bg-white text-black' : 'bg-gray-300 hover:bg-gray-400'
+              activeTab === 'comments' ? 'bg-white text-black' : 'bg-gray-500 hover:bg-gray-100'
             }`}
             onClick={() => setActiveTab('comments')}
           >
@@ -69,7 +68,7 @@ const MyPage = () => {
           </button>
           <button
             className={`px-6 py-2 rounded ${
-              activeTab === 'profile' ? 'bg-white text-black' : 'bg-gray-300 hover:bg-gray-400'
+              activeTab === 'profile' ? 'bg-white text-black' : 'bg-gray-500 hover:bg-gray-100'
             }`}
             onClick={() => setActiveTab('profile')}
           >

@@ -52,7 +52,7 @@ const Contents: React.FC<ContentsProps> = ({
               value={newNickname}
               onChange={(e) => setNewNickname(e.target.value)}
               placeholder="변경할 닉네임을 입력하세요."
-              className="border px-4 py-2 w-full rounded"
+              className="border px-4 py-2 w-full rounded w-[400px]"
             />
           </div>
 
@@ -125,12 +125,12 @@ const Contents: React.FC<ContentsProps> = ({
       return (
         <div className="max-w-[600px] mx-auto mt-10">
           <form onSubmit={handleNicknameSubmit}>
-            <div className="mb-6">
-              <label className="block font-bold mb-2">닉네임 변경</label>
+            <div className="mb-6 w-[400px]">
+              <label className="block font-bold mb-2 text-white text-[26px]">닉네임 변경</label>
               {nicknameInput}
             </div>
 
-            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
+            <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded w-[400px]">
               저장하기
             </button>
           </form>
