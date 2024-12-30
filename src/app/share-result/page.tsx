@@ -25,7 +25,7 @@ const ShareResultsPage = () => {
           별자리가 들려준 이야기를 다른 사람과 공유해보세요.
         </h2>
         {/* overlay */}
-        <div className="indent-[-9999px] absolute inset-0 w-full h-full bg-[rgba(0,0,0,0.2)]">
+        <div className="indent-[-9999px] absolute top-[80px] inset-0 w-full h-[320px] bg-[rgba(0,0,0,0.2)]">
           <span className="sr-only">overlay</span>
         </div>
       </section>
